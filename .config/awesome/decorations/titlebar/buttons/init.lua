@@ -17,18 +17,27 @@ tittlebar_buttons.maximize = function(c)
 end
 
 tittlebar_buttons.floating = function(c)
-    awful.client.floating.toggle(c)
+    c.floating = not c.floating
+end
+
+tittlebar_buttons.sticky = function(c)
+    c.sticky = not c.sticky
+end
+
+tittlebar_buttons.ontop = function(c)
+    c.ontop = not c.ontop
 end
 
 
-tittlebar_buttons.create_titlebar_button = function(c, init_icon, focus_icon, command) 
+tittlebar_buttons.create_titlebar_button = function(init_icon, active_icon, property, conditionF, command)
+    local icon = icons.wbicc(icons.wbifo(icons.wbi(init_icon, 12), 0, 0.5), active_icon, property, conditionF)
     local btn = wibox.widget{
-        icons.wbifo(init_icon, 12, 0, 0.5),
-        forced_width = dpi(24),
-        forced_height = dpi(24),
-        shape = gears.shape.circle,
-        bg     = beautiful.titlebar_button_color,
-        widget = wibox.container.background
+        icon,
+        forced_width    = dpi(24),
+        forced_height   = dpi(24),
+        shape           = gears.shape.circle,
+        bg              = beautiful.titlebar_button_color,
+        widget          = wibox.container.background
     }
 
     btn:connect_signal('mouse::enter', function ()

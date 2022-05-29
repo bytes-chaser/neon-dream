@@ -29,18 +29,51 @@ client.connect_signal("request::titlebars", function(c)
         layout = wibox.layout.align.horizontal,
         { -- Left
             {
-                titlebar_buttons.create_titlebar_button(c, "", "",
+                titlebar_buttons.create_titlebar_button("", "",
+                'maximized',
+                function(c)
+                    return false
+                end,
                 function()
                     titlebar_buttons.close(c)
                 end),
-                titlebar_buttons.create_titlebar_button(c, "", "",
+
+                titlebar_buttons.create_titlebar_button("", "",
+                'maximized',
+                function(c)
+                    return c.maximized
+                end,
                 function()
                     titlebar_buttons.maximize(c)
                 end),
-                titlebar_buttons.create_titlebar_button(c, "", "",
-                 function()
+
+                titlebar_buttons.create_titlebar_button("", "",
+                'floating',
+                function(c)
+                    return c.floating
+                end,
+                function()
                     titlebar_buttons.floating(c)
                 end),
+
+                titlebar_buttons.create_titlebar_button("", "",
+                'sticky',
+                function(c)
+                    return c.sticky
+                end,
+                function()
+                    titlebar_buttons.sticky(c)
+                end),
+
+                titlebar_buttons.create_titlebar_button("", "",
+                'ontop',
+                function(c)
+                    return c.ontop
+                end,
+                function()
+                    titlebar_buttons.ontop(c)
+                end),
+
                 layout = wibox.layout.fixed.horizontal,
                 spacing = dpi(7)
             },
@@ -59,11 +92,6 @@ client.connect_signal("request::titlebars", function(c)
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
-            awful.titlebar.widget.floatingbutton (c),
-            awful.titlebar.widget.maximizedbutton(c),
-            awful.titlebar.widget.stickybutton   (c),
-            awful.titlebar.widget.ontopbutton    (c),
-            awful.titlebar.widget.closebutton    (c),
             layout = wibox.layout.fixed.horizontal
         },
         widget = wibox.container.background,
