@@ -8,15 +8,11 @@ pbar = {}
 
 pbar.create_shaped_points_pbar = function(parameters)
 
-    local shape = parameters.shape
-    local bg_color = parameters.bg_color
-
-    local b_heigth = parameters.p_heigth
-    local b_width = parameters.p_width
-
-    local p_heigth = parameters.p_heigth
-    local p_width = parameters.p_width
-    local p_margin = parameters.p_margin
+    local shape = parameters.shape or gears.shape.circle
+    local bg_color = parameters.bg_color or beautiful.pbar_bg_color
+    local p_heigth = parameters.p_heigth or beautiful.pbar_heigth
+    local p_width = parameters.p_width or beautiful.pbar_width
+    local p_margin = parameters.p_margin or beautiful.pbar_margin
 
 
     local function create_point(index, shape, bg_color, p_heigth, p_width, p_margin)

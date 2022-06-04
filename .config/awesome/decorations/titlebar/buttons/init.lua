@@ -36,20 +36,20 @@ tittlebar_buttons.create_titlebar_button = function(init_icon, active_icon, prop
         forced_width    = dpi(24),
         forced_height   = dpi(24),
         shape           = gears.shape.circle,
-        bg              = beautiful.titlebar_button_color,
+        bg              = beautiful.bg_urgent,
         widget          = wibox.container.background
     }
 
     btn:connect_signal('mouse::enter', function ()
-        btn.bg = beautiful.titlebar_button_color .. "4D"
+        btn.bg = beautiful.bg_urgent .. "4D"
     end)
 
     btn:connect_signal('mouse::leave', function ()
-        btn.bg = beautiful.titlebar_button_color
+        btn.bg = beautiful.bg_urgent
       end)
 
-    btn:connect_signal('button::release', function ()
-        btn.bg = beautiful.titlebar_button_color
+    btn:connect_signal('button::fg_normal', function ()
+        btn.bg = beautiful.bg_urgent
     end)
 
     btn:buttons(gears.table.join(

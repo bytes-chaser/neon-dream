@@ -45,3 +45,12 @@
 
 # Browser
 * firefox
+
+# File Managers
+* ranger
+## Preview Tools
+* atool
+* elinks
+* ueberzug
+* poppler
+* ffmpegthumbnailer

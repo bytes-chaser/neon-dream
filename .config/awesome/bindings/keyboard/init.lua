@@ -1,7 +1,7 @@
-local gears = require("gears")
-local awful = require("awful")
+local gears         = require("gears")
+local awful         = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
-
+local beautiful     = require("beautiful")
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -95,7 +95,20 @@ globalkeys = gears.table.join(
 
     -- Menubar
     awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"})
+              {description = "show the menubar", group = "launcher"}),
+
+      -- Stats
+      awful.key({ modkey, "Control" }, "s", function()
+        if(monitor_dock) then
+          monitor_dock.ontop = not monitor_dock.ontop
+          if monitor_dock.ontop then
+            monitor_dock.bg = beautiful.pallete_c3
+          else
+            monitor_dock.bg = beautiful.col_transparent
+          end
+        end
+       end,
+      {description = "show stats", group = "panels"})
 )
 
 -- Set keys

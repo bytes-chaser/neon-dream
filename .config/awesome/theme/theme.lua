@@ -13,25 +13,36 @@ local theme = {}
 
 theme.font          = "sans 8"
 
-theme.bg_normal     = "#222222"
-theme.bg_focus      = "#333333"
-theme.bg_urgent     = "#ff0000"
+theme.pallete_c1 = "#be63db"
+theme.pallete_c2 = "#6edff5"
+theme.pallete_c3 = "#272459"
+theme.pallete_c4 = "#333170"
+theme.pallete_c5 = "#CCB8F0"
+
+theme.bg_normal     = theme.pallete_c3
+theme.bg_focus      = theme.pallete_c4
+theme.bg_urgent     = theme.pallete_c1
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
-theme.fg_normal     = "#aaaaaa"
-theme.fg_focus      = "#ffffff"
-theme.fg_urgent     = "#ffffff"
+theme.fg_normal     = theme.pallete_c5
+theme.fg_focus      = theme.pallete_c2
+theme.fg_urgent     = "d61ff0"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(5)
-theme.border_width  = dpi(0)
-theme.border_normal = "#000000"
-theme.border_focus  = "#535d6c"
+theme.useless_gap   = dpi(8)
+theme.border_width  = dpi(2)
+theme.border_normal = theme.pallete_c2
+theme.border_focus  = theme.pallete_c1
 theme.border_marked = "#91231c"
 
-theme.titlebar_button_color = "#666666"
 
-
+-- Progreess bar widget settings
+theme.pbar_heigth       = 30
+theme.pbar_width        = 30
+theme.pbar_margin       = 5
+theme.pbar_active_color = theme.pallete_c1
+theme.pbar_bg_color     = theme.pallete_c4
+theme.pbar_icon_size    = 30
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:
@@ -101,7 +112,7 @@ theme.titlebar_maximized_button_focus_inactive  = themes_path.."titlebar/maximiz
 theme.titlebar_maximized_button_normal_active = themes_path.."titlebar/maximized_normal_active.png"
 theme.titlebar_maximized_button_focus_active  = themes_path.."titlebar/maximized_focus_active.png"
 
-theme.wallpaper = themes_path.."1.png"
+theme.wallpaper = themes_path.."background.png"
 
 -- You can use your own layout icons like this:
 theme.layout_fairh = themes_path.."layouts/fairhw.png"
