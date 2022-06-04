@@ -41,7 +41,7 @@ tittlebar_buttons.create_titlebar_button = function(init_icon, active_icon, prop
     }
 
     btn:connect_signal('mouse::enter', function ()
-        btn.bg = beautiful.bg_urgent .. "4D"
+        btn.bg = beautiful.bg_urgent .. "9D"
     end)
 
     btn:connect_signal('mouse::leave', function ()
