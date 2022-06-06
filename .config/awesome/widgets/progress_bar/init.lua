@@ -44,6 +44,7 @@ pbar.create_shaped_points_pbar = function(parameters)
     points.layout = wibox.layout.fixed.horizontal
     points.id = "arr"
     return wibox.widget{
+        id = "bar_body",
         points,
         shape  = gears.shape.rounded_bar,
         widget = wibox.container.background,

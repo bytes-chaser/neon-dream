@@ -216,6 +216,5 @@ watchdogs.init()
 
 monitor_dock = require("widgets.monitor_dock")
 player = require("widgets.player")
-require("commons.playerctl")
 -- Autostart
 awful.spawn.with_shell("picom")
