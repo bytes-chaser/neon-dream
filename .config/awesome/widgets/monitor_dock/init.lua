@@ -1,10 +1,11 @@
-local gears     = require("gears")
-local awful     = require("awful")
-local wibox     = require("wibox")
-local beautiful = require("beautiful")
-local dpi       = beautiful.xresources.apply_dpi
-local pb        = require("widgets.progress_bar")
-local icons     = require("commons.icons")
+local gears       = require("gears")
+local awful       = require("awful")
+local wibox       = require("wibox")
+local beautiful   = require("beautiful")
+local dpi         = beautiful.xresources.apply_dpi
+local pb          = require("widgets.progress_bar")
+local icons       = require("commons.icons")
+local shape_utils = require("commons.shape")
 
 local sw_bg = function(pbar, index, color)
     local r = pbar:get_children_by_id("arr")[1]:get_children()[index]:get_children_by_id("point")[1]
@@ -29,19 +30,19 @@ local create_text_label = function(text)
   return wibox.widget{
       text   = text,
       align = "center",
-      forced_width = dpi(60),
+      forced_width = dpi(80),
       opacity = 1,
-      font = beautiful.font,
+      font = beautiful.font_famaly .. " Bold 20",
       widget = wibox.widget.textbox,
   }
 end
 
 local create_monitor_with_icon = function(pbar, label, icon)
     return {
-        icons.wbi(icon, beautiful.pbar_icon_size),
-        pbar,
-        label,
-        layout = wibox.layout.align.horizontal
+      icons.wbi(icon, beautiful.pbar_icon_size),
+      pbar,
+      label,
+      layout = wibox.layout.align.horizontal
     }
 end
 
@@ -56,9 +57,12 @@ local monitor_dock = wibox(
     visible = true,
     ontop = false,
     height = dpi(180),
-    width = dpi(500),
+    width = dpi(550),
     bg = beautiful.col_transparent,
     type = "dock",
+    border_width = dpi(4),
+    border_color = beautiful.border_focus,
+    shape =  shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
     screen = screen.primary,
 })
 
@@ -112,6 +116,6 @@ monitor_dock:setup {
     },
     layout = wibox.layout.fixed.vertical
 }
-awful.placement.top_left(monitor_dock, {honor_workarea=true, margins=50})
+awful.placement.top_left(monitor_dock, {honor_workarea=true, margins={left = 30, top = 70}})
 
 return monitor_dock

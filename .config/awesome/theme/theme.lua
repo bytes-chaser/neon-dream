@@ -10,13 +10,14 @@ local gfs = require("gears.filesystem")
 local themes_path = "/home/alex/.config/awesome/theme/"
 
 local theme = {}
-
-theme.font          = "sans 8"
+theme.font_famaly = "JetBrains Mono "
+theme.font        = theme.font_famaly.. "12"
 
 theme.pallete_c1 = "#d17bed"
 theme.pallete_c2 = "#96eef2"
 theme.pallete_c3 = "#2f2b3b"
 theme.pallete_c4 = "#CCB8F0"
+theme.pallete_c5 = "#333170"
 theme.col_transparent = "#00000000"
 
 theme.bg_normal     = theme.pallete_c3
@@ -24,8 +25,8 @@ theme.bg_focus      = theme.pallete_c3
 theme.bg_urgent     = theme.pallete_c1
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
-theme.fg_normal     = theme.pallete_c4
-theme.fg_focus      = theme.pallete_c2
+theme.fg_normal     = theme.pallete_c2
+theme.fg_focus      = theme.pallete_c4
 theme.fg_urgent     = "d61ff0"
 theme.fg_minimize   = "#ffffff"
 
@@ -41,7 +42,7 @@ theme.pbar_heigth       = 30
 theme.pbar_width        = 30
 theme.pbar_margin       = 5
 theme.pbar_active_color = theme.pallete_c1
-theme.pbar_bg_color     = theme.pallete_c3
+theme.pbar_bg_color     = theme.pallete_c5
 theme.pbar_icon_size    = 30
 -- There are other variable sets
 -- overriding the default one when

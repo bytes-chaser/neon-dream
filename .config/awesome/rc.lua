@@ -17,6 +17,7 @@ local menubar = require("menubar")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
+home_folder        = os.getenv("HOME")
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -214,5 +215,7 @@ watchdogs = require("watchdogs")
 watchdogs.init()
 
 monitor_dock = require("widgets.monitor_dock")
+player = require("widgets.player")
+require("commons.playerctl")
 -- Autostart
 awful.spawn.with_shell("picom")

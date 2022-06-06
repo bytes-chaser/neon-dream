@@ -26,6 +26,7 @@ watchdogs.scripts[watchdogs.signals.pow] =
     bash -c "cat /sys/class/power_supply/BAT0/capacity"
 ]]
 
+
 watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')
     local used  = stdout:match('__(.*)#')

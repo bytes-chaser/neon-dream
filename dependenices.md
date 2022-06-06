@@ -15,12 +15,15 @@
 # Fonts
 * ttf-font
 * ttf-font-awesome
+* ttf-jetbrains-mono
 
 # Terminals
 * alacritty
 
 # Shells
 * zsh
+## Add-Ons
+* Oh-My-Zsh
 
 # Video Drivers
 * xf86-video-amdgpu
@@ -51,6 +54,12 @@
 ## Preview Tools
 * atool
 * elinks
-* ueberzug
+* ueberzugls
+
 * poppler
 * ffmpegthumbnailer
+
+
+# Misc
+* base-devel
+* snap
