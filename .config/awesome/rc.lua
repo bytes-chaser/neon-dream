@@ -213,7 +213,7 @@ require("decorations")
 
 watchdogs = require("watchdogs")
 watchdogs.init()
-
+require("commons.playerctl")
 monitor_dock = require("widgets.monitor_dock")
 player = require("widgets.player")
 -- Autostart

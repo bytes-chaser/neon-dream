@@ -182,7 +182,6 @@ player_dock:setup {
 
 awesome.connect_signal("player::metadata",
 function(status, title, album, artist, art_link)
-
   if status == nil then
     player_works = false
   elseif status:match("Paused") then
