@@ -44,6 +44,12 @@ theme.pbar_margin       = 5
 theme.pbar_active_color = theme.pallete_c1
 theme.pbar_bg_color     = theme.pallete_c5
 theme.pbar_icon_size    = 30
+
+
+-- Battery indicator widget settings
+theme.battery_opacity   = 1
+theme.battery_alignment = "center"
+theme.battery_size      = 60
 -- There are other variable sets
 -- overriding the default one when
 -- defined, the sets are:

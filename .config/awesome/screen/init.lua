@@ -4,6 +4,7 @@ local beautiful     = require("beautiful")
 local menubar       = require("menubar")
 local wibox         = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local bwf           = require("widgets.battery")
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -139,6 +140,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mytextclock,
+            bwf.create({size = 20}),
             mykeyboardlayout,
             wibox.widget.systray(),
             s.mylayoutbox,

@@ -1,6 +1,5 @@
 local awful = require("awful")
 
-
 local watchdogs = {}
 watchdogs.signals = {}
 watchdogs.scripts = {}
@@ -23,7 +22,7 @@ watchdogs.scripts[watchdogs.signals.cpu] =
 
 watchdogs.scripts[watchdogs.signals.pow] =
 [[
-    bash -c "cat /sys/class/power_supply/BAT0/capacity"
+  zsh -c "{cat /sys/class/power_supply/BAT0/status;cat /sys/class/power_supply/BAT0/capacity} | paste -d ' ' -s" | awk '{printf "#" $1 "__" $2 "#"}'
 ]]
 
 
@@ -38,7 +37,9 @@ watchdogs.callbacks[watchdogs.signals.cpu] = function(widget, stdout)
 end
 
 watchdogs.callbacks[watchdogs.signals.pow] = function(widget, stdout)
-    awesome.emit_signal("sysstat::pow", tonumber(stdout))
+  local status = stdout:match('(.*) ')
+  local capacity  = stdout:match(' (.*)')
+  awesome.emit_signal("sysstat::pow", tonumber(capacity), status)
 end
 
 
@@ -50,7 +51,7 @@ end
 watchdogs.init = function()
     watchdogs.run(watchdogs.signals.ram, 5)
     watchdogs.run(watchdogs.signals.cpu, 5)
-    watchdogs.run(watchdogs.signals.pow, 5)
+    watchdogs.run(watchdogs.signals.pow, 2)
 end
 
 return watchdogs

@@ -3,8 +3,6 @@ local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 local pb          = require("widgets.progress_bar")
 local icons       = require("commons.icons")
-local shape_utils = require("commons.shape")
-local naughty = require("naughty")
 
 local mb = {}
 
