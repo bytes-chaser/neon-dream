@@ -29,7 +29,7 @@ mb.create = function(icon, parameters)
       align         = "center",
       forced_width  = dpi(80),
       opacity       = 1,
-      font          = beautiful.font_famaly .. " Bold 20",
+      font          = beautiful.font_famaly .. " Bold 16",
       widget        = wibox.widget.textbox,
   }
 

@@ -6,7 +6,6 @@ local gears       = require("gears")
 local icons       = require("commons.icons")
 local shape_utils = require("commons.shape")
 local spotify     = require("commons.spotify")
-local naughty = require("naughty")
 
 local player_dock = wibox(
 {
@@ -182,6 +181,7 @@ player_dock:setup {
 
 awesome.connect_signal("player::metadata",
 function(status, title, album, artist, art_link)
+
   if status == nil then
     player_works = false
   elseif status:match("Paused") then
