@@ -37,6 +37,8 @@ theme.border_focus  = theme.pallete_c1
 theme.border_marked = "#91231c"
 
 
+theme.profile_pic = home_folder .. "/profile.png"
+
 -- Progreess bar widget settings
 theme.pbar_heigth       = 30
 theme.pbar_width        = 30

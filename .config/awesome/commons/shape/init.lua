@@ -9,6 +9,11 @@ function shape_utils.rounded_rect(radius)
     end
 end
 
+function shape_utils.circle(radius)
+    return function(cr, width, height)
+        gears.shape.circle(cr, radius, radius)
+    end
+end
 
 function shape_utils.partially_rounded_rect(radius, tl, tr, br, bl)
     return function(cr, width, height)

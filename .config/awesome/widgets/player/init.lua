@@ -11,7 +11,7 @@ local player_dock = wibox(
 {
     visible = true,
     ontop = false,
-    height = dpi(200),
+    height = dpi(225),
     width = dpi(650),
     bg = beautiful.col_transparent,
     type = "dock",
@@ -24,7 +24,7 @@ local player_dock = wibox(
 local player_works = false
 
 local function button(symb, command)
-  icon = icons.wbi(symb, 20)
+  icon = icons.wbi(symb, 16)
   icon:buttons(gears.table.join(
       awful.button({ }, 1, command)))
   return icon
@@ -124,12 +124,14 @@ local control_panel = {
         end)
       end),
       widget = wibox.container.margin,
-      margins = dpi(5)
+      left = dpi(5),
+      right = dpi(5)
   },
   {
       toggle_btn,
       widget = wibox.container.margin,
-      margins = dpi(5)
+      left = dpi(5),
+      right = dpi(5)
   },
   {
       button("", function()
@@ -144,7 +146,9 @@ local control_panel = {
         end)
       end),
       widget = wibox.container.margin,
-      margins = dpi(5)
+      left = dpi(5),
+      right = dpi(5)
+
   },
   layout = wibox.layout.flex.horizontal
 }
@@ -153,8 +157,6 @@ local control_panel = {
 player_dock:setup {
   {
     {
-      text_metadata,
-      {widget = wibox.container.background},
       {
         {
           {
@@ -170,6 +172,7 @@ player_dock:setup {
         margins = dpi(10),
         widget = wibox.container.margin,
       },
+      text_metadata,
       layout = wibox.layout.align.horizontal,
     },
     control_panel,
