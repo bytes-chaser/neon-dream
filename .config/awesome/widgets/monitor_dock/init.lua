@@ -66,6 +66,6 @@ monitor_dock:setup {
     },
     layout = wibox.layout.fixed.vertical
 }
-awful.placement.left(monitor_dock, {honor_workarea=true, margins={left = 30}})
+awful.placement.left(monitor_dock, {honor_workarea=true, margins={left = 200}})
 
 return monitor_dock

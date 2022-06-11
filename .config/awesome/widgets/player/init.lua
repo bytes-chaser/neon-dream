@@ -11,8 +11,8 @@ local player_dock = wibox(
 {
     visible = true,
     ontop = false,
-    height = dpi(225),
-    width = dpi(650),
+    height = dpi(200),
+    width = dpi(500),
     bg = beautiful.col_transparent,
     type = "dock",
     border_width = dpi(4),
@@ -24,7 +24,7 @@ local player_dock = wibox(
 local player_works = false
 
 local function button(symb, command)
-  icon = icons.wbi(symb, 16)
+  icon = icons.wbi(symb, 30)
   icon:buttons(gears.table.join(
       awful.button({ }, 1, command)))
   return icon
@@ -44,7 +44,6 @@ end
 local function create_text(glyph)
   return wibox.widget{
       text   = glyph,
-      align = "center",
       opacity = 1,
       font = beautiful.font .. " ExtraBold 16",
       widget = wibox.widget.textbox,
@@ -182,6 +181,13 @@ player_dock:setup {
   layout = wibox.layout.flex.vertical
 }
 
+local function shorting(text)
+  if #text > 30 then
+    text = text:sub(1, 27) .. "..."
+  end
+  return text
+end
+
 awesome.connect_signal("player::metadata",
 function(status, title, album, artist, art_link)
 
@@ -196,9 +202,9 @@ function(status, title, album, artist, art_link)
   end
 
   if player_works then
-    tittle_val.text = title
-    album_val.text = album
-    artist_val.text = artist
+    tittle_val.text = shorting(title)
+    album_val.text = shorting(album)
+    artist_val.text = shorting(artist)
     awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
       function()
         local imbox = player_dock:get_children_by_id("art-box")[1].art

@@ -46,6 +46,6 @@ monitor_dock:setup{
 
 }
 
-awful.placement.right(monitor_dock, {honor_workarea=true, margins={left = 30}})
+awful.placement.top_left(monitor_dock, {honor_workarea=true, margins={left = 30}})
 
 return monitor_dock
