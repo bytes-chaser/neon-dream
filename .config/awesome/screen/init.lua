@@ -1,10 +1,13 @@
-local awful        = require("awful")
+local awful         = require("awful")
 local gears         = require("gears")
 local beautiful     = require("beautiful")
 local menubar       = require("menubar")
 local wibox         = require("wibox")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local bwf           = require("widgets.battery")
+local dpi           = beautiful.xresources.apply_dpi
+local shape_utils   = require("commons.shape")
+
 -- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
@@ -96,7 +99,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3"}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -112,7 +115,37 @@ awful.screen.connect_for_each_screen(function(s)
     s.mytaglist = awful.widget.taglist {
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
-        buttons = taglist_buttons
+        buttons = taglist_buttons,
+        style = {shape = gears.shape.circle},
+        layout = {spacing = dpi(10), layout = wibox.layout.fixed.horizontal},
+        widget_template = {
+          {
+            {
+              {
+                  {
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                  },
+                  left  = dpi(10),
+                  right  = dpi(10),
+                  bottom  = dpi(5),
+                  top  = dpi(5),
+                  widget = wibox.container.margin
+              },
+
+              bg = beautiful.palette_c6,
+              shape  = gears.shape.circle,
+              widget = wibox.container.background
+            },
+            margins  = 5,
+            widget = wibox.container.margin
+          },
+          id     = 'background_role',
+          widget = wibox.container.background,
+        }
     }
 
     -- Create a tasklist widget
@@ -123,28 +156,48 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s })
+    s.mywibox = awful.wibar({
+      position = "top",
+      screen = s,
+      bg = beautiful.col_transparent,
+      height = dpi(50)
+    })
 
     -- Add widgets to the wibox
     s.mywibox:setup {
-        layout = wibox.layout.align.horizontal,
-        { -- Left widgets
-            layout = wibox.layout.fixed.horizontal,
-            mylauncher,
-            s.mytaglist,
-            s.mypromptbox,
-        },
+        widget = wibox.container.margin,
+        top =  dpi(7),
+        left = dpi(7),
+        right = dpi(7),
         {
+          layout = wibox.layout.align.horizontal,
+          { -- Left widgets
+              widget = wibox.container.background,
+              bg = beautiful.pallete_c3,
+              shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+              {
+                layout = wibox.layout.fixed.horizontal,
+                s.mytaglist,
+                s.mypromptbox
+              }
+          },
+          {
             layout = wibox.layout.fixed.horizontal,
-        },
-        { -- Right widgets
-            layout = wibox.layout.fixed.horizontal,
-            mytextclock,
-            bwf.create({size = 20}),
-            mykeyboardlayout,
-            wibox.widget.systray(),
-            s.mylayoutbox,
-        },
+          },
+          { -- Right widgets
+              widget = wibox.container.background,
+              bg = beautiful.pallete_c3,
+              shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+              {
+                layout = wibox.layout.fixed.horizontal,
+                mytextclock,
+                bwf.create({size = 20}),
+                mykeyboardlayout,
+                wibox.widget.systray(),
+                -- s.mylayoutbox,
+              }
+          }
+        }
     }
 end)
 -- }}}
