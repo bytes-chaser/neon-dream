@@ -7,6 +7,8 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local bwf           = require("widgets.battery")
 local dpi           = beautiful.xresources.apply_dpi
 local shape_utils   = require("commons.shape")
+local wbm           = require("widgets.wibar_monitor")
+local naughty = require("naughty")
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -163,6 +165,21 @@ awful.screen.connect_for_each_screen(function(s)
       height = dpi(50)
     })
 
+    local battery_widget = bwf.create({size = 20})
+
+    local wbm_cpu = wbm.create("CPU: ")
+    awesome.connect_signal("sysstat::cpu", function(cpu_val)
+        wbm_cpu.wbm_body.wbm_labels.wbm_valtext.text = cpu_val .. '%'
+        wbm_cpu.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(cpu_val, 0)
+    end)
+
+    local wbm_ram = wbm.create("RAM: ")
+    awesome.connect_signal("sysstat::ram", function(used, total)
+        local label_val = math.floor(100 * (used / total))
+        wbm_ram.wbm_body.wbm_labels.wbm_valtext.text = label_val .. '%'
+        wbm_ram.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(label_val, 0)
+    end)
+
     -- Add widgets to the wibox
     s.mywibox:setup {
         widget = wibox.container.margin,
@@ -181,20 +198,41 @@ awful.screen.connect_for_each_screen(function(s)
                 s.mypromptbox
               }
           },
-          {
-            layout = wibox.layout.fixed.horizontal,
-          },
+          nil,
           { -- Right widgets
-              widget = wibox.container.background,
-              bg = beautiful.pallete_c3,
-              shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+              layout = wibox.layout.fixed.horizontal,
               {
-                layout = wibox.layout.fixed.horizontal,
-                mytextclock,
-                bwf.create({size = 20}),
-                mykeyboardlayout,
-                wibox.widget.systray(),
-                -- s.mylayoutbox,
+                widget = wibox.container.margin,
+                right = dpi(10),
+                {
+                  widget = wibox.container.background,
+                  bg = beautiful.pallete_c3,
+                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  wbm_cpu
+                }
+              },
+              {
+                widget = wibox.container.margin,
+                right = dpi(10),
+                {
+                  widget = wibox.container.background,
+                  bg = beautiful.pallete_c3,
+                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  wbm_ram
+                }
+              },
+              {
+                widget = wibox.container.background,
+                bg = beautiful.pallete_c3,
+                shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                {
+                  layout = wibox.layout.fixed.horizontal,
+                  mytextclock,
+                  bwf.create({size = 20}),
+                  mykeyboardlayout,
+                  wibox.widget.systray(),
+                  -- s.mylayoutbox,
+                }
               }
           }
         }
