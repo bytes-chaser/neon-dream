@@ -1,4 +1,4 @@
-
+local awful             = require("awful")
 local wibox             = require("wibox")
 local beautiful         = require("beautiful")
 local icons             = require("commons.icons")
@@ -6,7 +6,7 @@ local icons             = require("commons.icons")
 
 battery_widget_factory = {}
 battery_widget_factory.create = function(parameters)
-
+  local value = 0
   local battery_icon = wibox.widget{
       text    = "",
       align   = parameters.alignment or beautiful.battery_aligment,
@@ -15,8 +15,14 @@ battery_widget_factory.create = function(parameters)
       widget  = wibox.widget.textbox,
   }
 
-  awesome.connect_signal("sysstat::pow", function(pow_val, status)
+  local battery_icon_t = awful.tooltip {}
+  battery_icon_t:add_to_object(battery_icon)
+  battery_icon:connect_signal('mouse::enter', function()
+    battery_icon_t.text = tostring(value) .. "%"
+end)
 
+  awesome.connect_signal("sysstat::pow", function(pow_val, status)
+      value = pow_val
       if status:match("Charging") then
         battery_icon.text = ""
       elseif pow_val > 75 then
