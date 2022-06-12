@@ -30,7 +30,7 @@ end
 
 
 tittlebar_buttons.create_titlebar_button = function(init_icon, active_icon, property, conditionF, command)
-    local icon = icons.wbicc(icons.wbifo(icons.wbi(init_icon, 12), 0, 0.5), active_icon, property, conditionF)
+    local icon = icons.wbicc(icons.wbifo(icons.wbi(init_icon, 12), 0, 1), active_icon, property, conditionF)
     local btn = wibox.widget{
         icon,
         forced_width    = dpi(24),
