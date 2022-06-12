@@ -30,6 +30,12 @@
 * xf86-video-intel
 * xf86-video-nouveau
 
+# Video
+* brightnessctl
+
+#Audio
+alsa-utils
+
 # Windows Servers
 * xorg
 * xorg-xinit
@@ -59,7 +65,12 @@
 * poppler
 * ffmpegthumbnailer
 
-
-# Misc
+# Programming
 * base-devel
+
+# AUR's
 * snap
+* yay
+
+# yay
+* spicetify-cli

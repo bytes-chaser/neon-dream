@@ -14,8 +14,6 @@ pbar.create_shaped_points_pbar = function(parameters)
       shapes[1] = gears.shape.circle
     end
 
-    naughty.notify({text = tostring(#shapes) })
-
     local bg_color = parameters.bg_color or beautiful.pbar_bg_color
     local p_heigth = parameters.p_heigth or beautiful.pbar_heigth
     local p_width = parameters.p_width or beautiful.pbar_width

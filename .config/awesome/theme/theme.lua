@@ -18,6 +18,7 @@ theme.pallete_c2 = "#96eef2"
 theme.pallete_c3 = "#2f2b3b"
 theme.pallete_c4 = "#CCB8F0"
 theme.pallete_c5 = "#333170"
+theme.palette_c6 = "#4b455c"
 theme.col_transparent = "#00000000"
 
 theme.bg_normal     = theme.pallete_c3

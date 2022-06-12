@@ -1,4 +1,5 @@
 local awful = require("awful")
+local commands = require("commons.commands")
 
 local watchdogs = {}
 watchdogs.signals = {}
@@ -10,21 +11,9 @@ watchdogs.signals.ram = watchdogs.signals.prfx .. 'ram'
 watchdogs.signals.cpu = watchdogs.signals.prfx .. 'cpu'
 watchdogs.signals.pow = watchdogs.signals.prfx .. 'pow'
 
-watchdogs.scripts[watchdogs.signals.ram] =
-[[
-    bash -c "free -m | grep Mem: | awk '{printf \"#%d__%d#\", $2, $3}'"
-]]
-
-watchdogs.scripts[watchdogs.signals.cpu] =
-[[
-    bash -c "top -bn2 | grep '%Cpu' | tail -1 | grep -P '(....|...) id,'|awk '{print 100-$8}'"
-]]
-
-watchdogs.scripts[watchdogs.signals.pow] =
-[[
-  zsh -c "{cat /sys/class/power_supply/BAT0/status;cat /sys/class/power_supply/BAT0/capacity} | paste -d ' ' -s" | awk '{printf "#" $1 "__" $2 "#"}'
-]]
-
+watchdogs.scripts[watchdogs.signals.ram] = commands.ram
+watchdogs.scripts[watchdogs.signals.cpu] = commands.cpu
+watchdogs.scripts[watchdogs.signals.pow] = commands.pow
 
 watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')

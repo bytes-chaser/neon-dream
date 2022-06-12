@@ -215,8 +215,7 @@ require("decorations")
 watchdogs = require("watchdogs")
 watchdogs.init()
 require("commons.playerctl")
-monitor_dock = require("widgets.monitor_dock")
-local name = require("widgets.profile")
-player = require("widgets.player")
+require("widgets.dashboard")
+
 -- Autostart
 awful.spawn.with_shell("picom")

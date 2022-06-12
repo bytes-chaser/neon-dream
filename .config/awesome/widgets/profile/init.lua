@@ -5,47 +5,44 @@ local gears       = require("gears")
 local dpi         = beautiful.xresources.apply_dpi
 local shape_utils = require("commons.shape")
 
-local monitor_dock = wibox(
-{
-    visible = true,
-    ontop = false,
-    height = dpi(150),
-    width = dpi(250),
-    bg = beautiful.col_transparent,
-    type = "dock",
-    border_width = dpi(4),
-    border_color = beautiful.border_focus,
-    shape =  shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
-    screen = screen.primary,
-})
-
-
-monitor_dock:setup{
+profile = {}
+profile.pic = function(width, height, shape)
+  return wibox.widget(
   {
     {
         image = beautiful.profile_pic,
         widget = wibox.widget.imagebox,
-        forced_width = dpi(100),
-        forced_height = dpi(100),
-        clip_shape = shape_utils.circle(dpi(350))
+        forced_width = dpi(width),
+        forced_height = dpi(height),
+        clip_shape = shape
     },
     widget = wibox.container.place,
-  },
+  }
+)
+end
+
+profile.name = function (size)
+  return wibox.widget{
+      id            = "profile",
+      text          = user,
+      align         = "center",
+      opacity       = 1,
+      font          = beautiful.font_famaly .. " Bold " .. tostring(size),
+      widget        = wibox.widget.textbox,
+  }
+end
+
+local profile_dock = wibox.widget(
   {
-    {
-        id            = "profile",
-        text          = user,
-        align         = "center",
-        opacity       = 1,
-        font          = beautiful.font_famaly .. " Bold 32",
-        widget        = wibox.widget.textbox,
+        {
+      profile.pic(100, 100, shape_utils.circle(dpi(350))),
+      profile.name(32),
+      layout = wibox.layout.fixed.vertical
     },
-    layout = wibox.layout.flex.horizontal
-  },
-  layout = wibox.layout.flex.horizontal
+    widget = wibox.container.background,
+    forced_width = dpi(300),
+    forced_height = dpi(50),
+  }
+)
 
-}
-
-awful.placement.top_left(monitor_dock, {honor_workarea=true, margins={left = 30}})
-
-return monitor_dock
+return profile_dock

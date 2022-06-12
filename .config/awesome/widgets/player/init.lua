@@ -7,21 +7,11 @@ local icons       = require("commons.icons")
 local shape_utils = require("commons.shape")
 local spotify     = require("commons.spotify")
 
-local player_dock = wibox(
-{
-    visible = true,
-    ontop = false,
-    height = dpi(200),
-    width = dpi(500),
-    bg = beautiful.col_transparent,
-    type = "dock",
-    border_width = dpi(4),
-    border_color = beautiful.border_focus,
-    shape =  shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
-    screen = screen.primary,
-})
+
 
 local player_works = false
+
+
 
 local function button(symb, command)
   icon = icons.wbi(symb, 30)
@@ -153,7 +143,8 @@ local control_panel = {
 }
 
 
-player_dock:setup {
+local player = wibox.widget(
+{
   {
     {
       {
@@ -178,8 +169,10 @@ player_dock:setup {
     layout = wibox.layout.flex.vertical,
     id = "body"
   },
-  layout = wibox.layout.flex.vertical
-}
+  widget = wibox.container.background,
+  forced_width = dpi(100),
+  forced_height = dpi(200),
+})
 
 local function shorting(text)
   if #text > 30 then
@@ -187,7 +180,6 @@ local function shorting(text)
   end
   return text
 end
-
 awesome.connect_signal("player::metadata",
 function(status, title, album, artist, art_link)
 
@@ -207,7 +199,7 @@ function(status, title, album, artist, art_link)
     artist_val.text = shorting(artist)
     awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
       function()
-        local imbox = player_dock:get_children_by_id("art-box")[1].art
+        local imbox = player:get_children_by_id("art-box")[1].art
         imbox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
       end)
     else
@@ -218,5 +210,4 @@ function(status, title, album, artist, art_link)
 
 end)
 
-awful.placement.bottom_right(player_dock, {honor_workarea=true, margins={bottom = 10, right = 10}})
-return player_dock
+return player
