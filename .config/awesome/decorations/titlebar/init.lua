@@ -22,8 +22,6 @@ client.connect_signal("request::titlebars", function(c)
         end)
     )
 
-    
-
 
     awful.titlebar(c, { position = "top", size = dpi(36)}) : setup {
         layout = wibox.layout.align.horizontal,
@@ -77,11 +75,11 @@ client.connect_signal("request::titlebars", function(c)
                 layout = wibox.layout.fixed.horizontal,
                 spacing = dpi(7)
             },
-            
+
             widget = wibox.container.margin,
             left = dpi(6),
         },
-        
+
         { -- Middle
             { -- Title
                 layout  = wibox.layout.flex.horizontal
@@ -95,6 +93,12 @@ client.connect_signal("request::titlebars", function(c)
         widget = wibox.container.background,
         buttons = nil
     }
+
+    if show_titlebar then
+      awful.titlebar.show(c)
+    else
+      awful.titlebar.hide(c)
+    end
 end)
 
 -- Enable sloppy focus, so that focus follows mouse.

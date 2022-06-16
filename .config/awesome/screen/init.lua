@@ -8,6 +8,7 @@ local bwf           = require("widgets.battery")
 local dpi           = beautiful.xresources.apply_dpi
 local shape_utils   = require("commons.shape")
 local wbm           = require("widgets.wibar_monitor")
+local wb_player           = require("widgets.wibar_player")
 local naughty = require("naughty")
 
 -- {{{ Menu
@@ -154,7 +155,25 @@ awful.screen.connect_for_each_screen(function(s)
     s.focused_task = awful.widget.tasklist {
         screen  = s,
         filter  = awful.widget.tasklist.filter.focused,
-        buttons = tasklist_buttons
+        buttons = tasklist_buttons,
+        widget_template = {
+        {
+            {
+                {
+                    id     = 'text_role',
+                    widget = wibox.widget.textbox,
+                    align  = 'center',
+                    valign = 'center',
+                },
+                layout = wibox.layout.fixed.horizontal,
+            },
+            left  = 10,
+            right = 10,
+            widget = wibox.container.margin
+        },
+        shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+        widget = wibox.container.background,
+      }
     }
 
     -- Create the wibox
@@ -189,18 +208,44 @@ awful.screen.connect_for_each_screen(function(s)
         {
           layout = wibox.layout.align.horizontal,
           { -- Left widgets
-              widget = wibox.container.background,
-              bg = beautiful.pallete_c3,
-              shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+              layout = wibox.layout.fixed.horizontal,
               {
-                layout = wibox.layout.fixed.horizontal,
-                s.mytaglist,
-                s.mypromptbox
+                widget = wibox.container.background,
+                bg = beautiful.pallete_c3,
+                shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                {
+                  layout = wibox.layout.fixed.horizontal,
+                  s.mytaglist,
+                  -- s.mypromptbox,
+                },
+              },
+              {
+                widget = wibox.container.margin,
+                left = dpi(10),
+                {
+                  {
+                    layout = wibox.layout.fixed.horizontal,
+                    s.focused_task,
+                  },
+                  widget = wibox.container.background,
+                  bg = beautiful.pallete_c3,
+                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                }
               }
           },
           nil,
           { -- Right widgets
               layout = wibox.layout.fixed.horizontal,
+              {
+                widget = wibox.container.margin,
+                right = dpi(10),
+                {
+                  widget = wibox.container.background,
+                  bg = beautiful.pallete_c3,
+                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  wb_player
+                }
+              },
               {
                 widget = wibox.container.margin,
                 right = dpi(10),

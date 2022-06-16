@@ -25,6 +25,26 @@ commands.brightness =
   zsh -c "brightnessctl i | head -2 | tail -1 | awk '{printf $4}' | grep -o '[0-9]\+'"
 ]]
 
+commands.top_ps =
+[[
+  zsh -c "ps -eo pid,cmd,%mem,%cpu --sort=-%cpu | head -6 | tail -5"
+]]
+
+commands.player_toggle =
+[[
+  zsh -c "playerctl play-pause"
+]]
+
+commands.player_next =
+[[
+  zsh -c "playerctl next"
+]]
+
+commands.player_prev =
+[[
+  zsh -c "playerctl previous"
+]]
+
 commands.set_svol = function(audio_val)
   return "amixer set Master " .. audio_val .. "%"
 end

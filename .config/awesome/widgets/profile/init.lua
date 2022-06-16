@@ -34,10 +34,11 @@ end
 
 local profile_dock = wibox.widget(
   {
-        {
+    {
+      nil,
       profile.pic(100, 100, shape_utils.circle(dpi(350))),
       profile.name(32),
-      layout = wibox.layout.fixed.vertical
+      layout = wibox.layout.align.vertical
     },
     widget = wibox.container.background,
     forced_width = dpi(300),

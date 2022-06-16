@@ -18,7 +18,8 @@ local menubar = require("menubar")
 require("awful.hotkeys_popup.keys")
 
 home_folder        = os.getenv("HOME")
-user        = os.getenv("USER")
+user               = os.getenv("USER")
+show_titlebar      = false
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -64,7 +65,7 @@ require("layout")
 
 
 
-require("bindings")
+
 require("screen")
 
 
@@ -216,6 +217,7 @@ watchdogs = require("watchdogs")
 watchdogs.init()
 require("commons.playerctl")
 require("widgets.dashboard")
+require("bindings")
 
 -- Autostart
 awful.spawn.with_shell("picom")

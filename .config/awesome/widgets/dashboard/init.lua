@@ -13,18 +13,17 @@ local monitor_panel = require("widgets.monitor_panel")
 local sliders_set = require("widgets.sliders_set")
 local awful = require("awful")
 
-local dashboard = wibox(
+dashboard = wibox(
 {
-    visible = true,
-    ontop = false,
-    height = dpi(800),
-    width = dpi(1300),
+    visible = false,
+    ontop = true,
+    height = dpi(900),
+    width = dpi(800),
     bg = beautiful.bg_normal,
     type = "dashboard",
     border_width = dpi(4),
     border_color = beautiful.border_focus,
     shape =  shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
-    screen = screen.primary,
 })
 
 
@@ -45,15 +44,20 @@ local function create_card(content)
 end
 dashboard:setup {
   {
-    layout = wibox.layout.flex.vertical,
+    layout = wibox.layout.flex.horizontal,
+
     create_card(profile),
-    create_card(sliders_set)
+    create_card(player),
   },
   {
-    layout = wibox.layout.flex.vertical,
-    create_card(player),
+    layout = wibox.layout.flex.horizontal,
+
+    create_card(sliders_set),
+  },
+  {
+    layout = wibox.layout.flex.horizontal,
     create_card(monitor_panel)
   },
-  layout = wibox.layout.flex.horizontal
+  layout = wibox.layout.flex.vertical
 }
 awful.placement.centered(dashboard, {honor_workarea=true})

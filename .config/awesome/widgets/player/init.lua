@@ -5,11 +5,11 @@ local dpi         = beautiful.xresources.apply_dpi
 local gears       = require("gears")
 local icons       = require("commons.icons")
 local shape_utils = require("commons.shape")
-local spotify     = require("commons.spotify")
+local commands     = require("commons.commands")
 
 
 
-local player_works = false
+player_works = false
 
 
 
@@ -55,7 +55,7 @@ local text_metadata = {
     {
       tittle_label,
       widget = wibox.container.margin,
-      margins = dpi(5)
+      margins = dpi(3)
 
     },
     tittle_val,
@@ -65,7 +65,7 @@ local text_metadata = {
     {
       album_label,
       widget = wibox.container.margin,
-      margins = dpi(5)
+      margins = dpi(3)
 
     },
     album_val,
@@ -75,7 +75,7 @@ local text_metadata = {
     {
       artist_label,
       widget = wibox.container.margin,
-      margins = dpi(5)
+      margins = dpi(3)
 
     },
     artist_val,
@@ -88,7 +88,7 @@ local text_metadata = {
 local toggle_btn = button("", function()
     local command = ""
     if player_works then
-      command = spotify.commands.toggle
+      command = commands.player_toggle
     else
       command = "spotify"
     end
@@ -104,7 +104,7 @@ local control_panel = {
       button("", function()
         local command = ""
         if player_works then
-          command = spotify.commands.prev
+          command = commands.player_prev
         else
           command = "spotify"
         end
@@ -126,7 +126,7 @@ local control_panel = {
       button("", function()
         local command = ""
         if player_works then
-          command = spotify.commands.next
+          command = commands.player_next
         else
           command = "spotify"
         end
@@ -175,11 +175,12 @@ local player = wibox.widget(
 })
 
 local function shorting(text)
-  if #text > 30 then
-    text = text:sub(1, 27) .. "..."
+  if #text > 15 then
+    text = text:sub(1, 15) .. "..."
   end
   return text
 end
+
 awesome.connect_signal("player::metadata",
 function(status, title, album, artist, art_link)
 

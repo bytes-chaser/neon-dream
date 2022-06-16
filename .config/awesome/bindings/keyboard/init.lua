@@ -2,6 +2,8 @@ local gears         = require("gears")
 local awful         = require("awful")
 local hotkeys_popup = require("awful.hotkeys_popup")
 local beautiful     = require("beautiful")
+local naughty       = require("naughty")
+
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -68,10 +70,35 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+    awful.key({ modkey,           }, "space", function ()
+      awful.layout.inc( 1)
+      naughty.notify({
+                       title = "Layout Change",
+                       text = tostring(awful.layout.getname()) })
+                    end,
               {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+    awful.key({ modkey, "Shift"   }, "space", function ()
+      awful.layout.inc(-1)
+      naughty.notify({
+                       title = "Layout Change",
+                       text = tostring(awful.layout.getname()) })
+    end,
               {description = "select previous", group = "layout"}),
+    awful.key({ modkey }, "t", function ()
+                      local c = client.focus
+                      if c then
+                        awful.titlebar.toggle(c)
+                      end
+                   end,
+              {description = "focused client titlebar visibility toggle", group = "layout"}),
+
+  awful.key({ modkey, "Shift" }, "t", function ()
+                    for _, c in ipairs(client.get()) do
+                        awful.titlebar.toggle(c)
+                    end
+                    show_titlebar = not show_titlebar
+                 end,
+            {description = "all clients titlebar visibility toggle", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -99,16 +126,14 @@ globalkeys = gears.table.join(
 
       -- Stats
       awful.key({ modkey, "Control" }, "s", function()
-        if(monitor_dock) then
-          monitor_dock.ontop = not monitor_dock.ontop
-          if monitor_dock.ontop then
-            monitor_dock.bg = beautiful.pallete_c3
-          else
-            monitor_dock.bg = beautiful.col_transparent
-          end
+        if(dashboard) then
+          dashboard.visible = not dashboard.visible
         end
        end,
-      {description = "show stats", group = "panels"})
+      {description = "show dashboard", group = "panels"}),
+
+      awful.key({}, "Print", function () awful.util.spawn("flameshot screen") end,
+      {description = "screenshot", group = "runners"})
 )
 
 -- Set keys
