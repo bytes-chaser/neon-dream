@@ -1,10 +1,11 @@
-local awful       = require("awful")
+local awful     = require("awful")
 local wibox     = require("wibox")
 local beautiful = require("beautiful")
 local dpi       = beautiful.xresources.apply_dpi
 local gears     = require("gears")
 
 local factory = {}
+
 factory.create = function(min, max)
   return wibox.widget {
       bar_shape           = gears.shape.rounded_rect,

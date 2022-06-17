@@ -1,17 +1,15 @@
-local awful       = require("awful")
-
-local wibox     = require("wibox")
-local beautiful = require("beautiful")
-local dpi       = beautiful.xresources.apply_dpi
-local gears     = require("gears")
-local shape_utils = require("commons.shape")
-local commands = require("commons.commands")
-local profile = require("widgets.profile")
-local player = require("widgets.player")
-local slider_factory = require("widgets.control_slider")
-local monitor_panel = require("widgets.monitor_panel")
-local sliders_set = require("widgets.sliders_set")
-local awful = require("awful")
+local awful           = require("awful")
+local wibox           = require("wibox")
+local beautiful       = require("beautiful")
+local dpi             = beautiful.xresources.apply_dpi
+local gears           = require("gears")
+local shape_utils     = require("commons.shape")
+local commands        = require("commons.commands")
+local profile         = require("widgets.profile")
+local player          = require("widgets.player")
+local slider_factory  = require("widgets.control_slider")
+local monitor_panel   = require("widgets.monitor_panel")
+local sliders_set     = require("widgets.sliders_set")
 
 dashboard = wibox(
 {

@@ -51,7 +51,7 @@ beautiful.init("/home/alex/.config/awesome/theme/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nano"
+editor = os.getenv("EDITOR") or "nvim2"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -73,10 +73,10 @@ require("screen")
 -- Bind all key numbers to tags.
 -- Be careful: we use keycodes to make it work on any keyboard layout.
 -- This should map on the top row of your keyboard, usually 1 to 9.
-for i = 1, 9 do
+for i = 1, 3 do
     globalkeys = gears.table.join(globalkeys,
         -- View tag only.
-        awful.key({ modkey }, "#" .. i + 9,
+        awful.key({ modkey }, "#" .. i + 912,
                   function ()
                         local screen = awful.screen.focused()
                         local tag = screen.tags[i]

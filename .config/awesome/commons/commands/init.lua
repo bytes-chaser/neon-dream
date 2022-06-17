@@ -2,12 +2,12 @@
 local commands = {}
 commands.ram =
 [[
-    bash -c "free -m | grep Mem: | awk '{printf \"#%d__%d#\", $2, $3}'"
+    zsh -c "free -m | grep Mem: | awk '{printf \"#%d__%d#\", $2, $3}'"
 ]]
 
 commands.cpu =
 [[
-    bash -c "top -bn2 | grep '%Cpu' | tail -1 | grep -P '(....|...) id,'|awk '{print 100-$8}'"
+    zsh -c "top -bn2 | grep '%Cpu' | tail -1 | grep -P '(....|...) id,'|awk '{print 100-$8}'"
 ]]
 
 commands.pow =
@@ -52,4 +52,5 @@ end
 commands.set_brightness = function(brightness_val)
   return "brightnessctl s " .. brightness_val .. "%"
 end
+
 return commands

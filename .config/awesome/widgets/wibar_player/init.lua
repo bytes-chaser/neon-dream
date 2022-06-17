@@ -1,11 +1,11 @@
-local awful     = require("awful")
+local awful         = require("awful")
 local beautiful     = require("beautiful")
-local dpi       = beautiful.xresources.apply_dpi
-
-local wibox   = require("wibox")
-local gears   = require("gears")
-local icons = require("commons.icons")
-local commands = require("commons.commands")
+local dpi           = beautiful.xresources.apply_dpi
+local gears         = require("gears")
+local wibox         = require("wibox")
+local icons         = require("commons.icons")
+local commands      = require("commons.commands")
+local text_format   = require("commons.text_format")
 
 local text_player = wibox.widget{
     text   = "Nothing is played",
@@ -24,14 +24,14 @@ end
 
 local prev_btn = button("", function()
   local command = ""
+
   if player_works then
     command = commands.player_prev
   else
     command = "spotify"
   end
-  awful.spawn.easy_async(command,
-  function(stdout, stderr, reason, exit_code)
-  end)
+
+  awful.spawn.with_shell(command)
 end)
 
 local toggle_btn = button("", function()
@@ -41,9 +41,7 @@ local toggle_btn = button("", function()
     else
       command = "spotify"
     end
-    awful.spawn.easy_async(command,
-    function(stdout, stderr, reason, exit_code)
-    end)
+    awful.spawn.with_shell(command)
   end)
 
 
@@ -54,9 +52,7 @@ local next_btn = button("", function()
     else
       command = "spotify"
     end
-    awful.spawn.easy_async(command,
-    function(stdout, stderr, reason, exit_code)
-    end)
+    awful.spawn.with_shell(command)
   end)
 
   local wibox_player = wibox.widget{
@@ -96,13 +92,6 @@ local next_btn = button("", function()
     }
   }
 
-  local function shorting(text)
-    if #text > 35 then
-      text = text:sub(1, 35) .. "..."
-    end
-    return text
-  end
-
   awesome.connect_signal("player::metadata",
   function(status, title, album, artist, art_link)
 
@@ -113,12 +102,13 @@ local next_btn = button("", function()
     elseif status:match("Playing") then
       toggle_btn.text = ""
     end
+
     if player_works then
-      text_player.text = shorting(title .. " - " .. artist)
+      text_player.text = text_format.shorting(title .. " - " .. artist, 35)
       wibox_player.visible = true
-      else
-        text_player.text = "Nothing is played"
-        wibox_player.visible = false
+    else
+      text_player.text = "Nothing is played"
+      wibox_player.visible = false
     end
 
   end)
