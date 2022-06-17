@@ -49,7 +49,7 @@ color_schemes:
     # Cursor colors
     cursor:
       text: '#1E1E2E'
-      cursor: '#F5E0DC'
+      cursor: '#96eef2'
     vi_mode_cursor:
       text: '#1E1E2E'
       cursor: '#B4BEFE'
@@ -77,8 +77,8 @@ color_schemes:
 
     # Selection colors
     selection:
-      text: '#1E1E2E' # base
-      background: '#F5E0DC' # rosewater
+      text: '#d17bed' # base
+      background: '#96eef2' # rosewater
 
     # Normal colors
     normal:
