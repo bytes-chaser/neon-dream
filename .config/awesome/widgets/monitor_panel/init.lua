@@ -5,10 +5,11 @@ local gears       = require("gears")
 local dpi         = beautiful.xresources.apply_dpi
 local pb          = require("widgets.progress_bar")
 local shape_utils = require("commons.shape")
-local mb          = require("widgets.monitor_stat_bar")
+local mb          = require("widgets.monitor_stat_bar_std")
 
 
 local parameters = {}
+parameters.max_val = 100
 
 local ram = mb.create("", parameters)
 local cpu = mb.create("", parameters)

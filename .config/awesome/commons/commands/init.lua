@@ -45,6 +45,10 @@ commands.player_prev =
   zsh -c "playerctl previous"
 ]]
 
+commands.shutdown = 'sudo shutdown now'
+
+commands.reboot = 'sudo reboot'
+
 commands.set_svol = function(audio_val)
   return "amixer set Master " .. audio_val .. "%"
 end
