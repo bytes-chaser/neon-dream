@@ -1,9 +1,9 @@
-local wibox     = require("wibox")
-local gears    = require("gears")
-local commands = require("commons.commands")
-local icons = require("commons.icons")
-local slider_factory = require("widgets.control_slider")
-local awful = require("awful")
+local awful           = require("awful")
+local gears           = require("gears")
+local wibox           = require("wibox")
+local commands        = require("commons.commands")
+local icons           = require("commons.icons")
+local slider_factory  = require("widgets.control_slider")
 
 local sun_icon = icons.wbi("", 32)
 

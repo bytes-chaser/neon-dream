@@ -57,4 +57,24 @@ commands.set_brightness = function(brightness_val)
   return "brightnessctl s " .. brightness_val .. "%"
 end
 
+commands.get_disk_root_info =
+  [[
+    zsh -c "df -B 1MB / | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
+  ]]
+
+commands.get_disk_boot_info =
+  [[
+    zsh -c "df -B 1MB /boot | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
+  ]]
+
+commands.get_disk_home_info =
+  [[
+    zsh -c "df -B 1MB /home | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
+  ]]
+
+commands.temp =
+  [[
+    zsh -c "sensors | grep Package | awk '{printf \"%d\", $4}'"
+  ]]
+
 return commands

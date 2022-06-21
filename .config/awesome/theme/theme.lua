@@ -46,7 +46,7 @@ theme.pbar_width        = 30
 theme.pbar_margin       = 5
 theme.pbar_active_color = theme.pallete_c1
 theme.pbar_bg_color     = theme.pallete_c5
-theme.pbar_icon_size    = 32
+theme.pbar_icon_size    = 16
 
 
 -- Battery indicator widget settings

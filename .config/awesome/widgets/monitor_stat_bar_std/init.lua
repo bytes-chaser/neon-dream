@@ -15,14 +15,13 @@ end
 mb.create = function(icon, parameters)
   local pbar = wibox.widget {
     max_value     = parameters.max_val,
+    min_value     = 0,
     value         = 0,
-    forced_height = 5,
-    forced_width  = 100,
     shape         = gears.shape.rounded_bar,
     bar_shape     = gears.shape.rounded_bar,
     background_color = beautiful.bg_normal,
     color = beautiful.bg_urgent,
-    margins = 25,
+    margins = 15,
     paddings = 3,
     border_width  = 2,
     bar_border_width = 1,

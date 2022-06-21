@@ -9,6 +9,7 @@ local profile         = require("widgets.profile")
 local player          = require("widgets.player")
 local slider_factory  = require("widgets.control_slider")
 local monitor_panel   = require("widgets.monitor_panel")
+local disk_monitor_panel   = require("widgets.disk_monitor_panel")
 local sliders_set     = require("widgets.sliders_set")
 
 dashboard = wibox(
@@ -40,6 +41,8 @@ local function create_card(content)
     margins = dpi(10),
   }
 end
+
+
 dashboard:setup {
   {
     layout = wibox.layout.flex.horizontal,
@@ -54,7 +57,8 @@ dashboard:setup {
   },
   {
     layout = wibox.layout.flex.horizontal,
-    create_card(monitor_panel)
+    create_card(monitor_panel),
+    create_card(disk_monitor_panel)
   },
   layout = wibox.layout.flex.vertical
 }
