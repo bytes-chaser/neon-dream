@@ -5,6 +5,7 @@
 
 # Editors
 * neovim
+* Atom
 
 # Security
 * sudo
@@ -35,6 +36,9 @@
 
 #Audio
 alsa-utils
+pulseaudio
+playerctl
+spotify
 
 # Windows Servers
 * xorg
@@ -55,13 +59,16 @@ alsa-utils
 # Browser
 * firefox
 
+# Screenshots
+* flameshot
+
 # File Managers
 * ranger
+
 ## Preview Tools
 * atool
 * elinks
 * ueberzugls
-
 * poppler
 * ffmpegthumbnailer
 
