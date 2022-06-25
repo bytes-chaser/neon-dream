@@ -32,6 +32,10 @@
     <td><b>Shell</b></td>
     <td><a href="https://www.zsh.org/" target="_blank">zsh</a></td>
   <tr>
+    <tr>
+    <td><b>Apps Launcher</b></td>
+    <td><a href="https://github.com/davatorium/rofi" target="_blank">rofi</a></td>
+  <tr>
   <tr>
     <td><b>System Info</b></td>
     <td><a href="https://github.com/anhsirk0/fetch-master-6000" target="_blank">fm6000</a></td>
@@ -87,6 +91,104 @@ nvim configuration icnludes plugins configuration using:
 
 ## Awesome
 Awesome configuration based on default awesome config. All lua widgets are custom-made.
+
+### Dependencies
+<table>
+  <tr>
+    <td><b>zsh</b></td>
+    <td>default shell</a></td>
+  <tr>
+  <tr>
+    <td><b>rofi</b></td>
+    <td>Keybindings includes rofi calls</a></td>
+  <tr>
+  <tr>
+    <td><b>flameshot</b></td>
+    <td>Keybindings includes flameshot calls for making screenshots</a></td>
+  <tr>
+  <tr>
+    <td><b>playerctl</b></td>
+    <td>Used for player widgets implementations</a></td>
+  <tr>
+</table>
+
 ### Widgets
 
+#### Decorations
+By default decorations are hidden. To toggle active client decorations visibility use **Mod + T** key binding. It will not affect other opened clients and  new clients. **Mod  + Ctrl + T** key binding will toggle decoration visibility for all opened and new spawned clients 
+Decorations buttons has 5 buttons. Each of them has icon that becoming visible on hover. For last 4 buttons icon can changing depending on client state.
+Buttons:
+1. Close
+2. Maximize/Unmaximize
+3. Toggle floating mode
+4. Toggle sticky
+5. Toggle ontop
 
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/decorations.png)
+
+#### Bar (wibox)
+Transparent bar with rounded widget subsections.
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/bar.png)
+
+##### Tag Switch
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/tags.png)
+
+##### Active Client Title
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/active_client_title.png)
+##### Bar player
+Minimal version of dashboard player
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/active_client_title.png)
+
+##### CPU graph
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/cpu_graph.png)
+
+##### RAM graph
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/ram_graph.png)
+
+##### Systray
+Includes aweomewm default time and layout widgets. Has additional battery widget
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/systray.png)
+
+###### Battery
+Shows battery charge level on hover. Icon is changing depends on battery charge level.
+On click opening shutdown window
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/battery.png)
+
+###### Shutdown Window
+Simple controls for shutdown or restarting the system.
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/shutdown.png)
+
+#### Dashboard
+To show/hide dahsboard use **Mod + Ctrl + S** keys binding
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/dashboard.png)
+
+Dasboard includes:
+##### Profile
+Widgets loading active user name and profile image from **~/profile.png**
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/profile.png)
+##### Player
+Loading current active playing metadata (title, artist, album, image), has simple controls. Tested so far with a spotify and youtube.
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/player.png)
+##### Sliders
+Simple controls for system volume and brightness change.
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/sliders.png)
+##### System Monitor
+Progreess bars representing current system status including:
+* Memory usage
+* CPU load
+* Battery charge level
+* Temprature
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/sys-stat.png)
+
+##### Disks Monitor:
+Progreess bars representing system mounted disks usage
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/disk-stat.png)
