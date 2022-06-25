@@ -49,6 +49,7 @@ editor_cmd = terminal .. " -e " .. editor
 -- Default modkey.
 modkey = "Mod4"
 
+require("bindings")
 require("layout")
 
 
@@ -205,7 +206,7 @@ watchdogs = require("watchdogs")
 watchdogs.init()
 require("commons.playerctl")
 require("widgets.dashboard")
-require("bindings")
+
 
 -- Autostart
 awful.spawn.with_shell("picom")

@@ -9,7 +9,7 @@ local mb          = require("widgets.monitor_stat_bar_std")
 
 local parameters = {}
 parameters.max_val = 100
-parameters.margin = 40
+parameters.margin = 25
 
 local root = mb.create("root", parameters)
 local boot = mb.create("boot", parameters)

@@ -113,16 +113,12 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Rofi Run
-    awful.key({ modkey },            "r",     function () awful.util.spawn("rofi -show run") end,
+    awful.key({ modkey },  "r",     function () awful.util.spawn("rofi -show run'") end,
               {description = "open rofi run", group = "launcher"}),
 
     -- Rofi Window
-    awful.key({ "Control" },            "Tab",     function () awful.util.spawn("rofi -show window") end,
+    awful.key({ "Control" },  "Tab",     function () awful.util.spawn("rofi -show window") end,
                {description = "open rofi window", group = "launcher"}),
-
-    -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end,
-              {description = "show the menubar", group = "launcher"}),
 
       -- Stats
       awful.key({ modkey, "Control" }, "s", function()
@@ -132,7 +128,7 @@ globalkeys = gears.table.join(
        end,
       {description = "show dashboard", group = "panels"}),
 
-      awful.key({}, "Print", function () awful.util.spawn("flameshot screen") end,
+      awful.key({ modkey }, "p", function () awful.util.spawn("flameshot screen") end,
       {description = "screenshot", group = "runners"})
 )
 

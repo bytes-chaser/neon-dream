@@ -75,6 +75,12 @@ client.connect_signal("request::titlebars", function(c)
                 layout = wibox.layout.fixed.horizontal,
                 spacing = dpi(7)
             },
+            {
+              buttons = globalkeys,
+              font = beautiful.ont,
+              align = "center",
+              widget = wibox.widget.textbox("")
+            },
 
             widget = wibox.container.margin,
             left = dpi(6),
