@@ -97,7 +97,7 @@ local text_metadata = {
 
 local on_player_pause_cmd = "spotify"
 
-local prv_btn = button("", create_btn_callback(commands.player_prevm, on_player_pause_cmd))
+local prv_btn = button("", create_btn_callback(commands.player_prev, on_player_pause_cmd))
 local tgl_btn = button("", create_btn_callback(commands.player_toggle, on_player_pause_cmd))
 local nxt_btn = button("", create_btn_callback( commands.player_next, on_player_pause_cmd))
 
