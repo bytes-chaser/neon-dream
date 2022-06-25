@@ -140,13 +140,13 @@ Transparent bar with rounded widget subsections.
 ##### Bar player
 Minimal version of dashboard player
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/active_client_title.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/bar_player.png)
 
 ##### CPU graph
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/cpu_graph.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/graph.png)
 
 ##### RAM graph
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/ram_graph.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/ram-graph.png)
 
 ##### Systray
 Includes aweomewm default time and layout widgets. Has additional battery widget
