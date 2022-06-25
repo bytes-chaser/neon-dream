@@ -60,6 +60,15 @@
     <td><b>Visualizer</b></td>
     <td><a href="https://github.com/karlstav/cava" target="_blank">cava</a></td>
   <tr>
+  <tr>
+    <td><b>Text Font</b></td>
+    <td><a href="https://www.jetbrains.com/lp/mono/" target="_blank">JetBrains Mono</a></td>
+  <tr>
+  <tr>
+    <td><b>Icons Font</b></td>
+    <td><a href="https://fontawesome.com/icons" target="_blank">Font Awesome 6 Free</a></td>
+  <tr>
+
 </table>
 
 
