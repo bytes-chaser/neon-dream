@@ -209,4 +209,4 @@ require("widgets.dashboard")
 
 
 -- Autostart
-awful.spawn.with_shell("picom")
+awful.spawn.with_shell("picom --experimental-backends")
