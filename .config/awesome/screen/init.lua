@@ -7,9 +7,12 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local bwf           = require("widgets.battery")
 local dpi           = beautiful.xresources.apply_dpi
 local shape_utils   = require("commons.shape")
+local icons   = require("commons.icons")
 local wbm           = require("widgets.wibar_monitor")
 local wb_player           = require("widgets.wibar_player")
 local naughty = require("naughty")
+local notif_center = require("widgets.notification_center")
+
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -184,20 +187,76 @@ awful.screen.connect_for_each_screen(function(s)
       height = dpi(50)
     })
 
-    local battery_widget = bwf.create({size = 20})
 
     local wbm_cpu = wbm.create("CPU: ")
     awesome.connect_signal("sysstat::cpu", function(cpu_val)
         wbm_cpu.wbm_body.wbm_labels.wbm_valtext.text = cpu_val .. '%'
-        wbm_cpu.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(cpu_val, 0)
+        wbm_cpu.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(cpu_val, 1)
     end)
 
     local wbm_ram = wbm.create("RAM: ")
     awesome.connect_signal("sysstat::ram", function(used, total)
         local label_val = math.floor(100 * (used / total))
         wbm_ram.wbm_body.wbm_labels.wbm_valtext.text = label_val .. '%'
-        wbm_ram.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(label_val, 0)
+        wbm_ram.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(label_val, 1)
     end)
+
+
+
+    s.notif = awful.wibar {
+        position = "right",
+        screen   = s,
+        width    = dpi(400),
+        visible = false
+    }
+
+
+    local delete_all_notif = wibox.widget{
+          text   = 'Delete All',
+          font = beautiful.font,
+          align = "center",
+          opacity = 1,
+          widget = wibox.widget.textbox,
+    }
+
+    delete_all_notif:buttons(gears.table.join(awful.button({ }, 1, function()
+      notif_center:reset()
+    end)))
+
+    s.notif:setup {
+      layout = wibox.layout.fixed.vertical,
+      {
+        bg = beautiful.palette_c7,
+        widget = wibox.container.background,
+        {
+          widget = wibox.container.margin,
+          margins = dpi(10),
+          {
+                text   = 'Notifications',
+                font = beautiful.font_famaly .. '20',
+                align = "center",
+                opacity = 1,
+                widget = wibox.widget.textbox,
+          }
+        },
+      },
+      delete_all_notif,
+      notif_center
+    }
+
+    local notif_icon = icons.wbi("", 20)
+
+    local notif_icon_box = {
+      notif_icon,
+      margins = 10,
+      widget  = wibox.container.margin
+    },
+
+    notif_icon:buttons(gears.table.join(awful.button({ }, 1, function()
+      s.notif.visible = not s.notif.visible
+    end)))
+
+   -- s.notif:bind_to_widget(notif_icon)
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -274,6 +333,7 @@ awful.screen.connect_for_each_screen(function(s)
                   layout = wibox.layout.fixed.horizontal,
                   mytextclock,
                   bwf.create({size = 20}),
+                  notif_icon_box,
                   mykeyboardlayout,
                   wibox.widget.systray(),
                   -- s.mylayoutbox,
@@ -282,5 +342,9 @@ awful.screen.connect_for_each_screen(function(s)
           }
         }
     }
+
+
+
 end)
+  naughty.notify({ title = "Achtung!", message = 'heeelllooo', timeout = 5 })
 -- }}}

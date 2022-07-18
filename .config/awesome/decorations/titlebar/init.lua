@@ -11,16 +11,14 @@ local titlebar_buttons  = require("decorations.titlebar.buttons")
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
-    local buttons = gears.table.join(
+    local buttons = {
         awful.button({ }, 1, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.move(c)
+            c:activate { context = "titlebar", action = "mouse_move"  }
         end),
         awful.button({ }, 3, function()
-            c:emit_signal("request::activate", "titlebar", {raise = true})
-            awful.mouse.client.resize(c)
-        end)
-    )
+            c:activate { context = "titlebar", action = "mouse_resize"}
+        end),
+    }
 
 
     awful.titlebar(c, { position = "top", size = dpi(36)}) : setup {
@@ -76,8 +74,7 @@ client.connect_signal("request::titlebars", function(c)
                 spacing = dpi(7)
             },
             {
-              buttons = globalkeys,
-              font = beautiful.ont,
+              font = beautiful.font,
               align = "center",
               widget = wibox.widget.textbox("")
             },

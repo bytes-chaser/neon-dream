@@ -51,7 +51,10 @@ battery_widget_factory.create = function(parameters)
       widget  = wibox.widget.textbox,
   }
 
-  local battery_icon_t = awful.tooltip {}
+  local battery_icon_t = awful.tooltip {
+    ontop = true,
+    mode = 'mouse'
+  }
   battery_icon_t:add_to_object(battery_icon)
   battery_icon:connect_signal('mouse::enter', function()
     battery_icon_t.text = tostring(value) .. "%"
