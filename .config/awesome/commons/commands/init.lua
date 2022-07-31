@@ -27,7 +27,7 @@ commands.brightness =
 
 commands.top_ps =
 [[
-  zsh -c "ps -eo pid,cmd,%mem,%cpu --sort=-%cpu | head -6 | tail -5"
+  zsh -c "top -b|head -12 | tail -5 | awk '{printf \"#\" $12 \"-\" $9 \"__\" $10 \" \"}'"
 ]]
 
 commands.player_toggle =
@@ -45,6 +45,12 @@ commands.player_prev =
   zsh -c "playerctl previous"
 ]]
 
+commands.sync_packages =
+[[
+  zsh -c "sudo pacman -Sy ; yay -Sy"
+]]
+
+
 commands.shutdown = 'sudo shutdown now'
 
 commands.reboot = 'sudo reboot'
@@ -56,6 +62,28 @@ end
 commands.set_brightness = function(brightness_val)
   return "brightnessctl s " .. brightness_val .. "%"
 end
+
+commands.git_repos = function(scan_root)
+  return "find " .. scan_root .. " -name '.git'"
+end
+
+commands.git_repo_info = function(path)
+  return "git -C " .. path .. " remote show origin"
+end
+
+commands.get_files = function(path)
+  return "ls -l " .. path .. " | awk '{printf $9 \"\\n\"}'"
+end
+
+commands.delete_file = function(path)
+  return "rm " .. path
+end
+
+commands.get_text = function(path)
+  return "cat " .. path
+end
+
+commands.weather_info = 'curl https://api.weatherapi.com/v1/current.json?key=' .. os.getenv("WEATHER_API_COM_API_KEY") .. '&q=Tel-Aviv&aqi=no'
 
 commands.get_disk_root_info =
   [[
