@@ -65,8 +65,14 @@ end
 local make_hor_layout = function(l, v)
   return {
     make_metadata_margin(l),
-    v,
-    layout = wibox.layout.fixed.horizontal
+    {
+      layout = wibox.container.scroll.horizontal,
+      max_size = 100,
+      step_function = wibox.container.scroll.step_functions.nonlinear_back_and_forth,
+      speed = 100,
+      v
+    },
+    layout = wibox.layout.align.horizontal
   }
 end
 
@@ -109,38 +115,65 @@ local control_panel = {
   layout = wibox.layout.flex.horizontal
 }
 
-
-local player = wibox.widget(
-{
-  {
-    {
-      {
-        {
-          {
-              id = "art",
-              resize_allowed  = true,
-              widget = wibox.widget.imagebox,
-          },
-            widget = wibox.container.background,
-            forced_width = dpi(100),
-            forced_height = dpi(100),
-            id = "art-box"
-        },
-        margins = dpi(10),
-        widget = wibox.container.margin,
-      },
-      text_metadata,
-      layout = wibox.layout.align.horizontal,
-    },
-    control_panel,
-    layout = wibox.layout.flex.vertical,
-    id = "body"
+local filter_color_north = {
+	type = "linear",
+	from = { 0, 0 },
+	to = { 0, 280 },
+  stops = {
+    { 0, beautiful.palette_c6 .. "11" },
+    { 0.7, beautiful.palette_c6 .. "CC" },
+    { 0.8, beautiful.palette_c6 .. "DD" },
+    { 0.9, beautiful.palette_c6 .. "EE" },
+    { 1, beautiful.palette_c6 }
   },
-  widget = wibox.container.background,
-  forced_width = dpi(100),
-  forced_height = dpi(200),
+}
+
+local filter_color_east = {
+	type = "linear",
+	from = { 0, 0 },
+	to = { 0, 250 },
+  stops = {
+    { 0, beautiful.palette_c6 .. "11" },
+    { 0.7, beautiful.palette_c6 .. "CC" },
+    { 0.8, beautiful.palette_c6 .. "DD" },
+    { 0.9, beautiful.palette_c6 .. "EE" },
+    { 1, beautiful.palette_c6 }
+  },
+}
+
+local imagebox = wibox.widget({
+    id = "art",
+    resize = true,
+    widget = wibox.widget.imagebox,
 })
 
+local player = wibox.widget({
+    imagebox,
+    {
+      {
+        bg = filter_color_east,
+        widget = wibox.container.background
+      },
+      direction = "east",
+	    widget = wibox.container.rotate,
+    },
+    {
+      {
+        layout = wibox.layout.flex.vertical,
+        {
+            {
+              widget = wibox.container.background,
+            },
+            text_metadata,
+            layout = wibox.layout.flex.horizontal,
+        },
+        control_panel
+      },
+      bg = filter_color_north,
+      widget = wibox.container.background,
+    },
+    layout = wibox.layout.stack,
+  })
 
 awesome.connect_signal("player::metadata",
 function(status, title, album, artist, art_link)
@@ -156,13 +189,12 @@ function(status, title, album, artist, art_link)
   end
 
   if player_works then
-    tittle_val.text = text_format.shorting(title, 15)
-    album_val.text  = text_format.shorting(album, 15)
-    artist_val.text = text_format.shorting(artist, 15)
+    tittle_val.text = text_format.shorting(title, 30)
+    album_val.text  = text_format.shorting(album, 30)
+    artist_val.text = text_format.shorting(artist, 30)
     awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
       function()
-        local imbox = player:get_children_by_id("art-box")[1].art
-        imbox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
+        imagebox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
       end)
     else
       tittle_val.text = "Click"
