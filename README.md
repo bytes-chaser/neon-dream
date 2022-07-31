@@ -4,7 +4,7 @@
 </p>
 <br>
 
-<img width="50%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/collage.png" />
+<img width="50%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
 
 ## General Information
 <table>
@@ -31,6 +31,10 @@
   <tr>
     <td><b>Shell</b></td>
     <td><a href="https://www.zsh.org/" target="_blank">zsh</a></td>
+  <tr>
+    <tr>
+    <td><b>Prompt</b></td>
+    <td><a href="https://spaceship-prompt.sh/" target="_blank">Spaceship</a></td>
   <tr>
     <tr>
     <td><b>Apps Launcher</b></td>
@@ -75,10 +79,10 @@
 ## Additional Information
 
 ### zsh
-Confugured with [oh-my-zsh](https://ohmyz.sh/) framework. Theme [Agnoster](https://github.com/ohmyzsh/ohmyzsh/wiki/Themes#agnoster) with [custom color sheme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/oh-my-zsh/custom/themes).
+Confugured with [oh-my-zsh](https://ohmyz.sh/) framework and using [Starship Prompt](https://spaceship-prompt.sh/)
 
 ### Spotify
-Spotify client customized using [spicetify](https://github.com/spicetify/spicetify-cli). Client using [Dreary](https://github.com/spicetify/spicetify-themes/blob/master/THEMES.md#dreary) theme with a [custom color scheme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/spicetify/Themes/Dreary).
+Spotify client customized using [spicetify](https://github.com/spicetify/spicetify-cli). Client using [Dribbblish](https://github.com/spicetify/spicetify-themes/blob/master/THEMES.md#dribbblish) theme with a [custom color scheme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/spicetify/Themes/Dribbblish)
 
 ### nvim
 nvim configuration icnludes plugins configuration using:
@@ -121,9 +125,8 @@ Awesome configuration based on default awesome config. All lua widgets are custo
   <tr>
 </table>
 
-### Widgets
 
-#### Decorations
+### Decorations
 By default decorations are hidden. To toggle active client decorations visibility use **Mod + T** key binding. It will not affect other opened clients and  new clients. **Mod  + Ctrl + T** key binding will toggle decoration visibility for all opened and new spawned clients 
 Decorations buttons has 5 buttons. Each of them has icon that becoming visible on hover. For last 4 buttons icon can changing depending on client state.
 Buttons:
@@ -134,70 +137,57 @@ Buttons:
 5. Toggle ontop
 
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/decorations.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/decorations.png)
 
-#### Bar (wibox)
+### Main Bar
 Transparent bar with rounded widget subsections.
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/bar.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/bar.png)
+Includes:
+* Tag Switch
+* Left Bar Switch
+* Active Client Title (Becomes visible on any client focus)
+* Bar player  (Becomes visible on playing music/video only)
+* CPU usage history graph
+* RAM usage history graph
+* Systray (includes battery widget and notifications widget)
 
-##### Tag Switch
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/tags.png)
+### Battery
+Battery icon on systray shows battery charge level on hover event. Icon is changing depends on battery charge level.
+Battery click event triggers shutdown popup menu to open
 
-##### Active Client Title
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/shutdown.png)
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/active_client_title.png)
-##### Bar player
-Minimal version of dashboard player
+### Notifications
+Notification icon on systray. On click triggers notification menu to open
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/bar_player.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/notifications.png)
 
-##### CPU graph
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/graph.png)
+### Devtools bar
+Devtools bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + D**
+Includes:
+* Packages Update Monitor
+* Repositories Monitor
 
-##### RAM graph
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/ram-graph.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/dev.png)
 
-##### Systray
-Includes aweomewm default time and layout widgets. Has additional battery widget
+### User bar
+User bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + U**
+Includes:
+* User identifier
+* Weather inforamation
+* Audio Player
+* Control Sliders
+* Calendar
+* TODO List
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/systray.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/user.png)
 
-###### Battery
-Shows battery charge level on hover. Icon is changing depends on battery charge level.
-On click opening shutdown window
+### Statistics bar
+Statistics bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + S**
+Includes:
+* System State Monitor
+* Top Processes Monitor
+* Partitions Monitor
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/battery.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/stats.png)
 
-###### Shutdown Window
-Simple controls for shutdown or restarting the system.
-
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/shutdown.png)
-
-#### Dashboard
-To show/hide dahsboard use **Mod + Ctrl + S** keys binding
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/dashboard.png)
-
-Dasboard includes:
-##### Profile
-Widgets loading active user name and profile image from **~/profile.png**
-
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/profile.png)
-##### Player
-Loading current active playing metadata (title, artist, album, image), has simple controls. Tested so far with a spotify and youtube.
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/player.png)
-##### Sliders
-Simple controls for system volume and brightness change.
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/sliders.png)
-##### System Monitor
-Progreess bars representing current system status including:
-* Memory usage
-* CPU load
-* Battery charge level
-* Temprature
-
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/sys-stat.png)
-
-##### Disks Monitor:
-Progreess bars representing system mounted disks usage
-
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-1.0/disk-stat.png)
