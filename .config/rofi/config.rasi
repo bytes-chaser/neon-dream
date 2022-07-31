@@ -5,7 +5,7 @@ configuration {
 /*	yoffset: 0;*/
 /*	xoffset: 0;*/
 /*	fixed-num-lines: true;*/
-/*	show-icons: false;*/
+	show-icons: true;
 /*	terminal: "rofi-sensible-terminal";*/
 /*	ssh-client: "ssh";*/
 /*	ssh-command: "{terminal} -e {ssh-client} {host} [-p {port}]";*/
@@ -14,7 +14,7 @@ configuration {
 /*	run-shell-command: "{terminal} -e {cmd}";*/
 /*	window-command: "wmctrl -i -R {window}";*/
 /*	window-match-fields: "all";*/
-/*	icon-theme: ;*/
+	icon-theme: "ePapirus";
 /*	drun-match-fields: "name,generic,exec,categories,keywords";*/
 /*	drun-categories: ;*/
 /*	drun-show-actions: false;*/
@@ -141,55 +141,113 @@ configuration {
 }
 
 * {
-    background-normal: #2f2b3b;
-    background-alter:  #333170;
-    background-bar:    #2f2b3b;
-    foreground:        #96eef2;
-    hover:			       #9f3acf;
-    accent-active:		 #e0489e;
-    accent-normal:		 #48cce0;
+    pallete-c1: #FF77FF;
+    pallete-c2: #88FFFF;
+    pallete-c3: #1e1e2c;
+    pallete-c4: #FFAAFF;
+    pallete-c5: #333170;
+    palette-c6: #2a2939;
+    palette-c7: #33334a;
+    background-color: @pallete-c3;
+    text-color: @pallete-c4;
+    border-color: @pallete-c2;
 }
 
-#window {
-    background-color: @background-normal;
-    border:           1;
-    border-radius:    15px;
-    padding:          5;
+
+element-text,
+element-icon{
+  background-color: inherit;
+  text-color: inherit;
 }
 
-#listview {
-    spacing:      1% ;
-    scrollbar:    true;
-    padding:      2px 0px 0px ;
+window {
+  transparency: "real";
+  width: 45%;
+  border-radius: 15px;
+  background-color: #00000000;
+  border-color: @pallete-c3;
+  height: 70%;
 }
 
-#element {
-    border-radius:    15px;
-    padding:          0.5% ;
-    text-color:       @foreground;
+
+
+entry {
+  placeholder: "Search";
+  placeholder-color: #81a1c1;
+  text-color: #81a1c1;
+  expand: true;
+  padding: 2.0%;
+  border: 2px;
+  border-radius: 50%;
 }
 
-#element.normal.normal {
-    background-color: @background-normal;
+inputbar {
+  children: [entry];
+  background-image: url("background.png");
+  expand: false;
+  border-radius: 10px 10px 0 0px;
+  margin: 0 0 20px 0;
+  padding: 45px 20px 20px 20px;
 }
 
-#element.normal.active {
-    background-color: @accent-normal;
-    text-color:       @accent-active;
+listview {
+  columns: 3;
+  lines: 2;
+  cycle: false;
+  dynamic: true;
+  layout: vertical;
+  scrollbar: true;
+  border-color: @pallete-c2;
 }
+
+mainbox {
+  children: [inputbar,listview];
+}
+
+element {
+  orientation: horizontal;
+  padding: 2% 2% 2% 0;
+  margin: 5px 5px 5px 5px;
+  border-radius: 10px;
+  background-color: @pallete-c7;
+}
+
+element-text {
+  expand: true;
+  vertical-align: 0.5;
+  margin: 0% 1% 0% 1%;
+  background-color: inherit;
+
+}
+
+element-icon {
+    size:                           48;
+    border:                         0px;
+}
+
 
 #element.selected.normal {
-    background-color: @hover;
-    text-color:       @foreground;
-
+    background-color: @pallete-c4;
+    text-color:       @pallete-c3;
 }
 
 #element.selected.active {
-    background-color:  @accent-active;
-    text-color:        @accent-normal;
+    background-color: @pallete-c1;
+    text-color:       @pallete-c3;
+}
+
+#element.normal.normal {
+    background-color: @palette-c6;
+    text-color: @pallete-c2;
+}
+
+#element.normal.active {
+    background-color: @pallete-c5;
+    text-color: @pallete-c1;
 }
 
 
 #element.alternate.normal {
-    background-color: @background-alter;
+    background-color: @palette-c6;
+    text-color: @pallete-c2;
 }
