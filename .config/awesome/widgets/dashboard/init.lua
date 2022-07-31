@@ -5,6 +5,7 @@ local dpi             = beautiful.xresources.apply_dpi
 local gears           = require("gears")
 local shape_utils     = require("commons.shape")
 local commands        = require("commons.commands")
+local card            = require("widgets.card")
 local profile         = require("widgets.profile")
 local player          = require("widgets.player")
 local slider_factory  = require("widgets.control_slider")
@@ -47,18 +48,17 @@ dashboard:setup {
   {
     layout = wibox.layout.flex.horizontal,
 
-    create_card(profile),
-    create_card(player),
+    card.create(profile),
+    card.create(player),
   },
   {
     layout = wibox.layout.flex.horizontal,
-
-    create_card(sliders_set),
+    card.create(sliders_set),
   },
   {
     layout = wibox.layout.flex.horizontal,
-    create_card(monitor_panel),
-    create_card(disk_monitor_panel)
+    card.create(monitor_panel.create()),
+    card.create(disk_monitor_panel.create())
   },
   layout = wibox.layout.flex.vertical
 }
