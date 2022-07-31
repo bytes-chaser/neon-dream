@@ -7,11 +7,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local bwf           = require("widgets.battery")
 local dpi           = beautiful.xresources.apply_dpi
 local shape_utils   = require("commons.shape")
-local icons   = require("commons.icons")
+local icons         = require("commons.icons")
 local wbm           = require("widgets.wibar_monitor")
-local wb_player           = require("widgets.wibar_player")
-local naughty = require("naughty")
-local notif_center = require("widgets.notification_center")
+local wb_player     = require("widgets.wibar_player")
+local naughty       = require("naughty")
+local notif_center  = require("widgets.notification_center")
 
 
 -- {{{ Menu
@@ -105,7 +105,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3"}, s, awful.layout.layouts[1])
+    awful.tag(cfg.tags, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -122,7 +122,6 @@ awful.screen.connect_for_each_screen(function(s)
         screen  = s,
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
-        style = {shape = gears.shape.circle},
         layout = {spacing = dpi(10), layout = wibox.layout.fixed.horizontal},
         widget_template = {
           {
@@ -135,18 +134,20 @@ awful.screen.connect_for_each_screen(function(s)
                     },
                     layout = wibox.layout.fixed.horizontal,
                   },
-                  left  = dpi(10),
-                  right  = dpi(10),
-                  bottom  = dpi(5),
-                  top  = dpi(5),
+                  margins = dpi(8),
                   widget = wibox.container.margin
               },
 
-              bg = beautiful.palette_c6,
-              shape  = gears.shape.circle,
+              bg = beautiful.palette_c7,
+              shape  = cfg.tags_shape,
               widget = wibox.container.background
             },
-            margins  = 5,
+            margins  = {
+              top = 5,
+              bottom  = 5,
+              left = 6,
+              right = 6,
+            },
             widget = wibox.container.margin
           },
           id     = 'background_role',
@@ -161,18 +162,21 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = tasklist_buttons,
         widget_template = {
         {
+          {
+            layout = wibox.container.scroll.horizontal,
+            max_size = 400,
+            step_function = wibox.container.scroll.step_functions.waiting_nonlinear_back_and_forth,
+            speed = 300,
             {
-                {
-                    id     = 'text_role',
-                    widget = wibox.widget.textbox,
-                    align  = 'center',
-                    valign = 'center',
-                },
-                layout = wibox.layout.fixed.horizontal,
-            },
-            left  = 10,
-            right = 10,
-            widget = wibox.container.margin
+                id     = 'text_role',
+                widget = wibox.widget.textbox,
+                align  = 'center',
+                valign = 'center',
+            }
+          },
+          left  = 10,
+          right = 10,
+          widget = wibox.container.margin
         },
         shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
         widget = wibox.container.background,
@@ -184,7 +188,7 @@ awful.screen.connect_for_each_screen(function(s)
       position = "top",
       screen = s,
       bg = beautiful.col_transparent,
-      height = dpi(50)
+      height = dpi(40)
     })
 
 
@@ -207,12 +211,17 @@ awful.screen.connect_for_each_screen(function(s)
         position = "right",
         screen   = s,
         width    = dpi(400),
+        height = dpi(1000),
+        margins = {
+          top = dpi(20),
+          right = dpi(10)
+        },
         visible = false
     }
 
 
     local delete_all_notif = wibox.widget{
-          text   = 'Delete All',
+          text   = "Delete All",
           font = beautiful.font,
           align = "center",
           opacity = 1,
@@ -232,7 +241,7 @@ awful.screen.connect_for_each_screen(function(s)
           widget = wibox.container.margin,
           margins = dpi(10),
           {
-                text   = 'Notifications',
+                markup   = "<span foreground='" .. beautiful.fg_focus .."'>Notifications</span>",
                 font = beautiful.font_famaly .. '20',
                 align = "center",
                 opacity = 1,
@@ -244,7 +253,7 @@ awful.screen.connect_for_each_screen(function(s)
       notif_center
     }
 
-    local notif_icon = icons.wbi("", 20)
+    local notif_icon = icons.wbi("", 14)
 
     local notif_icon_box = {
       notif_icon,
@@ -257,11 +266,57 @@ awful.screen.connect_for_each_screen(function(s)
     end)))
 
    -- s.notif:bind_to_widget(notif_icon)
+   local create_munu_panel_button = function(glyph, text, btn_fn)
+     local btn = wibox.widget{
+         {
+           {
+             icons.wbi(glyph, 12),
+             margins = dpi(5),
+             widget = wibox.container.margin
+           },
+           bg = beautiful.palette_c7,
+           widget = wibox.container.background
+         },
+         margins = dpi(5),
+         widget = wibox.container.margin
+
+     }
+
+     local myclock_t = awful.tooltip {
+         objects        = { btn },
+         timer_function = function()
+             return text
+         end,
+     }
+
+     btn_fn(btn)
+     return btn
+   end
+
+
+   show_sub_panel = false
+   sub_panel_mode = 'dev'
+
+   local stat_bar = require("widgets.stat_bar")
+   stat_bar.create(s)
+
+   local dev_bar = require("widgets.dev_bar")
+   dev_bar.create(s)
+
+   local user_bar = require("widgets.user_bar")
+   user_bar.create(s)
+
+   local close_all_sub_panels = function()
+     s.stats.visible    = false
+     s.dev.visible = false
+     s.user.visible     = false
+   end
+
 
     -- Add widgets to the wibox
     s.mywibox:setup {
         widget = wibox.container.margin,
-        top =  dpi(7),
+        top =  dpi(4),
         left = dpi(7),
         right = dpi(7),
         {
@@ -277,6 +332,74 @@ awful.screen.connect_for_each_screen(function(s)
                   s.mytaglist,
                   -- s.mypromptbox,
                 },
+              },
+              {
+                widget = wibox.container.margin,
+                left = dpi(10),
+                {
+                  widget = wibox.container.background,
+                  bg = beautiful.pallete_c3,
+                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  {
+                    widget = wibox.container.margin,
+                    left = dpi(10),
+                    right = dpi(10),
+                    {
+                      layout = wibox.layout.fixed.horizontal,
+
+
+                      create_munu_panel_button("", "User", function(btn)
+                        btn:buttons(gears.table.join(awful.button({ }, 1, function()
+                          if sub_panel_mode == 'user' and show_sub_panel then
+                            s.user.visible = false
+                            show_sub_panel = false
+                          else
+                            if not sub_panel_mode ~= 'user' then
+                              close_all_sub_panels()
+                            end
+                            show_sub_panel = true
+                            sub_panel_mode = 'user'
+                            s.user.visible = true
+
+                          end
+                        end)))
+                      end),
+                      create_munu_panel_button("", "Devtools", function(btn)
+                        btn:buttons(gears.table.join(awful.button({ }, 1, function()
+                          if sub_panel_mode == 'dev' and show_sub_panel then
+                            s.dev.visible = false
+                            show_sub_panel = false
+                          else
+                            if not sub_panel_mode ~= 'dev' then
+                              close_all_sub_panels()
+                            end
+                            show_sub_panel = true
+                            sub_panel_mode = 'dev'
+                            s.dev.visible = true
+
+                          end
+                        end)))
+                      end),
+
+                      create_munu_panel_button("", "Stats", function(btn)
+                        btn:buttons(gears.table.join(awful.button({ }, 1, function()
+                          if sub_panel_mode == 'stat' and show_sub_panel then
+                            s.stats.visible = false
+                            show_sub_panel = false
+                          else
+                            if not sub_panel_mode ~= 'stat' then
+                              close_all_sub_panels()
+                            end
+                            show_sub_panel = true
+                            sub_panel_mode = 'stat'
+                            s.stats.visible = true
+
+                          end
+                        end)))
+                      end),
+                    }
+                  }
+                }
               },
               {
                 widget = wibox.container.margin,
@@ -343,8 +466,5 @@ awful.screen.connect_for_each_screen(function(s)
         }
     }
 
-
-
 end)
-  naughty.notify({ title = "Achtung!", message = 'heeelllooo', timeout = 5 })
 -- }}}
