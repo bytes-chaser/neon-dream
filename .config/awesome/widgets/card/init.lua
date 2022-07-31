@@ -1,8 +1,10 @@
 local wibox           = require("wibox")
 local beautiful       = require("beautiful")
-local dpi         = beautiful.xresources.apply_dpi
-local shape_utils = require("commons.shape")
+local dpi             = beautiful.xresources.apply_dpi
+local shape_utils     = require("commons.shape")
+
 local card = {}
+
 card.create = function(content)
   return wibox.widget{
     {
