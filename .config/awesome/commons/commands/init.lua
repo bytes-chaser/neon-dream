@@ -83,7 +83,7 @@ commands.get_text = function(path)
   return "cat " .. path
 end
 
-commands.weather_info = 'curl https://api.weatherapi.com/v1/current.json?key=' .. os.getenv("WEATHER_API_COM_API_KEY") .. '&q=Tel-Aviv&aqi=no'
+commands.weather_info = 'curl https://api.weatherapi.com/v1/current.json?key=' .. os.getenv("WEATHER_API_COM_API_KEY") .. '&q='.. os.getenv("WEATHER_API_COM_CITY") ..'&aqi=no'
 
 commands.get_disk_root_info =
   [[

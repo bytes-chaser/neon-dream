@@ -4,6 +4,11 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 local beautiful     = require("beautiful")
 local naughty       = require("naughty")
 
+local close_all_sub_panels = function(s)
+  s.stats.visible    = false
+  s.dev.visible = false
+  s.user.visible     = false
+end
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
@@ -112,6 +117,31 @@ globalkeys = gears.table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
+
+
+
+    awful.key({ modkey, "Shift" },  "u",     function ()
+      local screen = awful.screen.focused()
+      close_all_sub_panels(screen)
+      screen.user.visible = not screen.user.visible
+    end, {description = "open user wiabar", group = "wibars"}),
+
+    awful.key({ modkey, "Shift" },  "d",     function ()
+      local screen = awful.screen.focused()
+      close_all_sub_panels(screen)
+      screen.dev.visible = not screen.dev.visible
+    end, {description = "open development wibar", group = "wibars"}),
+
+    awful.key({ modkey, "Shift" },  "s",     function ()
+      local screen = awful.screen.focused()
+      close_all_sub_panels(screen)
+      screen.stats.visible = not screen.stats.visible
+    end,{description = "open statistics wibar", group = "wibars"}),
+
+    awful.key({ modkey, "Shift" },  "x",     function ()
+      local screen = awful.screen.focused()
+      close_all_sub_panels(screen)
+    end,{description = "close wibar", group = "wibars"}),
     -- Rofi Run
     awful.key({ modkey },  "r",     function () awful.util.spawn("rofi -show drun") end,
               {description = "open rofi run", group = "launcher"}),

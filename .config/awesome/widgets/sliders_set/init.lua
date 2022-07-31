@@ -4,8 +4,8 @@ local wibox           = require("wibox")
 local commands        = require("commons.commands")
 local icons           = require("commons.icons")
 local slider_factory  = require("widgets.control_slider")
-local beautiful   = require("beautiful")
-local dpi       = beautiful.xresources.apply_dpi
+local beautiful       = require("beautiful")
+local dpi             = beautiful.xresources.apply_dpi
 
 
 local sun_icon = icons.wbic("", 20, beautiful.pallete_c1)
