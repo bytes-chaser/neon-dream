@@ -1,6 +1,5 @@
-local awful = require("awful")
-local wibox = require("wibox")
-local naughty = require("naughty")
+local awful        = require("awful")
+local wibox        = require("wibox")
 local process_info = require("widgets.processes.process_info")
 
 
