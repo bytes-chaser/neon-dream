@@ -13,7 +13,19 @@ icons.wbi = function(glyph, size)
         opacity = 1,
         font = beautiful.icons_font .. size,
         widget = wibox.widget.textbox,
-    } 
+    }
+
+    return icon
+end
+
+icons.wbic = function(glyph, size, col)
+    local icon = wibox.widget{
+        markup   = "<span foreground='" .. col .."'>" .. glyph .. "</span>",
+        align = "center",
+        opacity = 1,
+        font = beautiful.icons_font .. size,
+        widget = wibox.widget.textbox,
+    }
 
     return icon
 end
@@ -37,7 +49,7 @@ end
 -- wibox text icon with client change decorator
 icons.wbicc = function(icon, active_glyph, property, conditionF)
     local init_glyph = icon.text
-    
+
     local function callback(c)
         local is_active = conditionF(c)
         if(is_active) then
@@ -47,7 +59,7 @@ icons.wbicc = function(icon, active_glyph, property, conditionF)
         end
     end
 
-    client.connect_signal("manage", callback)        
+    client.connect_signal("manage", callback)
     client.connect_signal("property::" .. property, callback)
 
     return icon
