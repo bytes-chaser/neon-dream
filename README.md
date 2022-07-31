@@ -82,7 +82,7 @@
 Confugured with [oh-my-zsh](https://ohmyz.sh/) framework and using [Starship Prompt](https://spaceship-prompt.sh/)
 
 ### Spotify
-Spotify client customized using [spicetify](https://github.com/spicetify/spicetify-cli). Client using [Dribbblish](https://github.com/spicetify/spicetify-themes/blob/master/THEMES.md#dribbblish) theme with a [custom color scheme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/spicetify/Themes/Dribbblish)
+Spotify client customized using [spicetify](https://github.com/spicetify/spicetify-cli). Client using [Dribbblish](https://github.com/spicetify/spicetify-themes/tree/master/Dribbblish) theme with a [custom color scheme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/spicetify/Themes/Dribbblish)
 
 ### nvim
 nvim configuration icnludes plugins configuration using:
