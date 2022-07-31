@@ -38,13 +38,13 @@ do
         in_error = false
     end)
 end
-
+require("config")
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(theme_folder.."theme.lua")
+beautiful.init(theme_folder .. cfg.theme_version .. "/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = os.getenv("EDITOR") or "nvim2"
+editor = os.getenv("EDITOR") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
 -- Default modkey.
@@ -155,7 +155,6 @@ require("decorations")
 watchdogs = require("watchdogs")
 watchdogs.init()
 require("commons.playerctl")
-require("widgets.dashboard")
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
