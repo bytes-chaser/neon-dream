@@ -11,15 +11,16 @@ is_power_popup_opened = false
 local create_btn_container = function(glyph, tooltip, cmd)
   local btn = wibox.widget{
     {
-      icons.wbi(glyph, 25),
+      icons.wbic(glyph, 150, beautiful.pallete_c1),
       margins = 10,
       widget  = wibox.container.margin
     },
     widget  = wibox.container.background,
     shape              = gears.shape.rounded_rect,
-    bg                 = beautiful.bg_normal,
-    shape_border_color = beautiful.fg_normal,
-    shape_border_width = 2
+    bg                 = beautiful.col_transparent,
+    shape_border_color = beautiful.pallete_c1,
+    shape_border_width = 10,
+
   }
 
 
@@ -79,21 +80,28 @@ battery_widget_factory.create = function(parameters)
   local pp = awful.popup {
     widget = {
         {
-            create_btn_container("", "Shutdown", commands.shutdown),
-            create_btn_container("", "Reboot", commands.reboot),
-            create_btn_container("X", "Cancel"),
-            layout = wibox.layout.fixed.horizontal,
+          {
+              create_btn_container("", "Shutdown", commands.shutdown),
+              create_btn_container("", "Reboot", commands.reboot),
+              layout = wibox.layout.fixed.horizontal,
+          },
+          layout = wibox.container.place,
+          valign = 'center',
+          halign = 'center'
         },
         margins = 10,
         widget  = wibox.container.margin
     },
     type = "dropdown_menu",
+     minimum_height  = dpi(1500),
+     minimum_width  = dpi(2000),
     border_width = 5,
     visible = false,
     ontop = true,
     hide_on_right_click = true,
     shape = gears.shape.rounded_rect,
-    placement = awful.placement.centered
+    placement = awful.placement.centered,
+    bg = beautiful.col_transparent
   }
 
   battery_icon:connect_signal('button::press', function()
