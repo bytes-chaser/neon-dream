@@ -11,17 +11,19 @@ local titlebar_buttons  = require("decorations.titlebar.buttons")
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
     -- buttons for the titlebar
-    local buttons = {
+    local buttons = gears.table.join(
         awful.button({ }, 1, function()
-            c:activate { context = "titlebar", action = "mouse_move"  }
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.move(c)
         end),
         awful.button({ }, 3, function()
-            c:activate { context = "titlebar", action = "mouse_resize"}
-        end),
-    }
+            c:emit_signal("request::activate", "titlebar", {raise = true})
+            awful.mouse.client.resize(c)
+        end)
+    )
 
 
-    awful.titlebar(c, { position = "top", size = dpi(36)}) : setup {
+    awful.titlebar(c, { position = "top", size = dpi(36), bg_normal = beautiful.pallete_c3}) : setup {
         layout = wibox.layout.align.horizontal,
         { -- Left
             {
@@ -82,18 +84,13 @@ client.connect_signal("request::titlebars", function(c)
             widget = wibox.container.margin,
             left = dpi(6),
         },
-
         { -- Middle
-            { -- Title
-                layout  = wibox.layout.flex.horizontal
-            },
             buttons = buttons,
             layout  = wibox.layout.flex.horizontal
         },
         { -- Right
             layout = wibox.layout.fixed.horizontal
         },
-        widget = wibox.container.background,
         buttons = nil
     }
 
