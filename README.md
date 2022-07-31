@@ -9,6 +9,10 @@
 ## General Information
 <table>
   <tr>
+    <td><b>Latest Release</b></td>
+    <td><a href="https://github.com/bytes-chaser/neon-dream/releases/tag/2.0.0" target="_blank">2.0.0</a></td>
+  <tr>
+  <tr>
     <td><b>OS</b></td>
     <td><a href="https://archlinux.org/" target="_blank">Arch Linux</a></td>
   <tr>
