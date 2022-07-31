@@ -6,17 +6,12 @@ local dpi         = beautiful.xresources.apply_dpi
 local shape_utils = require("commons.shape")
 
 profile = {}
-profile.pic = function(width, height, shape)
+profile.pic = function( shape)
   return wibox.widget(
   {
-    {
-        image = beautiful.profile_pic,
-        widget = wibox.widget.imagebox,
-        forced_width = dpi(width),
-        forced_height = dpi(height),
-        clip_shape = shape
-    },
-    widget = wibox.container.place,
+      image = beautiful.profile_pic,
+      widget = wibox.widget.imagebox,
+      clip_shape = shape
   }
 )
 end
@@ -35,10 +30,13 @@ end
 local profile_dock = wibox.widget(
   {
     {
-      nil,
-      profile.pic(100, 100, shape_utils.circle(dpi(350))),
-      profile.name(32),
-      layout = wibox.layout.align.vertical
+      profile.pic(gears.shape.circle),
+      {
+        profile.name(12),
+        widget = wibox.container.margin,
+        left = dpi(5)
+      },
+      layout = wibox.layout.fixed.horizontal
     },
     widget = wibox.container.background,
     forced_width = dpi(300),
