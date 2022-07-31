@@ -3,14 +3,22 @@ local wibox       = require("wibox")
 local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 local gears       = require("gears")
-local naughty = require('naughty')
+local naughty     = require('naughty')
 local shape_utils = require("commons.shape")
-local icons = require("commons.icons")
+local icons       = require("commons.icons")
+
 
 local notifications = wibox.widget({
-  layout = wibox.layout.fixed.vertical,
-})
+  layout = require("dependencies.overflow").vertical,
+  spacing = dpi(8),
+  scrollbar_widget = {
+    widget = wibox.widget.separator,
+    shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+  },
+  scrollbar_width = dpi(8),
+  step = 50,
 
+})
 
 local add_notif = function(title, text, notif_icon)
   local icon_widget = nil
@@ -23,8 +31,17 @@ local add_notif = function(title, text, notif_icon)
       forced_height = dpi(beautiful.font_size * 2),
     }
     else
-      icon_widget = icons.wbi("", 25)
+      icon_widget = icons.wbic("", 25, beautiful.fg_focus)
   end
+
+local close_icon = wibox.widget({
+  id = "icon",
+  markup   =  "<span foreground='" .. beautiful.fg_focus .."'>" .. "" .. "</span>",
+  align = "center",
+  opacity = 0,
+  font = beautiful.icons_font .. 20,
+  widget = wibox.widget.textbox,
+})
 
   local notification =  wibox.widget({
     widget = wibox.container.margin,
@@ -32,46 +49,33 @@ local add_notif = function(title, text, notif_icon)
     right = dpi(10),
     left = dpi(10),
     {
-      id = "box",
       {
-        id = "box_list",
         {
-          id = "header",
           bg = beautiful.palette_c7,
           widget = wibox.container.background,
           {
-            id = "margin",
             widget = wibox.container.margin,
             top = dpi(3),
             bottom = dpi(3),
             right = dpi(5),
             left = dpi(5),
             {
-              id = "list",
               {
                 widget = wibox.container.margin,
                 right = dpi(15),
                 icon_widget
               },
               {
-                    text   = title,
+                    markup = "<span foreground='" .. beautiful.fg_focus .."'><b>" .. title .. "</b></span>",
                     align = "left",
                     opacity = 1,
                     font = beautiful.font,
                     widget = wibox.widget.textbox,
               },
               {
-                id = "icon_margin",
                 widget = wibox.container.margin,
                 margins = dpi(5),
-                {
-                    id = "icon",
-                    text   = "",
-                    align = "center",
-                    opacity = 1,
-                    font = beautiful.icons_font .. 20,
-                    widget = wibox.widget.textbox,
-                }
+                close_icon
               },
               layout = wibox.layout.align.horizontal
             }
@@ -80,9 +84,9 @@ local add_notif = function(title, text, notif_icon)
         {
           widget = wibox.container.margin,
           top = dpi(3),
-          bottom = dpi(3),
-          right = dpi(5),
-          left = dpi(5),
+          bottom = dpi(5),
+          right = dpi(10),
+          left = dpi(10),
           {
               text   = text,
               align = "left",
@@ -91,23 +95,28 @@ local add_notif = function(title, text, notif_icon)
               widget = wibox.widget.textbox,
           }
         },
-        layout = wibox.layout.fixed.vertical
+        layout = wibox.layout.align.vertical
       },
       bg = beautiful.palette_c6,
+      shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
       widget = wibox.container.background,
       height = dpi(30)
     }
   })
 
-  local icon = notification.box.box_list.header.margin.list.icon_margin.icon;
-  icon:buttons(gears.table.join(awful.button({ }, 1, function()
+  close_icon:buttons(gears.table.join(awful.button({ }, 1, function()
     notifications:remove_widgets(notification, true)
   end)))
+
+  notification:connect_signal('mouse::enter', function ()
+      close_icon.opacity = 1
+  end)
+
+  notification:connect_signal('mouse::leave', function ()
+      close_icon.opacity = 0
+  end)
 return notification
 end
-
-
-notifications:insert(1, add_notif("man", "man"))
 
 
 local add = function(n, notif_icon)
