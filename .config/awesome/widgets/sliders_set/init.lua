@@ -4,8 +4,11 @@ local wibox           = require("wibox")
 local commands        = require("commons.commands")
 local icons           = require("commons.icons")
 local slider_factory  = require("widgets.control_slider")
+local beautiful   = require("beautiful")
+local dpi       = beautiful.xresources.apply_dpi
 
-local sun_icon = icons.wbi("", 32)
+
+local sun_icon = icons.wbic("", 20, beautiful.pallete_c1)
 
 local vol_sl = slider_factory.create_with_events(0, 100, commands.svol,
 function(stdout)
@@ -16,7 +19,7 @@ function(val)
 end
 )
 
-local music_icon = icons.wbi("", 32)
+local music_icon = icons.wbic("", 20, beautiful.pallete_c1)
 
 local brightness_sl = slider_factory.create_with_events(10, 100, commands.brightness,
 function(stdout)
@@ -28,17 +31,38 @@ end)
 
 return wibox.widget{
   {
-    {
-      music_icon,
-      vol_sl,
-      layout = wibox.layout.fixed.horizontal
-    },
-    {
-      sun_icon,
-      brightness_sl,
-      layout = wibox.layout.fixed.horizontal
-    },
-    layout = wibox.layout.flex.vertical
+    widget = wibox.container.background
   },
-  widget = wibox.container.background
+  {
+    nil,
+    {
+      {
+        widget = wibox.container.rotate,
+        direction     = 'east',
+        vol_sl
+      },
+      widget = wibox.container.margin,
+      bottom = dpi(15)
+    },
+    music_icon,
+    layout = wibox.layout.align.vertical
+  },
+  {
+    nil,
+    {
+      {
+        widget = wibox.container.rotate,
+        direction     = 'east',
+        brightness_sl
+      },
+      widget = wibox.container.margin,
+      bottom = dpi(15)
+    },
+    sun_icon,
+    layout = wibox.layout.align.vertical
+  },
+  {
+    widget = wibox.container.background
+  },
+  layout = wibox.layout.flex.horizontal
 }
