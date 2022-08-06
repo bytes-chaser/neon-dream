@@ -31,8 +31,17 @@ weather.create = function()
 
 
   awesome.connect_signal("data:weather", function(status, t)
-      icon.markup =  "<span foreground='" .. beautiful.pallete_c1 .."'>" .. weather_icons_map[tonumber(status)] .. "</span>"
-      temp_txt.text = t .. '°'
+      naughty.notification({message = tonumber(status)})
+      local weather_icon = ''
+      local weather_text = 'No Data'
+
+      if status ~= nil then
+        weather_text = t .. '°'
+        icon = weather_icons_map[tonumber(status)]
+      end
+
+      icon.markup =  "<span foreground='" .. beautiful.pallete_c1 .."'>" .. weather_icon .. "</span>"
+      temp_txt.text = weather_text
   end)
 
   return base_widget
