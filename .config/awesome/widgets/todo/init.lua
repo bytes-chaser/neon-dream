@@ -63,10 +63,10 @@ todo.create = function()
                     widget = wibox.widget.textbox,
                     text   = text_out,
                     font = beautiful.font_famaly .. '10',
+                    forced_width = dpi(450)
                   },
                   nil,
                   {
-
                     delete_btn,
                     layout = wibox.layout.fixed.horizontal
                   },
