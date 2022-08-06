@@ -6,10 +6,16 @@ local commands    = require("commons.commands")
 local shape_utils = require("commons.shape")
 local icons       = require("commons.icons")
 local gears       = require("gears")
+local naughty     = require("naughty")
 
 local todo = {}
 
 todo.create = function()
+  local todo_path = cfg.todo.path
+  local get_list_cmd = commands.get_files(todo_path)
+
+  local files = {}
+  local content = {}
 
   local list = wibox.widget({
     layout = require("dependencies.overflow").vertical,
@@ -22,23 +28,6 @@ todo.create = function()
     step = 50,
   })
 
-  local text_widget = icons.wbi("+", 14)
-
-  local base_widget = wibox.widget({
-    layout = wibox.layout.align.vertical,
-    {
-      widget = wibox.container.margin,
-      bottom = dpi(10),
-      text_widget
-    },
-    list
-  })
-
-  local todo_path = cfg.todo.path
-  local get_list_cmd = commands.get_files(todo_path)
-
-  local files = {}
-  local content = {}
 
   update_todo_list = function()
     list:reset()
@@ -110,12 +99,51 @@ todo.create = function()
     end)
   end
 
+
+  local text_widget = icons.wbi("+", 14)
+
+
+  local myprompt = awful.widget.prompt {
+      prompt = 'Add: ',
+      exe_callback = function(input)
+      text_widget.visible = true
+
+      if not input or #input == 0 then
+      else
+        local add_todo_cmd = "echo '" .. input .. "' > " .. todo_path .. tostring(#files + 1)
+        naughty.notify{ text = add_todo_cmd}
+
+          awful.spawn.easy_async_with_shell(add_todo_cmd, function(stdout, stderr)
+            naughty.notify{ text = stdout}
+            update_todo_list()
+
+          end)
+      end
+
+    end
+  }
+
+
+  local base_widget = wibox.widget({
+    layout = wibox.layout.align.vertical,
+    {
+      widget = wibox.container.margin,
+      bottom = dpi(10),
+      {
+        myprompt,
+        text_widget,
+        nil,
+        layout = wibox.layout.align.horizontal
+      }
+    },
+    list
+  })
+
   update_todo_list()
 
   text_widget:buttons(gears.table.join(awful.button({ }, 1, function()
-    awful.spawn.easy_async_with_shell(editor_cmd .. ' ' .. todo_path .. tostring(#files + 1), function()
-      update_todo_list()
-    end)
+    myprompt:run()
+    text_widget.visible = false
   end)))
 
   return base_widget
