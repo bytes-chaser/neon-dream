@@ -2,10 +2,8 @@ local awful       = require("awful")
 local wibox       = require("wibox")
 local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
-local naughty              = require("naughty")
-local commands          = require("commons.commands")
-local shape_utils          = require("commons.shape")
-local icons          = require("commons.icons")
+local icons       = require("commons.icons")
+
 require("config.weather")
 
 local weather = {}
@@ -19,6 +17,7 @@ weather.create = function()
       font = beautiful.font_famaly .. '26'
 
   })
+
   local base_widget = wibox.widget({
     {
       icon,
@@ -31,7 +30,6 @@ weather.create = function()
 
 
   awesome.connect_signal("data:weather", function(status, t)
-      naughty.notification({message = tonumber(status)})
       local weather_icon = ''
       local weather_text = 'No Data'
 
