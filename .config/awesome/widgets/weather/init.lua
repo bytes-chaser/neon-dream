@@ -37,7 +37,7 @@ weather.create = function()
 
       if status ~= nil then
         weather_text = t .. '°'
-        icon = weather_icons_map[tonumber(status)]
+        weather_icon = weather_icons_map[tonumber(status)]
       end
 
       icon.markup =  "<span foreground='" .. beautiful.pallete_c1 .."'>" .. weather_icon .. "</span>"
