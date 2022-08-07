@@ -3,61 +3,23 @@ local wibox       = require("wibox")
 local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 local gears       = require("gears")
-local icons       = require("commons.icons")
-local shape_utils = require("commons.shape")
 local commands    = require("commons.commands")
 local text_format = require("commons.text_format")
 
 player_works = false
 
-local function button(symb, command)
-  icon = icons.wbi(symb, 30)
-  icon:buttons(gears.table.join(awful.button({ }, 1, command)))
-return icon
-end
+local on_player_pause_cmd = "spotify"
 
-local create_label = function(glyph)
-return wibox.widget{
-    text   = glyph,
-    align = "center",
-    opacity = 1,
-    font = beautiful.icons_font .. " Bold 16",
-    widget = wibox.widget.textbox,
-}
-end
-
-
-local create_text = function(glyph)
-return wibox.widget{
-    text   = glyph,
-    opacity = 1,
-    font = beautiful.font .. " ExtraBold 16",
-    widget = wibox.widget.textbox,
-}
-end
-
-
-local create_btn_callback = function(on_play_cmd, on_pause_cmd)
-  return function()
-    local command = ""
-
-    if player_works then
-      command = on_play_cmd
-    else
-      command = on_pause_cmd
-    end
-
-    awful.spawn.with_shell(command)
-  end
-end
+local controls = require("widgets.player.controls")
+local metadata = require("widgets.player.metadata")
 
 
 local make_metadata_margin = function(content)
   return {
     content,
     widget = wibox.container.margin,
-    left = dpi(5),
-    right = dpi(5)
+    left   = dpi(5),
+    right  = dpi(5)
   }
 end
 
@@ -85,27 +47,26 @@ local make_ctr_margin = function(content)
   }
 end
 
-local tittle_label = create_label("")
-local album_label = create_label("")
-local artist_label = create_label("")
+local title_label = metadata.label("")
+local album_label  = metadata.label("")
+local artist_label = metadata.label("")
 
-local tittle_val = create_text("Open")
-local album_val = create_text("Spotify")
-local artist_val = create_text("To Start")
+local title_val  = metadata.value("Open")
+local album_val  = metadata.value("Spotify")
+local artist_val = metadata.value("To Start")
 
 
 local text_metadata = {
-  make_hor_layout(tittle_label, tittle_val),
-  make_hor_layout(album_label, album_val),
+  make_hor_layout(title_label,  title_val),
+  make_hor_layout(album_label,  album_val),
   make_hor_layout(artist_label, artist_val),
   layout = wibox.layout.fixed.vertical
 }
 
-local on_player_pause_cmd = "spotify"
 
-local prv_btn = button("", create_btn_callback(commands.player_prev, on_player_pause_cmd))
-local tgl_btn = button("", create_btn_callback(commands.player_toggle, on_player_pause_cmd))
-local nxt_btn = button("", create_btn_callback( commands.player_next, on_player_pause_cmd))
+local prv_btn = controls.create("", commands.player_prev)
+local tgl_btn = controls.create("", commands.player_toggle)
+local nxt_btn = controls.create("", commands.player_next)
 
 
 local control_panel = {
@@ -115,30 +76,26 @@ local control_panel = {
   layout = wibox.layout.flex.horizontal
 }
 
+local stops = {
+  { 0.0, beautiful.palette_c6 .. "11" },
+  { 0.7, beautiful.palette_c6 .. "CC" },
+  { 0.8, beautiful.palette_c6 .. "DD" },
+  { 0.9, beautiful.palette_c6 .. "EE" },
+  { 1.0, beautiful.palette_c6 }
+}
+
 local filter_color_north = {
-	type = "linear",
-	from = { 0, 0 },
-	to = { 0, 280 },
-  stops = {
-    { 0, beautiful.palette_c6 .. "11" },
-    { 0.7, beautiful.palette_c6 .. "CC" },
-    { 0.8, beautiful.palette_c6 .. "DD" },
-    { 0.9, beautiful.palette_c6 .. "EE" },
-    { 1, beautiful.palette_c6 }
-  },
+	type  = "linear",
+	from  = { 0, 0 },
+	to    = { 0, 280 },
+  stops = stops,
 }
 
 local filter_color_east = {
-	type = "linear",
-	from = { 0, 0 },
-	to = { 0, 250 },
-  stops = {
-    { 0, beautiful.palette_c6 .. "11" },
-    { 0.7, beautiful.palette_c6 .. "CC" },
-    { 0.8, beautiful.palette_c6 .. "DD" },
-    { 0.9, beautiful.palette_c6 .. "EE" },
-    { 1, beautiful.palette_c6 }
-  },
+	type  = "linear",
+	from  = { 0, 0 },
+	to    = { 0, 250 },
+  stops = stops,
 }
 
 local imagebox = wibox.widget({
@@ -151,11 +108,11 @@ local player = wibox.widget({
     imagebox,
     {
       {
-        bg = filter_color_east,
+        bg     = filter_color_east,
         widget = wibox.container.background
       },
       direction = "east",
-	    widget = wibox.container.rotate,
+	    widget    = wibox.container.rotate,
     },
     {
       {
@@ -169,39 +126,40 @@ local player = wibox.widget({
         },
         control_panel
       },
-      bg = filter_color_north,
+      bg     = filter_color_north,
       widget = wibox.container.background,
     },
     layout = wibox.layout.stack,
   })
 
+
 awesome.connect_signal("player::metadata",
-function(status, title, album, artist, art_link)
+  function(status, title, album, artist, art_link)
 
-  if status == nil then
-    player_works = false
-  elseif status:match("Paused") then
-    tgl_btn.text = ""
-    player_works = true
-  elseif status:match("Playing") then
-    tgl_btn.text = ""
-    player_works = true
-  end
+    if status == nil then
+      player_works = false
+    elseif status:match("Paused") then
+      tgl_btn.text = ""
+      player_works = true
+    elseif status:match("Playing") then
+      tgl_btn.text = ""
+      player_works = true
+    end
 
-  if player_works then
-    tittle_val.text = text_format.shorting(title, 30)
-    album_val.text  = text_format.shorting(album, 30)
-    artist_val.text = text_format.shorting(artist, 30)
-    awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
-      function()
-        imagebox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
-      end)
-    else
-      tittle_val.text = "Click"
-      album_val.text  = "To start"
-      artist_val.text = on_player_pause_cmd
-  end
+    if player_works then
+      title_val.text  = text_format.shorting(title,  30)
+      album_val.text  = text_format.shorting(album,  30)
+      artist_val.text = text_format.shorting(artist, 30)
 
+      awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
+        function()
+          imagebox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
+        end)
+      else
+        title_val.text  = "Click"
+        album_val.text  = "To start"
+        artist_val.text = on_player_pause_cmd
+    end
 end)
 
 return player
