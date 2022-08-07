@@ -11,7 +11,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 require("awful.hotkeys_popup.keys")
-
+require("commons.nd_utils")
 home_folder        = os.getenv("HOME")
 theme_folder       = home_folder .. "/.config/awesome/theme/"
 user               = os.getenv("USER")
