@@ -1,7 +1,6 @@
 local awful       = require("awful")
 local wibox       = require("wibox")
-local beautiful   = require("beautiful")
-local dpi         = beautiful.xresources.apply_dpi
+local dpi         = require("beautiful").xresources.apply_dpi
 local commands    = require("commons.commands")
 local shape_utils = require("commons.shape")
 
@@ -12,7 +11,7 @@ return {
 
     local scroll = {
       widget = wibox.widget.separator,
-      shape  = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+      shape  = shape_utils.default_frr,
     }
 
     local base_widget = wibox.widget({

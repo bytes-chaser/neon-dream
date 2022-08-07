@@ -8,7 +8,7 @@ local factory = {}
 
 factory.create = function(min, max)
   return wibox.widget {
-      bar_shape           = gears.shape.rounded_rect,
+      bar_shape           = gears.shape.default_frr,
       bar_height          = dpi(5),
       bar_color           = beautiful.fg_normal,
       handle_color        = beautiful.pallete_c4,

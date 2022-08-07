@@ -1,7 +1,7 @@
 local awful                = require("awful")
 local wibox                = require("wibox")
 local beautiful            = require("beautiful")
-local dpi                  = beautiful.xresources.apply_dpi
+local dpi                  = require("beautiful").xresources.apply_dpi
 local calendar             = require("widgets.calendar")
 local shape_utils          = require("commons.shape")
 local card                 = require("widgets.card")
@@ -19,7 +19,7 @@ return {
     s.user = awful.wibar({
       position = "left",
       screen   = s,
-      shape    = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+      shape    = shape_utils.default_frr,
       visible  = false,
       width    = dpi(600),
       height   = dpi(1000),

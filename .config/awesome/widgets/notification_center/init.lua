@@ -13,7 +13,7 @@ local notifications = wibox.widget({
   spacing = dpi(8),
   scrollbar_widget = {
     widget = wibox.widget.separator,
-    shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+    shape = shape_utils.default_frr,
   },
   scrollbar_width = dpi(8),
   step = 50,
@@ -98,7 +98,7 @@ local close_icon = wibox.widget({
         layout = wibox.layout.align.vertical
       },
       bg = beautiful.palette_c6,
-      shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+      shape = shape_utils.default_frr,
       widget = wibox.container.background,
       height = dpi(30)
     }

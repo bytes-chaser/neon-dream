@@ -14,7 +14,7 @@ packages_list.create = function()
 		spacing = dpi(5),
 		scrollbar_widget = {
 			widget = wibox.widget.separator,
-			shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+			shape = shape_utils.default_frr,
 		},
 		scrollbar_width = dpi(8),
 		step = 50,

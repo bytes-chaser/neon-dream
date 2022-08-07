@@ -16,7 +16,7 @@ local create_btn_container = function(glyph, tooltip, cmd)
       widget  = wibox.container.margin
     },
     widget  = wibox.container.background,
-    shape              = gears.shape.rounded_rect,
+    shape              = gears.shape.default_frr,
     bg                 = beautiful.col_transparent,
     shape_border_color = beautiful.pallete_c1,
     shape_border_width = 10,
@@ -99,7 +99,7 @@ battery_widget_factory.create = function(parameters)
     visible = false,
     ontop = true,
     hide_on_right_click = true,
-    shape = gears.shape.rounded_rect,
+    shape = gears.shape.default_frr,
     placement = awful.placement.centered,
     bg = beautiful.col_transparent
   }

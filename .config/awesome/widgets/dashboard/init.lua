@@ -24,7 +24,7 @@ dashboard = wibox(
     type = "dashboard",
     border_width = dpi(4),
     border_color = beautiful.border_focus,
-    shape =  shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+    shape =  shape_utils.default_frr,
 })
 
 

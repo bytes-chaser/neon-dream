@@ -105,7 +105,7 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag(cfg.tags, s, awful.layout.layouts[1])
+    awful.tag(cfg.tags.names, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -139,7 +139,7 @@ awful.screen.connect_for_each_screen(function(s)
               },
 
               bg = beautiful.palette_c7,
-              shape  = cfg.tags_shape,
+              shape  = cfg.tags.shape,
               widget = wibox.container.background
             },
             margins  = {
@@ -178,7 +178,7 @@ awful.screen.connect_for_each_screen(function(s)
           right = 10,
           widget = wibox.container.margin
         },
-        shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+        shape  = shape_utils.default_frr,
         widget = wibox.container.background,
       }
     }
@@ -326,7 +326,7 @@ awful.screen.connect_for_each_screen(function(s)
               {
                 widget = wibox.container.background,
                 bg = beautiful.pallete_c3,
-                shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                shape = shape_utils.default_frr,
                 {
                   layout = wibox.layout.fixed.horizontal,
                   s.mytaglist,
@@ -339,7 +339,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                   widget = wibox.container.background,
                   bg = beautiful.pallete_c3,
-                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  shape = shape_utils.default_frr,
                   {
                     widget = wibox.container.margin,
                     left = dpi(10),
@@ -411,7 +411,7 @@ awful.screen.connect_for_each_screen(function(s)
                   },
                   widget = wibox.container.background,
                   bg = beautiful.pallete_c3,
-                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  shape = shape_utils.default_frr,
                 }
               }
           },
@@ -424,7 +424,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                   widget = wibox.container.background,
                   bg = beautiful.pallete_c3,
-                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  shape = shape_utils.default_frr,
                   wb_player
                 }
               },
@@ -434,7 +434,7 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                   widget = wibox.container.background,
                   bg = beautiful.pallete_c3,
-                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  shape = shape_utils.default_frr,
                   wbm_cpu
                 }
               },
@@ -444,14 +444,14 @@ awful.screen.connect_for_each_screen(function(s)
                 {
                   widget = wibox.container.background,
                   bg = beautiful.pallete_c3,
-                  shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                  shape = shape_utils.default_frr,
                   wbm_ram
                 }
               },
               {
                 widget = wibox.container.background,
                 bg = beautiful.pallete_c3,
-                shape = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+                shape = shape_utils.default_frr,
                 {
                   layout = wibox.layout.fixed.horizontal,
                   mytextclock,

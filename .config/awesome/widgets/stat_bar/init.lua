@@ -1,7 +1,6 @@
 local awful                = require("awful")
 local wibox                = require("wibox")
-local beautiful            = require("beautiful")
-local dpi                  = beautiful.xresources.apply_dpi
+local dpi                  = require("beautiful").xresources.apply_dpi
 local shape_utils          = require("commons.shape")
 local monitor_panel        = require("widgets.monitor_panel")
 local disk_monitor_panel   = require("widgets.disk_monitor_panel")
@@ -32,7 +31,7 @@ return {
     s.stats = awful.wibar({
       position = "left",
       screen   = s,
-      shape    = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+      shape    = shape_utils.default_frr,
       visible  = false,
       width    = dpi(300),
       height   = dpi(1000),
