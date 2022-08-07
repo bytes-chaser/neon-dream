@@ -10,14 +10,12 @@ return {
     local icon = icons.wbi(repo_info.icon, 16)
 
     local name = {
-      id = "name",
       widget = wibox.widget.textbox,
       markup   = "<span foreground='" .. beautiful.fg_focus .."'>" .. repo_info.name .."</span>",
       font = beautiful.font_famaly .. '12',
     }
 
     local path = {
-      id = "path",
       widget = wibox.widget.textbox,
       markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. repo_info.path .."</span>",
       font = beautiful.font_famaly .. '10',
@@ -26,7 +24,6 @@ return {
     local source_icon_widget = icons.wbi(source_icon, 14)
 
     local remote_addr = {
-      id = "remote",
       wrap = 'word_char',
       widget = wibox.widget.textbox,
       markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. url .."</span>",
