@@ -1,3 +1,5 @@
+-- todo/notes list widget
+
 local awful        = require("awful")
 local wibox        = require("wibox")
 local beautiful    = require("beautiful")
