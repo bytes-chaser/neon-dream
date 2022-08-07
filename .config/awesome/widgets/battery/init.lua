@@ -9,18 +9,20 @@ local commands          = require("commons.commands")
 is_power_popup_opened = false
 
 local create_btn_container = function(glyph, tooltip, cmd)
+
+  local icon = {
+    icons.wbic(glyph, 150, beautiful.pallete_c1),
+    margins = 10,
+    widget  = wibox.container.margin
+  }
+
   local btn = wibox.widget{
-    {
-      icons.wbic(glyph, 150, beautiful.pallete_c1),
-      margins = 10,
-      widget  = wibox.container.margin
-    },
-    widget  = wibox.container.background,
+    icon,
+    widget             = wibox.container.background,
     shape              = gears.shape.default_frr,
     bg                 = beautiful.col_transparent,
     shape_border_color = beautiful.pallete_c1,
     shape_border_width = 10,
-
   }
 
 
@@ -29,7 +31,6 @@ local create_btn_container = function(glyph, tooltip, cmd)
       awful.spawn.with_shell(cmd)
     end)
   end
-
 
 
   return {
@@ -47,7 +48,7 @@ battery_widget_factory.create = function(parameters)
   local battery_icon = wibox.widget{
       text    = "",
       align   = parameters.alignment or beautiful.battery_aligment,
-      opacity = parameters.opacity or beautiful.battery_opacity,
+      opacity = parameters.opacity   or beautiful.battery_opacity,
       font    = beautiful.icons_font .. (parameters.size or beautiful.battery_size),
       widget  = wibox.widget.textbox,
   }
@@ -56,6 +57,7 @@ battery_widget_factory.create = function(parameters)
     ontop = true,
     mode = 'mouse'
   }
+
   battery_icon_t:add_to_object(battery_icon)
   battery_icon:connect_signal('mouse::enter', function()
     battery_icon_t.text = tostring(value) .. "%"
