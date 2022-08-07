@@ -5,54 +5,61 @@ local dpi                  = beautiful.xresources.apply_dpi
 local calendar             = require("widgets.calendar")
 local shape_utils          = require("commons.shape")
 local card                 = require("widgets.card")
-local weather              = require("widgets.weather")
-local todo                 = require("widgets.todo")
-user_bar = {}
 
-user_bar.create = function(s)
+local weather    = require("widgets.weather").create()
+local calendar   = require("widgets.calendar").create()
+local todo       = require("widgets.todo").create()
+local player     = require("widgets.player")
+local sliders    = require("widgets.sliders_set")
+local profile    = require("widgets.profile")
 
+return {
+  create = function(s)
 
-  s.user = awful.wibar({
-    position = "left",
-    screen   = s,
-    shape    = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
-    visible  = false,
-    width    = dpi(600),
-    height   = dpi(1000),
-    margins  = {
-      left = dpi(15)
-    }
-  })
+    s.user = awful.wibar({
+      position = "left",
+      screen   = s,
+      shape    = shape_utils.partially_rounded_rect(beautiful.rounded, true, true, true, true),
+      visible  = false,
+      width    = dpi(600),
+      height   = dpi(1000),
+      margins  = {
+        left = dpi(15)
+      }
+    })
 
-  s.user:setup{
-    card.create({
-      require("widgets.profile"),
+    local header = card.create({
+      profile,
       nil,
-      weather.create(),
+      weather,
       layout = wibox.layout.align.horizontal
-    }),
-    {
+    })
 
-      layout = wibox.layout.flex.vertical,
+    local play = {
+      card.create(player),
+      layout = wibox.layout.flex.horizontal
+    }
+
+    local sliders_and_calendar = {
+      card.create(sliders),
+      card.create(calendar),
+      layout = wibox.layout.flex.horizontal
+    }
+
+    local tasks = {
+      card.create(todo),
+      layout = wibox.layout.flex.horizontal
+    }
+
+    s.user:setup{
+      layout = wibox.layout.align.vertical,
+      header,
       {
-        card.create(require("widgets.player")),
-
-        layout = wibox.layout.flex.horizontal
-      },
-      {
-        card.create(require("widgets.sliders_set")),
-        card.create(calendar.create()),
-        layout = wibox.layout.flex.horizontal
-      },
-      {
-        card.create(todo.create()),
-        layout = wibox.layout.flex.horizontal
-      },
-    },
-
-    layout = wibox.layout.align.vertical
-  }
-
-end
-
-return user_bar
+        layout = wibox.layout.flex.vertical,
+        play,
+        sliders_and_calendar,
+        tasks,
+      }
+    }
+  end
+}
