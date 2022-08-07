@@ -14,10 +14,10 @@ theme.font_famaly = "JetBrains Mono "
 theme.font_size = 10
 theme.font        = theme.font_famaly..tostring(theme.font_size)
 
-theme.pallete_c1 = "#FF77FF"
-theme.pallete_c2 = "#88FFFF"
+theme.pallete_c1 = "#ff77ff"
+theme.pallete_c2 = "#88ffff"
 theme.pallete_c3 = "#1e1e2c"
-theme.pallete_c4 = "#FFAAFF"
+theme.pallete_c4 = "#ffaaff"
 theme.pallete_c5 = "#333170"
 theme.palette_c6 = "#2a2939"
 theme.palette_c7 = "#33334a"
