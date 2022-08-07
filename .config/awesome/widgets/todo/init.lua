@@ -5,7 +5,6 @@ local dpi          = beautiful.xresources.apply_dpi
 local commands     = require("commons.commands")
 
 local task_factory = require("widgets.todo.task_factory")
-local add_btn      = require("widgets.todo.add_btn")
 local header       = require("widgets.todo.header")
 
 local todo = {}
