@@ -4,11 +4,11 @@ local dpi       = beautiful.xresources.apply_dpi
 local gears     = require("gears")
 local icons     = require("commons.icons")
 
-local point     = require("widgets.progress_bar.point")
+local point     = require("widgets.pbars.pbar_shaped_dots.point")
 
 return {
 
-  create_shaped_points_pbar = function(parameters)
+  create = function(parameters)
 
       local shapes = parameters.shapes
       if shapes == nil then

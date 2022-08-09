@@ -4,8 +4,8 @@ local dpi         = beautiful.xresources.apply_dpi
 local gears       = require("gears")
 local icons       = require("commons.icons")
 
-local bar         = require("widgets.monitor_stat_bar_std.progress_bar")
-local lbl         = require("widgets.monitor_stat_bar_std.progress_label")
+local bar         = require("widgets.pbars.pbar_std.progress_bar")
+local lbl         = require("widgets.pbars.pbar_std.progress_label")
 
 
 local get_layout = function(parameters)
@@ -17,7 +17,7 @@ end
 
 
 return {
-  
+
   set_val = function(pbar, pbar_parameters, val)
       pbar[2].pb.value = val
   end,

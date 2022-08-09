@@ -3,9 +3,8 @@ local wibox       = require("wibox")
 local beautiful   = require("beautiful")
 local gears       = require("gears")
 local dpi         = beautiful.xresources.apply_dpi
-local pb          = require("widgets.progress_bar")
 local shape_utils = require("commons.shape")
-local mb          = require("widgets.monitor_stat_bar_std")
+local mb          = require("widgets.pbars.pbar_std")
 
 local g_params = {}
 g_params.max_val = 100
