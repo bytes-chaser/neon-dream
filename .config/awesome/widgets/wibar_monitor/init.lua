@@ -2,7 +2,6 @@ local wibox       = require("wibox")
 local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 
-
 return {
   create = function(label_text)
     local label = {
@@ -34,31 +33,31 @@ return {
     }
 
     return wibox.widget{
-      {
-        layout = wibox.layout.fixed.horizontal,
-        {
-          label,
-          percentage,
-          layout = wibox.layout.fixed.horizontal,
-          id = "wbm_labels"
-        },
-        {
-          widget = wibox.container.margin,
-          left = dpi(10),
-          {
-            graph,
-            layout = wibox.layout.fixed.horizontal,
-            id     = "wbm_graphs"
-          },
-          id = "wbm_graphs_margin"
-        },
-        nil,
-        id = "wbm_body"
-      },
       widget  = wibox.container.margin,
       margins = dpi(10),
+      {
+        id     = "wbm_body",
+        layout = wibox.layout.fixed.horizontal,
+        {
+          id     = "wbm_labels",
+          layout = wibox.layout.fixed.horizontal,
+
+          label,
+          percentage,
+        },
+        {
+          id     = "wbm_graphs_margin",
+          widget = wibox.container.margin,
+          left   = dpi(10),
+          {
+            layout = wibox.layout.fixed.horizontal,
+            id     = "wbm_graphs",
+
+            graph
+          }
+        },
+        nil
+      }
     }
-
-
   end
 }

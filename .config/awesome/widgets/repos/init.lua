@@ -7,12 +7,14 @@ local shape_utils = require("commons.shape")
 local repo_card   = require("widgets.repos.repo_card")
 
 return {
+
   create = function()
 
     local scroll = {
       widget = wibox.widget.separator,
       shape  = shape_utils.default_frr,
     }
+
 
     local base_widget = wibox.widget({
   		layout           = require("dependencies.overflow").vertical,
@@ -22,10 +24,12 @@ return {
   		scrollbar_widget = scroll,
   	})
 
+
     function get_url(text)
       local url = text:match('Fetch URL: (.+)%.git\n%s+Push')
       return url or 'No connection'
     end
+
 
     function get_source_code_icon(url)
       local source_icon = ""
@@ -48,8 +52,10 @@ return {
       local url         = get_url(out)
       local source_icon = get_source_code_icon(url)
       local card        = repo_card.create(repo_info, url, source_icon)
+
       base_widget:add(card)
     end
+
 
     awesome.connect_signal("sysstat::git_repos", function(repos)
       for _, repo_info in pairs(repos) do
