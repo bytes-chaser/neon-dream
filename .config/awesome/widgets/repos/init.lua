@@ -22,12 +22,17 @@ return {
   		scrollbar_widget = scroll,
   	})
 
-    function get_url(text) return text:match('Fetch URL: (.+)%.git\n%s+Push') end
+    function get_url(text)
+      local url = text:match('Fetch URL: (.+)%.git\n%s+Push')
+      return url or 'No connection'
+    end
 
     function get_source_code_icon(url)
       local source_icon = ""
 
-      if url:find('github') then
+      if url == nil then
+        source_icon = ""
+      elseif url:find('github') then
         source_icon = ''
       elseif url:find('gitlab') then
         source_icon = ""
@@ -39,7 +44,7 @@ return {
     end
 
 
-    function create_repo_card(out)
+    function create_repo_card(out, repo_info)
       local url         = get_url(out)
       local source_icon = get_source_code_icon(url)
       local card        = repo_card.create(repo_info, url, source_icon)
@@ -48,9 +53,11 @@ return {
 
     awesome.connect_signal("sysstat::git_repos", function(repos)
       for _, repo_info in pairs(repos) do
-        local path          = repo_info.path
-        local repo_info_cmd = commands.git_repo_info(path)
-        awful.spawn.easy_async_with_shell(repo_info_cmd, create_repo_card)
+
+        awful.spawn.easy_async_with_shell(commands.git_repo_info(repo_info.path),
+          function(out)
+            create_repo_card(out, repo_info)
+          end)
 
       end
     end)
