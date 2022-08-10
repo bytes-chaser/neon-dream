@@ -8,5 +8,15 @@ nd_utils = {
     end
 
     return false
+  end,
+
+  copy = function(source)
+    local result = {}
+
+    for k, v in pairs(source) do
+      result[k] = v
+    end
+
+    return result
   end
 }

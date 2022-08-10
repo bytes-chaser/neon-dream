@@ -2,29 +2,59 @@ local awful                = require("awful")
 local wibox                = require("wibox")
 local dpi                  = require("beautiful").xresources.apply_dpi
 local shape_utils          = require("commons.shape")
-local monitor_panel        = require("widgets.monitor_panel")
-local disk_monitor_panel   = require("widgets.disk_monitor_panel")
 local processes            = require("widgets.processes")
 local card                 = require("widgets.card")
+local amp                  = require("widgets.mon_panel")
 
-local monitor_panel_params = monitor_panel.default_params()
-monitor_panel_params.direction   = 'east'
-monitor_panel_params.bars_margin = 10
+local sys_stats_params       = amp.default_params()
+sys_stats_params.direction   = 'east'
+sys_stats_params.bars_margin = 10
 
-local sys_headerless_mon_widget = monitor_panel.create(monitor_panel_params)
-local sys_mon_widget = card.create_with_header("System", sys_headerless_mon_widget)
+local sys_stats_widget = card.create_with_header("System", amp.create(sys_stats_params, {
+  {
+    icon     = "",
+    signal   = "sysstat::ram",
+  },
+  {
+    icon     = "",
+    signal   = "sysstat::cpu",
+  },
+  {
+    icon     = "",
+    signal   = "sysstat::pow",
+  },
+  {
+    icon     = "",
+    signal   = "sysstat::temp",
+  },
+}))
 
 
 local processes_widget = card.create_with_header("Processes",  processes.create())
 
 
-local disk_monitor_panel_params = disk_monitor_panel.default_params()
-disk_monitor_panel_params.direction   = 'east'
-disk_monitor_panel_params.bars_margin = 10
-disk_monitor_panel_params.title_size  = 12
+local disk_stats_params       = amp.default_params()
+disk_stats_params.direction   = 'east'
+disk_stats_params.margin      = 25
+disk_stats_params.bars_margin = 10
+disk_stats_params.title_size  = 12
 
-local disks_headerless_mon_widget = disk_monitor_panel.create(disk_monitor_panel_params)
-local disks_mon_widget = card.create_with_header("Partitions", disks_headerless_mon_widget)
+local disks_stats_widget = card.create_with_header("Partitions", amp.create(disk_stats_params, {
+  {
+    icon     = "root",
+    signal   = "sysstat:disk_root",
+  },
+  {
+    icon     = "boot",
+    signal   = "sysstat:disk_boot",
+  },
+  {
+    icon     = "home",
+    signal   = "sysstat:disk_home",
+
+  },
+}))
+
 
 return {
   create = function(s)
@@ -41,9 +71,9 @@ return {
     })
 
     s.stats:setup{
-      sys_mon_widget,
+      sys_stats_widget,
       processes_widget,
-      disks_mon_widget,
+      disks_stats_widget,
       layout = wibox.layout.flex.vertical
     }
 

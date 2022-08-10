@@ -193,16 +193,15 @@ awful.screen.connect_for_each_screen(function(s)
 
 
     local wbm_cpu = wbm.create("CPU: ")
-    awesome.connect_signal("sysstat::cpu", function(cpu_val)
-        wbm_cpu.wbm_body.wbm_labels.wbm_valtext.text = cpu_val .. '%'
-        wbm_cpu.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(cpu_val, 1)
+    awesome.connect_signal("sysstat::cpu", function(val, postfix)
+        wbm_cpu.wbm_body.wbm_labels.wbm_valtext.text = val .. postfix
+        wbm_cpu.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(val, 1)
     end)
 
     local wbm_ram = wbm.create("RAM: ")
-    awesome.connect_signal("sysstat::ram", function(used, total)
-        local label_val = math.floor(100 * (used / total))
-        wbm_ram.wbm_body.wbm_labels.wbm_valtext.text = label_val .. '%'
-        wbm_ram.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(label_val, 1)
+    awesome.connect_signal("sysstat::ram", function(val, postfix)
+        wbm_ram.wbm_body.wbm_labels.wbm_valtext.text = val .. postfix
+        wbm_ram.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(val, 1)
     end)
 
 

@@ -34,17 +34,17 @@ watchdogs.scripts[watchdogs.signals.diskhome] = commands.get_disk_home_info
 watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')
     local used  = stdout:match('__(.*)#')
-    awesome.emit_signal("sysstat::ram", tonumber(used), tonumber(total))
+    local val = math.floor(100 * (tonumber(used) / tonumber(total)))
+    awesome.emit_signal("sysstat::ram", val, '%')
 end
 
 watchdogs.callbacks[watchdogs.signals.cpu] = function(widget, stdout)
-    awesome.emit_signal("sysstat::cpu", tonumber(stdout))
+    awesome.emit_signal("sysstat::cpu", tonumber(stdout), '%')
 end
 
 watchdogs.callbacks[watchdogs.signals.pow] = function(widget, stdout)
-  local status = stdout:match('(.*) ')
   local capacity  = stdout:match(' (.*)')
-  awesome.emit_signal("sysstat::pow", tonumber(capacity), status)
+  awesome.emit_signal("sysstat::pow", tonumber(capacity), '%')
 end
 
 local check_excluded_repo_path = function(w)
@@ -80,7 +80,7 @@ watchdogs.callbacks[watchdogs.signals.git_repos] = function(widget, stdout)
 end
 
 watchdogs.callbacks[watchdogs.signals.temp] = function(widget, stdout)
-  awesome.emit_signal("sysstat::temp", tonumber(stdout))
+  awesome.emit_signal("sysstat::temp", tonumber(stdout), '°C')
 end
 
 watchdogs.callbacks[watchdogs.signals.sync_packages] = function(widget, stdout, stderr, exitreason, exitcode)
@@ -119,7 +119,8 @@ local disk_callback = function(sig, widget, stdout)
 
   local used = stdout:match('(.*) ')
   local available  = stdout:match(' (.*)')
-  awesome.emit_signal(sig, tonumber(used), tonumber(available))
+  local val = math.ceil(100 * (tonumber(used) / tonumber(available)))
+  awesome.emit_signal(sig, val, '%')
 end
 
 
