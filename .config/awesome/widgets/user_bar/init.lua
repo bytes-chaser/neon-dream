@@ -9,7 +9,7 @@ local card                 = require("widgets.card")
 local weather    = require("widgets.weather").create()
 local calendar   = require("widgets.calendar").create()
 local todo       = require("widgets.todo").create()
-local player     = require("widgets.player")
+local player     = require("widgets.player.std")
 local sliders    = require("widgets.sliders_set")
 local profile    = require("widgets.profile")
 

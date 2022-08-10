@@ -4,14 +4,13 @@ local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 local gears       = require("gears")
 local commands    = require("commons.commands")
-local text_format = require("commons.text_format")
 
 player_works = false
 
 local on_player_pause_cmd = "spotify"
 
 local controls = require("widgets.player.controls")
-local metadata = require("widgets.player.metadata")
+local metadata = require("widgets.player.std.metadata")
 
 
 local make_metadata_margin = function(content)
@@ -47,7 +46,8 @@ local make_ctr_margin = function(content)
   }
 end
 
-local title_label = metadata.label("")
+
+local title_label  = metadata.label("")
 local album_label  = metadata.label("")
 local artist_label = metadata.label("")
 
@@ -64,9 +64,9 @@ local text_metadata = {
 }
 
 
-local prv_btn = controls.create("", commands.player_prev)
-local tgl_btn = controls.create("", commands.player_toggle)
-local nxt_btn = controls.create("", commands.player_next)
+local prv_btn = controls.create("", 30, commands.player_prev)
+local tgl_btn = controls.create("", 30, commands.player_toggle)
+local nxt_btn = controls.create("", 30, commands.player_next)
 
 
 local control_panel = {
@@ -107,22 +107,22 @@ local imagebox = wibox.widget({
 local player = wibox.widget({
     imagebox,
     {
+      direction = "east",
+	    widget    = wibox.container.rotate,
       {
         bg     = filter_color_east,
         widget = wibox.container.background
       },
-      direction = "east",
-	    widget    = wibox.container.rotate,
     },
     {
       {
         layout = wibox.layout.flex.vertical,
         {
+            layout = wibox.layout.flex.horizontal,
             {
               widget = wibox.container.background,
             },
             text_metadata,
-            layout = wibox.layout.flex.horizontal,
         },
         control_panel
       },
@@ -147,9 +147,9 @@ awesome.connect_signal("player::metadata",
     end
 
     if player_works then
-      title_val.text  = text_format.shorting(title,  30)
-      album_val.text  = text_format.shorting(album,  30)
-      artist_val.text = text_format.shorting(artist, 30)
+      title_val.text  = title
+      album_val.text  = album
+      artist_val.text = artist
 
       awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
         function()

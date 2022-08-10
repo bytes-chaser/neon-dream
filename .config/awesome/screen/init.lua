@@ -9,7 +9,7 @@ local dpi           = beautiful.xresources.apply_dpi
 local shape_utils   = require("commons.shape")
 local icons         = require("commons.icons")
 local wbm           = require("widgets.wibar_monitor")
-local wb_player     = require("widgets.wibar_player")
+local wb_player     = require("widgets.player.wibar")
 local naughty       = require("naughty")
 local notif_center  = require("widgets.notification_center")
 

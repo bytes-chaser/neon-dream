@@ -5,8 +5,8 @@ local gears       = require("gears")
 local icons       = require("commons.icons")
 local commands    = require("commons.commands")
 
-local button = function(symb, command)
-  icon = icons.wbi(symb, 30)
+local button = function(symb, size, command)
+  icon = icons.wbi(symb, size)
   icon:buttons(gears.table.join(awful.button({ }, 1, command)))
 return icon
 end
@@ -27,7 +27,8 @@ local create_btn_callback = function(on_play_cmd, on_pause_cmd)
 end
 
 return {
-  create = function(symb, cmd, pause_cmd)
-    return button(symb, create_btn_callback(cmd, pause_cmd))
+
+  create = function(symb, size, cmd, pause_cmd)
+    return button(symb, size, create_btn_callback(cmd, pause_cmd))
   end
 }
