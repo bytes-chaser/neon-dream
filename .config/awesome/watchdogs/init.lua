@@ -44,7 +44,8 @@ end
 
 watchdogs.callbacks[watchdogs.signals.pow] = function(widget, stdout)
   local capacity  = stdout:match(' (.*)')
-  awesome.emit_signal("sysstat::pow", tonumber(capacity), '%')
+  local status    = stdout:match('(.*) ')
+  awesome.emit_signal("sysstat::pow", tonumber(capacity), '%', status)
 end
 
 local check_excluded_repo_path = function(w)
