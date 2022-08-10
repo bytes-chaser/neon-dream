@@ -16,7 +16,7 @@ local profile    = require("widgets.profile")
 return {
   create = function(s)
 
-    s.user = awful.wibar({
+    local user = awful.wibar({
       position = "left",
       screen   = s,
       shape    = shape_utils.default_frr,
@@ -51,7 +51,7 @@ return {
       layout = wibox.layout.flex.horizontal
     }
 
-    s.user:setup{
+    user:setup{
       layout = wibox.layout.align.vertical,
       header,
       {
@@ -61,5 +61,7 @@ return {
         tasks,
       }
     }
+
+    return user
   end
 }

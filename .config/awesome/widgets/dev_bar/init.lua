@@ -9,23 +9,28 @@ local repos = card.create_with_header("Repositories", require("widgets.repos").c
 
 return {
   create = function(s)
-    s.dev = awful.wibar({
+    local dev  = awful.wibar({
+
       position = "left",
       screen   = s,
       shape    = shape_utils.default_frr,
       visible  = false,
       width    = dpi(500),
       height   = dpi(1000),
+
       margins  = {
-        left = dpi(15)
+        left   = dpi(15)
       }
+
     })
 
-    s.dev:setup{
+    dev:setup{
       packs,
       repos,
       layout = wibox.layout.flex.vertical
     }
+
+    return dev
 
 
   end

@@ -58,7 +58,8 @@ local disks_stats_widget = card.create_with_header("Partitions", amp.create(disk
 
 return {
   create = function(s)
-    s.stats = awful.wibar({
+
+    local stat = awful.wibar({
       position = "left",
       screen   = s,
       shape    = shape_utils.default_frr,
@@ -70,12 +71,14 @@ return {
       }
     })
 
-    s.stats:setup{
+    stat:setup{
       sys_stats_widget,
       processes_widget,
       disks_stats_widget,
       layout = wibox.layout.flex.vertical
     }
+
+    return stat
 
   end
 }
