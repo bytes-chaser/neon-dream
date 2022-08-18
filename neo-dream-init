@@ -1,0 +1,10 @@
+#!/bin/bash
+pacman -Syu
+pacman -S  base-devel xorg xorg-xinit ttf-font alacritty zsh picom networkmanager git rofi firefox flameshot ranger neovim brightnessctl fftw alsa-lib iniparser alsa-utils pulseaudio playerctl
+
+git clone https://aur.archlinux.org/yay.git
+cd yay
+makepkg -si
+cd
+yay -Syu
+yay -S awesome-git cava-git spicetify-cli-git
