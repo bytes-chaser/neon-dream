@@ -7,7 +7,6 @@ local xresources = require("beautiful.xresources")
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
-local themes_path = "/home/alex/.config/awesome/theme/"
 
 local theme = {}
 theme.font_famaly = "JetBrains Mono "
@@ -86,13 +85,13 @@ theme.taglist_squares_unsel = theme_assets.taglist_squares_unsel(
 -- Variables set for theming the menu:
 -- menu_[bg|fg]_[normal|focus]
 -- menu_[border_color|border_width]
-theme.menu_submenu_icon = themes_path.."submenu.png"
+theme.menu_submenu_icon = theme_folder.."submenu.png"
 theme.menu_height = dpi(15)
 theme.menu_width  = dpi(100)
 
 theme.icons_font = "Font Awesome 6 Free "
 
-theme.wallpaper = themes_path.."/2/background.png"
+theme.wallpaper = theme_folder.."2/background.png"
 
 
 theme.rounded = dpi(20)
