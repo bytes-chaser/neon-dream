@@ -75,7 +75,7 @@ spotify
 # Programming
 * base-devel
 
-# AUR's
+# Package Managment
 * snap
 * yay
 
