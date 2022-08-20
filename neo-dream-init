@@ -7,4 +7,5 @@ cd yay
 makepkg -si
 cd
 yay -Syu
-yay -S awesome-git cava-git spicetify-cli-git
+yay -S awesome-git cava-git spicetify-cli-git nvim-packer-git vim-plug-git
+ 
