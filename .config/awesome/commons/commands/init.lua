@@ -12,7 +12,7 @@ commands.cpu =
 
 commands.pow =
 [[
-  zsh -c "{cat /sys/class/power_supply/BAT0/status;cat /sys/class/power_supply/BAT0/capacity} | paste -d ' ' -s" | awk '{printf "#" $1 "__" $2 "#"}'
+  zsh -c "{cat /sys/class/power_supply/BAT0/status | sed 's/ //g';cat /sys/class/power_supply/BAT0/capacity} | paste -d ' ' -s" | awk '{printf "#" $1 "__" $2 "#"}'
 ]]
 
 commands.svol =
