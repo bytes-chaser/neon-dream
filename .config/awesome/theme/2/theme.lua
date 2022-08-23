@@ -32,7 +32,7 @@ theme.fg_focus      = theme.pallete_c4
 theme.fg_urgent     = "d61ff0"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(8)
+theme.useless_gap   = dpi(5)
 theme.border_width  = dpi(2)
 theme.border_normal = theme.col_transparent
 theme.border_focus  = theme.pallete_c2
