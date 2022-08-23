@@ -64,9 +64,9 @@ local text_metadata = {
 }
 
 
-local prv_btn = controls.create("", 30, commands.player_prev)
-local tgl_btn = controls.create("", 30, commands.player_toggle)
-local nxt_btn = controls.create("", 30, commands.player_next)
+local prv_btn = controls.create("", 30, commands.player_prev,   on_player_pause_cmd)
+local tgl_btn = controls.create("", 30, commands.player_toggle, on_player_pause_cmd)
+local nxt_btn = controls.create("", 30, commands.player_next,   on_player_pause_cmd)
 
 
 local control_panel = {
@@ -138,6 +138,7 @@ awesome.connect_signal("player::metadata",
 
     if status == nil then
       player_works = false
+      tgl_btn.text = ""
     elseif status:match("Paused") then
       tgl_btn.text = ""
       player_works = true
@@ -156,7 +157,7 @@ awesome.connect_signal("player::metadata",
           imagebox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
         end)
       else
-        title_val.text  = "Click"
+	title_val.text  = "Click"
         album_val.text  = "To start"
         artist_val.text = on_player_pause_cmd
     end
