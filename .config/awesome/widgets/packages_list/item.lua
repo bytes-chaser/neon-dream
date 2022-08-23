@@ -3,7 +3,7 @@ local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 
 return {
-  create = function(package, version, available, color, available_text_font)
+  create = function(package, c_version, c_color, a_version, a_font, a_color)
     local package_name = {
       widget   = wibox.widget.textbox,
       markup   = "<span foreground='" .. beautiful.fg_focus .."'>" .. package .."</span>",
@@ -12,15 +12,15 @@ return {
 
     local current_version = {
       widget = wibox.widget.textbox,
-      markup = "<span foreground='" .. color .."'>" .. version .. "</span>",
+      markup = "<span foreground='" .. c_color .."'>" .. c_version .. "</span>",
       font   = beautiful.font_famaly .. '12',
     }
 
     local available_version = {
       align  = "right",
       widget = wibox.widget.textbox,
-      markup = available,
-      font   = available_text_font,
+      markup =  "<span foreground='" .. a_color .."'>" .. a_version .. "</span>",
+      font   = beautiful.font_famaly .. a_font,
     }
 
     return {

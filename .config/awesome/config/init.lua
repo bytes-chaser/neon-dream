@@ -7,7 +7,10 @@ cfg = {
 		names = { "web", "dev", "misc"},
 		shape = shape_utils.default_frr
 	},
-	track_packages = {'git', 'lua', 'awesome-git', 'alacritty', 'zsh', 'python', 'go'},
+	track_packages = {
+		names = {'git', 'lua', 'awesome-git', 'alacritty', 'zsh', 'python', 'go'},
+		cache_file = home_folder .. '/.cache/awesome/packages'
+	},
 	repos_scan = {
 		scan_root_path = home_folder,
 		exclude_paths  = {

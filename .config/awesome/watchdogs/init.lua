@@ -1,4 +1,5 @@
 local awful = require("awful")
+local naughty = require("naughty")
 local commands = require("commons.commands")
 
 local watchdogs = {}
@@ -84,7 +85,7 @@ watchdogs.callbacks[watchdogs.signals.temp] = function(widget, stdout)
   awesome.emit_signal("sysstat::temp", tonumber(stdout), '°C')
 end
 
-watchdogs.callbacks[watchdogs.signals.sync_packages] = function(widget, stdout, stderr, exitreason, exitcode)
+watchdogs.callbacks[watchdogs.signals.sync_packages] = function()
 
   local date_table = os.date("*t")
   local hour, minute, second = date_table.hour, date_table.min, date_table.sec
@@ -94,8 +95,33 @@ watchdogs.callbacks[watchdogs.signals.sync_packages] = function(widget, stdout, 
 
 
   awful.spawn.with_shell("echo '" .. result .. "' > " .. home_folder .. '/.config/awesome/.packages_sync_time')
-  awesome.emit_signal("sysstat::package_sync", result)
 
+    awful.spawn.with_shell(commands.create_text_file(cfg.track_packages.cache_file))
+
+    for _, package in pairs(cfg.track_packages.names) do
+
+        local check_updates = "pacman -Qu " .. package .." | awk '{printf $4}'"
+        local check_current = "pacman -Q " .. package .. " | awk '{printf $2}'"
+
+        awful.spawn.easy_async_with_shell(check_updates, function(out)
+            local is_outdated = (#out == 0)
+            local avail_version = is_outdated and '' or out
+            local avail_col = '#48b892'
+            local avail_font = (is_outdated and '16' or '12')
+
+            awful.spawn.easy_async_with_shell(check_current, function(version)
+                local color = is_outdated and '#48b892' or '#b84860'
+                awful.spawn.with_shell(commands.append_text(cfg.track_packages.cache_file,
+                                package                     .. ' ' ..
+                                color                       .. ' ' ..
+                                version:gsub("[\r\n]", "")  .. ' ' ..
+                                avail_col                   .. ' ' ..
+                                avail_font                  .. ' ' ..
+                                avail_version:gsub("[\r\n]", "")))
+                awesome.emit_signal("sysstat::package_add")
+            end)
+        end)
+    end
 end
 
 watchdogs.callbacks[watchdogs.signals.ps] = function(widget, stdout)

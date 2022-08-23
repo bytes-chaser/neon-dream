@@ -3,7 +3,7 @@ local wibox        = require("wibox")
 local beautiful    = require("beautiful")
 local dpi          = beautiful.xresources.apply_dpi
 local shape_utils  = require("commons.shape")
-
+local commands     = require("commons.commands")
 local package_item = require("widgets.packages_list.item")
 
 return {
@@ -19,28 +19,27 @@ return {
   		step            = 50,
   	})
 
-    awesome.connect_signal("sysstat::package_sync", function()
+    awesome.connect_signal("sysstat::package_add", function()
 
-      for k, package in pairs(cfg.track_packages) do
-        local row = base_widget.children[k]
+        awful.spawn.easy_async_with_shell(commands.get_text_sorted(cfg.track_packages.cache_file, 1), function(pacs)
+            base_widget:reset()
 
-        local check_updates = "pacman -Qu " .. package .." | awk '{printf $4}'"
-        local check_current = "pacman -Q " .. package .." | awk '{printf $2}'"
+            for line in pacs:gmatch('([^\n]+)') do
+                local arr = nd_utils.split(line, ' ')
 
-        awful.spawn.easy_async_with_shell(check_updates, function(out)
-          local is_outdated = (#out == 0)
+                local name      = arr[1]
+                local c_color   = arr[2]
+                local c_version = arr[3]
+                local a_color   = arr[4]
+                local a_font    = arr[5]
+                local a_version = arr[6]
 
-          local avail_text = "<span foreground='#48b892'>" .. (is_outdated and '' or out) .. "</span>"
-          local avail_font = beautiful.font_famaly .. (is_outdated and '16' or '12')
+                base_widget:add(package_item.create(name, c_version, c_color, a_version, a_font, a_color))
 
-          awful.spawn.easy_async_with_shell(check_current, function(version)
-            local color = is_outdated and '#48b892' or '#b84860'
-            local item  = package_item.create(package, version, avail_text, color, avail_font)
-            base_widget:add(item)
-          end)
+            end
         end)
-      end
     end)
+
 
     return base_widget
 

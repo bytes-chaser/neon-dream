@@ -18,5 +18,15 @@ nd_utils = {
     end
 
     return result
+  end,
+
+  split = function(text, delimiter)
+      result = {};
+
+      for match in (text .. delimiter):gmatch("(.-)"..delimiter) do
+          table.insert(result, match);
+      end
+
+      return result;
   end
 }

@@ -83,6 +83,18 @@ commands.get_text = function(path)
   return "cat " .. path
 end
 
+commands.create_text_file = function(path)
+  return "echo '' > " .. path
+end
+
+commands.append_text = function(path, text)
+  return "echo '" ..text .. "' >> " .. path
+end
+
+commands.get_text_sorted = function(path, col)
+  return "sort -k " .. tostring(col) .. ' ' .. path
+end
+
 commands.weather_info = 'curl https://api.weatherapi.com/v1/current.json?key=' .. os.getenv("WEATHER_API_COM_API_KEY") .. '&q='.. os.getenv("WEATHER_API_COM_CITY") ..'&aqi=no'
 
 commands.get_disk_root_info =
