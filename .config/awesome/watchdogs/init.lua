@@ -111,13 +111,15 @@ watchdogs.callbacks[watchdogs.signals.sync_packages] = function()
 
             awful.spawn.easy_async_with_shell(check_current, function(version)
                 local color = is_outdated and '#48b892' or '#b84860'
-                awful.spawn.with_shell(commands.append_text(cfg.track_packages.cache_file,
-                                package                     .. ' ' ..
+                local row =     package:gsub("[\r\n]", "")  .. ' ' ..
                                 color                       .. ' ' ..
                                 version:gsub("[\r\n]", "")  .. ' ' ..
                                 avail_col                   .. ' ' ..
                                 avail_font                  .. ' ' ..
-                                avail_version:gsub("[\r\n]", "")))
+                                avail_version:gsub("[\r\n]", "") .. '\n'
+		require('naughty').notify({text = row})
+
+                awful.spawn.with_shell(commands.append_text(cfg.track_packages.cache_file, row))
                 awesome.emit_signal("sysstat::package_add")
             end)
         end)

@@ -84,11 +84,11 @@ commands.get_text = function(path)
 end
 
 commands.create_text_file = function(path)
-  return "echo '' > " .. path
+  return "echo -n '' > " .. path
 end
 
 commands.append_text = function(path, text)
-  return "echo '" ..text .. "' >> " .. path
+  return "echo -n '" ..text .. "' >> " .. path
 end
 
 commands.get_text_sorted = function(path, col)
