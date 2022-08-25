@@ -91,8 +91,9 @@ commands.append_text = function(path, text)
   return "echo -n '" ..text .. "' >> " .. path
 end
 
-commands.get_text_sorted = function(path, col)
-  return "sort -k " .. tostring(col) .. ' ' .. path
+commands.get_text_sorted = function(path, col, direction)
+  local cmd = (direction and 'desc' == direction) and "sort -r -k " or "sort -k "
+  return cmd .. tostring(col) .. ' ' .. path
 end
 
 commands.weather_info = 'curl https://api.weatherapi.com/v1/current.json?key=' .. os.getenv("WEATHER_API_COM_API_KEY") .. '&q='.. os.getenv("WEATHER_API_COM_CITY") ..'&aqi=no'

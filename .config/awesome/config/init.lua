@@ -8,8 +8,13 @@ cfg = {
 		shape = shape_utils.default_frr
 	},
 	track_packages = {
-		names = {'git', 'lua', 'awesome-git', 'alacritty', 'zsh', 'python', 'go'},
-		cache_file = home_folder .. '/.cache/awesome/packages'
+		names = {'git', 'lua', 'awesome-git', 'alacritty', 'zsh', 'neovim', 'rofi'},
+		cache_file = home_folder .. '/.cache/awesome/packages',
+		pagination_defaults = {
+			size          = 5,     -- items per page,
+			order         = 'asc', -- asc or desc
+			sort_property = 1,     -- 1-Name, 3-Current Version, 6-Available version
+		}
 	},
 	repos_scan = {
 		scan_root_path = home_folder,
