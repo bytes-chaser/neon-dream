@@ -27,7 +27,7 @@ commands.brightness =
 
 commands.top_ps =
 [[
-  zsh -c "top -b|head -12 | tail -5 | awk '{printf \"#\" $12 \"-\" $9 \"__\" $10 \" \"}'"
+  zsh -c "top -b|head -14 | tail -7 | awk '{printf \"#\" $12 \"-\" $9 \"__\" $10 \" \"}'"
 ]]
 
 commands.player_toggle =
@@ -105,7 +105,7 @@ commands.get_disk_root_info =
 
 commands.get_disk_boot_info =
   [[
-    zsh -c "df -B 1MB /boot | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
+    zsh -c "df -B 1MB /efi | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
   ]]
 
 commands.get_disk_home_info =

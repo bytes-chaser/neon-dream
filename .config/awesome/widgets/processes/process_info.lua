@@ -1,4 +1,7 @@
-local wibox = require("wibox")
+local beautiful = require("beautiful")
+local dpi       = beautiful.xresources.apply_dpi
+local shapes    = require("commons.shape")
+local wibox     = require("wibox")
 
 return {
   create = function(record)
@@ -6,23 +9,42 @@ return {
     local cpu  = record.cpu
     local mem  = record.mem
 
-    return wibox.widget{
+    return wibox.widget {
+      widget = wibox.container.margin,
+      margins = dpi(5),
       {
-        id = "name",
-        widget = wibox.widget.textbox,
-        text = name
-      },
-      {
-        id = "cpu",
-        widget = wibox.widget.textbox,
-        text = cpu
-      },
-      {
-        widget = wibox.widget.textbox,
-        id = "mem",
-        text = mem
-      },
-      layout = wibox.layout.flex.horizontal,
+        id = 'marg',
+        widget = wibox.container.background,
+        shape  = shapes.default_frr,
+        bg = beautiful.palette_c6,
+        {
+          id      = 'i_marg',
+          widget  = wibox.container.margin,
+          top     = dpi(5),
+          bottom  = dpi(5),
+          left    = dpi(10),
+          right   = dpi(10),
+          {
+            id = 'box',
+            {
+              id = "name",
+              widget = wibox.widget.textbox,
+              markup = "<span foreground='" .. beautiful.pallete_c1 .."'>" .. name  .."</span>"
+            },
+            {
+              id = "cpu",
+              widget = wibox.widget.textbox,
+              markup = "<span foreground='" .. beautiful.pallete_c1 .."'>" .. cpu  .."</span>"
+            },
+            {
+              widget = wibox.widget.textbox,
+              id = "mem",
+              markup = "<span foreground='" .. beautiful.pallete_c1 .."'>" .. mem  .."</span>"
+            },
+            layout = wibox.layout.flex.horizontal,
+          }
+        }
+      }
     }
   end
 }

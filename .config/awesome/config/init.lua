@@ -29,6 +29,9 @@ cfg = {
 	},
 	todo = {
 		path = home_folder .. '/.cache/awesome/todo/'
+	},
+	widgets_versions = {
+		stat_bar = 'v2' -- v1, v2
 	}
 }
 

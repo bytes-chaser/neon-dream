@@ -11,20 +11,20 @@ local lbl         = require("widgets.pbars.pbar_std.progress_label")
 local get_layout = function(parameters)
   local direction = parameters.direction
   return (direction == 'north' or direction == 'south')
-        and wibox.layout.align.horizontal
-        or wibox.layout.align.vertical
+        and wibox.layout.ratio.horizontal
+        or wibox.layout.ratio.vertical
 end
 
 
 return {
 
   set_val = function(pbar, pbar_parameters, val)
-      pbar[2].pb.value = val
+      pbar:get_children()[2].pb.value = val
   end,
 
 
   set_label_text = function(element, text)
-      element[3].markup = "<span foreground='" .. beautiful.fg_focus .."'>" .. text .. "</span>"
+      element:get_children()[3].markup = "<span foreground='" .. beautiful.fg_focus .."'>" .. text .. "</span>"
   end,
 
 
@@ -38,18 +38,20 @@ return {
       pbar.forced_width    = width
     end
 
-    if parameters.heigh then
+    if parameters.height then
       pbar.pb.forced_height = width
       pbar.forced_height    = width
     end
 
     local label = lbl.create()
 
-    return {
+    local widget = wibox.widget{
       icon,
       pbar,
       label,
       layout = get_layout(parameters)
     }
+    widget:ajust_ratio(2, 0.1, 0.8, 0.1)
+    return widget
   end
 }

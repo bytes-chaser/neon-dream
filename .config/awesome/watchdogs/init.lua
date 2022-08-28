@@ -36,7 +36,7 @@ watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')
     local used  = stdout:match('__(.*)#')
     local val = math.floor(100 * (tonumber(used) / tonumber(total)))
-    awesome.emit_signal("sysstat::ram", val, '%')
+    awesome.emit_signal("sysstat::ram", val, '%', total, used)
 end
 
 watchdogs.callbacks[watchdogs.signals.cpu] = function(widget, stdout)
@@ -148,7 +148,7 @@ local disk_callback = function(sig, widget, stdout)
   local used = stdout:match('(.*) ')
   local available  = stdout:match(' (.*)')
   local val = math.ceil(100 * (tonumber(used) / tonumber(available)))
-  awesome.emit_signal(sig, val, '%')
+  awesome.emit_signal(sig, val, '%', used, available)
 end
 
 

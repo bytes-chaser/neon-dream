@@ -10,7 +10,7 @@ return {
         align         = "center",
         forced_width  = dpi(80),
         opacity       = 1,
-        font          = beautiful.font_famaly .. " Bold 10",
+        font          = beautiful.font_famaly .. " Bold 9",
         widget        = wibox.widget.textbox,
     }
   end
