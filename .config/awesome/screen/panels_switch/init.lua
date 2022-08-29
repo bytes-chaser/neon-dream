@@ -4,9 +4,10 @@ local beautiful     = require("beautiful")
 local wibox         = require("wibox")
 local dpi           = beautiful.xresources.apply_dpi
 local icons         = require("commons.icons")
+local shapes         = require("commons.shape")
 
-local active_panel_switch_icon = nil
-local active_panel_switch_icon_section = nil
+local active_panel_switch_icon
+local active_panel_switch_icon_section
 
 local close_all_sub_panels = function(s)
   s.stats.visible    = false
@@ -28,14 +29,15 @@ local create_munu_panel_button = function(glyph, text, btn_fn)
 	forced_width  = dpi(25),
 	forced_heigth = dpi(15),
         bg 	      = beautiful.palette_c7,
-        widget 	      = wibox.container.background
+        shape         = shapes.circle(dpi(25)),
+        widget 	  = wibox.container.background
       },
       margins = dpi(5),
       widget  = wibox.container.margin
 
   }
 
-  local myclock_t = awful.tooltip {
+  awful.tooltip {
       objects        = { btn },
       timer_function = function()
           return text
@@ -69,8 +71,8 @@ return {
             s.user.visible = true
             icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. "" .. "</span>"
 
-	    active_panel_switch_icon = "" 
-	    active_panel_switch_icon_section = icon
+            active_panel_switch_icon = ""
+            active_panel_switch_icon_section = icon
 
           end
         end)))
@@ -92,8 +94,8 @@ return {
             s.dev.visible  = true
             icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. "" .. "</span>"
 	    
-	    active_panel_switch_icon = ""
-	    active_panel_switch_icon_section = icon
+            active_panel_switch_icon = ""
+            active_panel_switch_icon_section = icon
             
           end
         end)))
@@ -115,8 +117,8 @@ return {
             s.stats.visible = true
             icon.markup     = "<span foreground='" .. beautiful.fg_focus .. "'>" .. "" .. "</span>"
 
-	    active_panel_switch_icon = "" 
-	    active_panel_switch_icon_section = icon
+            active_panel_switch_icon = ""
+            active_panel_switch_icon_section = icon
           end
         end)))
       end),
