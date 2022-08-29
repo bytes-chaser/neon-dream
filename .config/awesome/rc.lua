@@ -12,10 +12,14 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 require("awful.hotkeys_popup.keys")
 require("commons.nd_utils")
-home_folder        = os.getenv("HOME")
-theme_folder       = home_folder .. "/.config/awesome/theme/"
-user               = os.getenv("USER")
-show_titlebar      = false
+home_folder         = os.getenv("HOME")
+cache_folder        = os.getenv("HOME") .. "/.cache/awesome/"
+theme_folder        = home_folder .. "/.config/awesome/theme/"
+alacritty_folder    = home_folder .. "/.config/alacritty/"
+rofi_folder         = home_folder .. "/.config/rofi/"
+theme_active        = cache_folder .. "theme.lua"
+user                = os.getenv("USER")
+show_titlebar       = false
 
 -- Error handling
 if awesome.startup_errors then
@@ -40,8 +44,7 @@ do
 end
 require("config")
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(theme_folder .. cfg.theme_version .. "/theme.lua")
-
+require("commons.theme").init()
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -52,7 +55,6 @@ modkey = "Mod4"
 
 require("bindings")
 require("layout")
-
 
 
 
@@ -158,3 +160,5 @@ require("commons.playerctl")
 
 -- Autostart
 awful.spawn.with_shell("picom --experimental-backends")
+
+
