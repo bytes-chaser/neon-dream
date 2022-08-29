@@ -4,9 +4,6 @@ local dpi                  = require("beautiful").xresources.apply_dpi
 local shape_utils          = require("commons.shape")
 local processes            = require("widgets.processes")
 local arcchart_stat        = require("widgets.arcchart_stat")
-local amp                  = require("widgets.mon_panel")
-local mb                   = require("widgets.pbars.pbar_std")
-
 
 return {
     create = function(s)
