@@ -2,6 +2,7 @@ local awful         = require("awful")
 local beautiful     = require("beautiful")
 local wibox         = require("wibox")
 local bwf           = require("widgets.battery")
+local ts            = require("widgets.theme_switch")
 local dpi           = beautiful.xresources.apply_dpi
 local shape_utils   = require("commons.shape")
 local wbm           = require("widgets.wibar_monitor")
@@ -128,6 +129,11 @@ return {
                   layout = wibox.layout.fixed.horizontal,
                   wibox.widget.textclock(),
                   bwf.create({size = 20}),
+                  {
+                      ts.create({size = 12}),
+                      margins = 10,
+                      widget  = wibox.container.margin
+                  },
                   {
                     notif_icon,
                     margins = 10,
