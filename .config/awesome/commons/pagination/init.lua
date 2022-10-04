@@ -22,13 +22,15 @@ return {
 
 
         awful.spawn.easy_async_with_shell(get_count, function(out)
-            local count      = tonumber(out)
-            local totalPages = math.floor(count / size)
-            local diff       = count % size
+            local count       = tonumber(out)
+            local totalPages  = math.floor(count / size)
+            local diff        = count % size
 
             if diff > 0 then
                 totalPages = totalPages + 1
             end
+
+            local isOddPagesN = totalPages % 2 == 1
 
             if page > totalPages then
                 page = totalPages
@@ -40,10 +42,10 @@ return {
 
             local cmd = get_text_cmd
 
-            if page < (math.floor(totalPages / 2)) then
+            if (page - 1) < (math.floor(totalPages / 2)) then
                 cmd  = cmd .. ' | head -' .. tostring(page * size) .. ' | tail -' .. tostring(size)
             else
-                cmd  = cmd .. ' | tail -' .. tostring((size * ((totalPages) - page)) + diff) .. ' | head -' .. tostring(size)
+                cmd  = cmd .. ' | tail -' .. tostring((size * (totalPages - page + (isOddPagesN and 1 or 0))) + diff) .. ' | head -' .. tostring(size)
             end
 
             awful.spawn.easy_async_with_shell(cmd, function(text)

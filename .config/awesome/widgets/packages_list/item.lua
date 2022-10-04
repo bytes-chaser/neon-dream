@@ -25,7 +25,6 @@ return {
 
     return {
       id            = package,
-      forced_height = dpi(65),
       widget        = wibox.container.background,
       bg            = beautiful.palette_c7,
       {
@@ -34,7 +33,7 @@ return {
           {
             {
                layout        = wibox.container.scroll.horizontal,
-               max_size      = 100,
+               forced_height = 25,
                step_function = wibox.container.scroll.step_functions.nonlinear_back_and_forth,
                speed         = 100,
                current_version,
@@ -44,7 +43,7 @@ return {
             },
             {
               layout        = wibox.container.scroll.horizontal,
-              max_size      = 100,
+              forced_height = 25,
               step_function = wibox.container.scroll.step_functions.nonlinear_back_and_forth,
               speed         = 100,
               available_version
@@ -54,7 +53,7 @@ return {
           layout = wibox.layout.flex.vertical,
         },
         widget  = wibox.container.margin,
-        margins = dpi(10)
+        margins = dpi(cfg.track_packages.style.card_margin)
       }
 
     }

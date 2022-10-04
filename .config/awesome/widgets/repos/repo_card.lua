@@ -5,19 +5,19 @@ local shape_utils = require("commons.shape")
 local icons       = require("commons.icons")
 
 return {
-  create = function(repo_info, url, source_icon)
+  create = function(path_text, name_text, url, vcs_icon, source_icon)
 
-    local icon = icons.wbi(repo_info.icon, 16)
+    local icon = icons.wbi(vcs_icon, 16)
 
     local name = {
       widget = wibox.widget.textbox,
-      markup   = "<span foreground='" .. beautiful.fg_focus .."'>" .. repo_info.name .."</span>",
+      markup   = "<span foreground='" .. beautiful.fg_focus .."'>" .. name_text .."</span>",
       font = beautiful.font_famaly .. '12',
     }
 
     local path = {
       widget = wibox.widget.textbox,
-      markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. repo_info.path .."</span>",
+      markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. path_text .."</span>",
       font = beautiful.font_famaly .. '10',
     }
 
@@ -74,7 +74,7 @@ return {
             layout = wibox.layout.flex.vertical
           },
           widget = wibox.container.margin,
-          margins = dpi(10)
+          margins = cfg.repos_scan.style.card_margin
         },
         layout = require("dependencies.overflow").vertical,
         spacing = dpi(5),

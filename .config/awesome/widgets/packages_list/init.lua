@@ -13,16 +13,19 @@ local paginator    = require("widgets.paginator")
 return {
   create = function()
 
+      local scroll = {
+          widget = wibox.widget.separator,
+          shape  = shape_utils.default_frr,
+      }
+
+
       local base_widget = wibox.widget({
-  		layout  = require("dependencies.overflow").vertical,
-  		spacing = dpi(5),
-  		scrollbar_widget = {
-  			widget = wibox.widget.separator,
-  			shape  = shape_utils.default_frr,
-  		},
-  		scrollbar_width = dpi(8),
-  		step            = 50,
-  	  })
+          layout           = require("dependencies.overflow").vertical,
+          spacing          = dpi(5),
+          scrollbar_width  = dpi(8),
+          step             = 50,
+          scrollbar_widget = scroll,
+      })
 
 
       local page       = 1
@@ -181,6 +184,7 @@ return {
       })
 
 
+      update();
       return wibox.widget({
           widget = wibox.layout.fixed.vertical,
           header_widget,

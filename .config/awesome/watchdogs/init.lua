@@ -62,23 +62,45 @@ end
 
 watchdogs.callbacks[watchdogs.signals.git_repos] = function(widget, stdout)
 
-  local repos = {}
-  local index = 1
-  for w in stdout:gmatch("[^\r\n]+") do
+    awful.spawn.with_shell(commands.create_text_file(cfg.repos_scan.cache_file))
 
-    local included = check_excluded_repo_path(w)
+    for w in stdout:gmatch("[^\r\n]+") do
 
-    if included then
-      repo_info = {}
-      repo_info.vcs = 'git'
-      repo_info.icon = ''
-      repo_info.path = w:match('(.*)/.git')
-      repo_info.name = repo_info.path:match('.+/(.+)$')
-      repos[index] = repo_info
-      index = index + 1
-    end
-  end
-  awesome.emit_signal("sysstat::git_repos", repos)
+        local included = check_excluded_repo_path(w)
+
+        if included then
+          local path = w:match('(.*)/.git')
+
+            awful.spawn.easy_async_with_shell(commands.git_repo_info(path),
+                function(out)
+
+                    local url = out:match('Fetch URL: (.+)%.git\n%s+Push') or 'undefined'
+
+                    local source_icon = ""
+
+                    if(url == nil) then
+                        source_icon = ""
+                    elseif url:find('github') then
+                        source_icon = ''
+                    elseif url:find('gitlab') then
+                        source_icon = ""
+                    elseif url:find('bitbucket') then
+                        source_icon = ""
+                    end
+
+                    local formatted_path = string.gsub(path, home_folder, "~")
+                    local row =    'git'                    .. ' ' ..
+                                    formatted_path          .. ' ' ..
+                                    path:match('.+/(.+)$')  .. ' ' ..
+                                    url                     .. ' ' ..
+                                    ''                     .. ' ' ..
+                                    source_icon             .. '\n'
+
+                    awful.spawn.with_shell(commands.append_text(cfg.repos_scan.cache_file, row))
+                    awesome.emit_signal("sysstat::repo_add")
+                end)
+        end
+      end
 end
 
 watchdogs.callbacks[watchdogs.signals.temp] = function(widget, stdout)
@@ -86,7 +108,6 @@ watchdogs.callbacks[watchdogs.signals.temp] = function(widget, stdout)
 end
 
 watchdogs.callbacks[watchdogs.signals.sync_packages] = function()
-
   local date_table = os.date("*t")
   local hour, minute, second = date_table.hour, date_table.min, date_table.sec
 
@@ -192,6 +213,20 @@ watchdogs.init = function()
     watchdogs.run(watchdogs.signals.weather, 120)
     watchdogs.run(watchdogs.signals.sync_packages, 3600)
 
+    if nd_utils.is_file_exists(cfg.track_packages.cache_file) == false then
+        awful.spawn.easy_async_with_shell(
+                watchdogs.scripts[watchdogs.signals.sync_packages] ,
+                watchdogs.callbacks[watchdogs.signals.sync_packages]
+        )
+    end
+
+    if nd_utils.is_file_exists(cfg.repos_scan.cache_file) == false then
+
+        awful.spawn.easy_async_with_shell(
+                watchdogs.scripts[watchdogs.signals.git_repos],
+                watchdogs.callbacks[watchdogs.signals.git_repos]
+        )
+    end
 end
 
 return watchdogs

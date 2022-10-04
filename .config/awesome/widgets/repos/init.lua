@@ -1,8 +1,14 @@
 local awful       = require("awful")
 local wibox       = require("wibox")
-local dpi         = require("beautiful").xresources.apply_dpi
+local beautiful   = require("beautiful")
+local dpi         = beautiful.xresources.apply_dpi
+local gears       = require("gears")
 local commands    = require("commons.commands")
+local icons       = require("commons.icons")
 local shape_utils = require("commons.shape")
+local droplist    = require("widgets.droplist")
+local pagination   = require("commons.pagination")
+local paginator   = require("widgets.paginator")
 
 local repo_card   = require("widgets.repos.repo_card")
 
@@ -19,56 +25,170 @@ return {
     local base_widget = wibox.widget({
   		layout           = require("dependencies.overflow").vertical,
   		spacing          = dpi(5),
-      scrollbar_width  = dpi(8),
+       scrollbar_width  = dpi(8),
   		step             = 50,
   		scrollbar_widget = scroll,
   	})
 
+    local page       = 1
+    local totalPages = 1
+    local size       = cfg.repos_scan.pagination_defaults.size
+    local col        = cfg.repos_scan.pagination_defaults.sort_property
+    local direction  = cfg.repos_scan.pagination_defaults.order
 
-    function get_url(text)
-      local url = text:match('Fetch URL: (.+)%.git\n%s+Push')
-      return url or 'No connection'
+
+    local sort_menu = wibox.widget({
+      text   = 'Sort by:',
+      align = "left",
+      opacity = 1,
+      font = beautiful.font_famaly .. '10',
+      widget = wibox.widget.textbox,
+    })
+
+    local toggleOrder = function()
+      direction = direction == 'asc' and 'desc' or 'asc'
+      return direction == 'asc' and '' or ''
     end
 
 
-    function get_source_code_icon(url)
-      local source_icon = ""
+    local updateSortBox = function(n)
+      if n == 2 then
+        sort_menu.text = 'Sort by: Path'
+      elseif n == 3 then
+        sort_menu.text = 'Sort by: Name'
+      elseif n == 4 then
+        sort_menu.text = 'Sort by: Remote URL'
+      end
+    end
 
-      if url == nil then
-        source_icon = ""
-      elseif url:find('github') then
-        source_icon = ''
-      elseif url:find('gitlab') then
-        source_icon = ""
-      elseif url:find('bitbucket') then
-        source_icon = ""
+    local pgntr;
+
+    local update_callback = function(page_body)
+      local pacs = page_body.text
+      page       = page_body.page
+      size       = page_body.size
+      totalPages = page_body.totalPages
+      col        = page_body.col
+
+      local totalElements = page_body.totalElements
+
+      base_widget:reset()
+
+      for line in pacs:gmatch('([^\n]+)') do
+        local arr = nd_utils.split(line, ' ')
+
+        local path        = arr[2]
+        local name        = arr[3]
+        local url         = arr[4]
+        local icon_vcs    = arr[5]
+        local icon_remote = arr[6]
+
+        base_widget:add(repo_card.create(path, name, url, icon_vcs, icon_remote))
       end
 
-      return source_icon
+      paginator.update(pgntr, page, size, totalElements, totalPages)
+      updateSortBox(col)
     end
 
 
-    function create_repo_card(out, repo_info)
-      local url         = get_url(out)
-      local source_icon = get_source_code_icon(url)
-      local card        = repo_card.create(repo_info, url, source_icon)
-
-      base_widget:add(card)
+    local update = function()
+      pagination.getPage(cfg.repos_scan.cache_file, update_callback, page, size, col, direction)
     end
 
 
-    awesome.connect_signal("sysstat::git_repos", function(repos)
-      for _, repo_info in pairs(repos) do
-
-        awful.spawn.easy_async_with_shell(commands.git_repo_info(repo_info.path),
-          function(out)
-            create_repo_card(out, repo_info)
-          end)
-
+    local paginator_prev = function()
+      if page > 1 then
+        page = page - 1
       end
+      update()
+    end
+
+
+    local paginator_next = function()
+      if page < totalPages then
+        page = page + 1
+      end
+      update()
+    end
+
+
+    pgntr = paginator.create(10, paginator_prev, paginator_next)
+
+
+    local sortDirection = icons.wbi(direction == 'asc' and '' or '', 12)
+    sortDirection:buttons(gears.table.join(awful.button({ }, 1, function()
+      sortDirection.text = toggleOrder()
+      update()
+    end)))
+
+
+
+    droplist.create(sort_menu,
+            shape_utils.partially_rounded_rect(false, true, true, false, beautiful.rounded),
+            'right', 'middle',
+            {
+              {
+                name = "Path",
+                callback = function()
+                  col = 2
+                  update()
+                end,
+              },
+              {
+                name = "Name",
+                default = true,
+                callback = function()
+                  col = 3
+                  update()
+                end
+              },
+              {
+                name = "Remote URL",
+                callback = function()
+                  col = 4
+                  update()
+                end
+              }
+            }
+    )
+
+
+    local header_widget = wibox.widget({
+      widget = wibox.container.margin,
+      margins = dpi(3),
+      {
+        widget = wibox.container.background,
+        forced_height = dpi(35),
+        {
+          layout = wibox.layout.align.horizontal,
+          pgntr,
+          nil,
+          {
+            layout = wibox.layout.align.horizontal,
+            sort_menu,
+            {
+              widget = wibox.widget.background,
+              forced_width = 10
+            },
+            sortDirection
+          }
+        }
+      }
+    })
+
+
+    awesome.connect_signal("sysstat::repo_add", function()
+      page = 1
+      update()
     end)
 
-    return base_widget
+    update();
+
+    return wibox.widget({
+      widget = wibox.layout.fixed.vertical,
+      header_widget,
+      base_widget
+    })
 
   end
 }

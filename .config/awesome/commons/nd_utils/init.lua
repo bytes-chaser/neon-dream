@@ -28,5 +28,15 @@ nd_utils = {
       end
 
       return result;
+  end,
+
+  is_file_exists = function(path)
+      local f= io.open(path,"r")
+      if f ~= nil then
+          io.close(f)
+          return true
+      else
+          return false
+      end
   end
 }
