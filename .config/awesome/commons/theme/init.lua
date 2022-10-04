@@ -1,3 +1,4 @@
+local awful     = require("awful")
 local beautiful = require("beautiful")
 
 local copy_file_cnt = function(path1, path2)
@@ -23,7 +24,10 @@ theme_util.switch = function(name)
     copy_file_cnt(theme_folder .. name .. '/config.rasi'        ,rofi_folder .. 'config.rasi')
     copy_file_cnt(theme_folder .. name .. '/background.png'     ,rofi_folder .. 'background.png')
 
-    awesome.restart()
+    awful.spawn.easy_async_with_shell("sh " .. theme_folder .. name .. '/spicetify.sh', function()
+        awesome.restart()
+    end)
+
 
 end
 
