@@ -15,7 +15,7 @@ return {
             shape    = shape_utils.default_frr,
             visible  = false,
             width    = dpi(500),
-            height   = dpi(1000),
+            height   = dpi(1020),
 
             margins  = {
                 left   = dpi(15)
