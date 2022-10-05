@@ -38,7 +38,7 @@ cfg = {
 	},
 	calendar = {
 		week_started_on_sunday = true,
-		weekend_days_incices   = {5, 6},
+		weekend_days_indexes   = {5, 6},
 	},
 	todo = {
 		path = home_folder .. '/.cache/awesome/todo/'

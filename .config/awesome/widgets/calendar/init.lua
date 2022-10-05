@@ -38,7 +38,7 @@ calendar.decorate_cell = function(widget, flag, date)
 
 
     local weekday = tonumber(os.date("%w", os.time(d)))
-    local default_fg = nd_utils.arr_contains(cfg.calendar.weekend_days_incices, weekday)
+    local default_fg = nd_utils.arr_contains(cfg.calendar.weekend_days_indexes, weekday)
                         and '#88ffbb'
                         or (props.fg_color or beautiful.pallete_c2)
 
