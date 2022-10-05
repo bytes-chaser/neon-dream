@@ -12,6 +12,7 @@ local active_panel_switch_icon_section
 local close_all_sub_panels = function(s)
   s.stats.visible    = false
   s.dev.visible      = false
+  s.docker.visible     = false
   s.user.visible     = false
   if active_panel_switch_icon and active_panel_switch_icon_section then
 	active_panel_switch_icon_section.markup = "<span foreground='" .. beautiful.fg_normal .. "'>" .. active_panel_switch_icon .. "</span>"
