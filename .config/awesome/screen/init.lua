@@ -12,6 +12,7 @@ local wibar   = require("screen.wibar")
 
 local stat_bar = require("widgets.stat_bar")
 local dev_bar  = require("widgets.dev_bar")
+local docker_bar  = require("widgets.docker_bar")
 local user_bar = require("widgets.user_bar")
 
 
@@ -42,10 +43,11 @@ awful.screen.connect_for_each_screen(function(s)
     show_sub_panel = false
     sub_panel_mode = 'dev'
 
-    s.stats = stat_bar.create(s)
-    s.dev   = dev_bar.create(s)
-    s.user  = user_bar.create(s)
-    s.notif = notif.create(s)
+    s.stats  = stat_bar.create(s)
+    s.dev    = dev_bar.create(s)
+    s.docker = docker_bar.create(s)
+    s.user   = user_bar.create(s)
+    s.notif  = notif.create(s)
     
     wibar.create(s)
 

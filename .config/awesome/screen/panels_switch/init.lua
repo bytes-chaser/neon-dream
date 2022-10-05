@@ -101,6 +101,29 @@ return {
         end)))
       end),
 
+      create_munu_panel_button('', "Docker", function(btn, icon)
+        btn:buttons(gears.table.join(awful.button({ }, 1, function()
+          if sub_panel_mode == 'docker' and show_sub_panel then
+            s.docker.visible  = false
+            show_sub_panel = false
+            icon.markup    = "<span foreground='" .. beautiful.fg_normal .. "'>" .. '' .. "</span>"
+          else
+            if not sub_panel_mode ~= 'docker' then
+              icon.markup  = "<span foreground='" .. beautiful.fg_normal .. "'>" .. '' .. "</span>"
+              close_all_sub_panels(s)
+            end
+            show_sub_panel = true
+            sub_panel_mode = 'docker'
+            s.docker.visible  = true
+            icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. '' .. "</span>"
+
+            active_panel_switch_icon = ''
+            active_panel_switch_icon_section = icon
+
+          end
+        end)))
+      end),
+
       create_munu_panel_button("", "Stats", function(btn, icon)
         btn:buttons(gears.table.join(awful.button({ }, 1, function()
           if sub_panel_mode == 'stat' and show_sub_panel then

@@ -36,6 +36,14 @@ cfg = {
 			home_folder .. '/.local/share/nvim/'
 		}
 	},
+	docker = {
+		cache_file = home_folder .. '/.cache/awesome/docker_containers',
+		pagination_defaults = {
+			size          = 10,     -- items per page,
+			order         = 'asc', -- asc or desc
+			sort_property = 3,     -- 1-ID, 2-Image, 3-Name, 4-Ports, 5-Status
+		}
+	},
 	calendar = {
 		week_started_on_sunday = true,
 		weekend_days_indexes   = {5, 6},

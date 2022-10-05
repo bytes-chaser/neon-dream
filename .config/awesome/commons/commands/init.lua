@@ -118,4 +118,9 @@ commands.temp =
     zsh -c "sensors | grep Package | awk '{printf \"%d\", $4}'"
   ]]
 
+commands.docker_containers =
+[[
+  zsh -c "docker ps -a --format '{{.ID}}___{{.Image}}___{{.Names}}___{{.Ports}}___{{.Status}}___{{.RunningFor}}'"
+]]
+
 return commands

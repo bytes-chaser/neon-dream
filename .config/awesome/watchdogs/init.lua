@@ -1,5 +1,4 @@
 local awful = require("awful")
-local naughty = require("naughty")
 local commands = require("commons.commands")
 
 local watchdogs = {}
@@ -19,6 +18,7 @@ watchdogs.signals.sync_packages = watchdogs.signals.prfx .. 'sync'
 watchdogs.signals.diskroot = watchdogs.signals.prfx .. 'diskroot'
 watchdogs.signals.diskboot = watchdogs.signals.prfx .. 'diskboot'
 watchdogs.signals.diskhome = watchdogs.signals.prfx .. 'diskhome'
+watchdogs.signals.docker = watchdogs.signals.prfx .. 'docker'
 
 watchdogs.scripts[watchdogs.signals.ram] = commands.ram
 watchdogs.scripts[watchdogs.signals.cpu] = commands.cpu
@@ -31,6 +31,7 @@ watchdogs.scripts[watchdogs.signals.sync_packages] = commands.sync_packages
 watchdogs.scripts[watchdogs.signals.diskroot] = commands.get_disk_root_info
 watchdogs.scripts[watchdogs.signals.diskboot] = commands.get_disk_boot_info
 watchdogs.scripts[watchdogs.signals.diskhome] = commands.get_disk_home_info
+watchdogs.scripts[watchdogs.signals.docker] = commands.docker_containers
 
 watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')
@@ -192,6 +193,39 @@ watchdogs.callbacks[watchdogs.signals.diskboot] = function(widget, stdout)
   disk_callback("sysstat:disk_boot", widget, stdout)
 end
 
+watchdogs.callbacks[watchdogs.signals.docker] = function(widget, stdout)
+    awful.spawn.with_shell(commands.create_text_file(cfg.docker.cache_file))
+
+    stdout = stdout:gsub("______", "___Noinfo___")
+
+    local container_table = nd_utils.split(stdout, '\n')
+    for _, value in ipairs(container_table) do
+        if #value > 0 then
+            value = nd_utils.trim(value)
+
+            local line_data = nd_utils.split(nd_utils.trim(value), "___")
+
+            line_data[5] = line_data[5]:match("^%w+")
+
+            local time = line_data[6]:match("^%d+%s+%w+")
+            if time == nil then
+                line_data[6] = line_data[6]:match("About%s+a%w*%s+(%w+)")
+            else
+                line_data[6] = time
+            end
+
+
+            line_data[6] = line_data[6]:gsub("%s", "___")
+
+            local row = table.concat(line_data, " ")
+            awful.spawn.with_shell(commands.append_text(cfg.docker.cache_file, row .. '\n'))
+            awesome.emit_signal("sysstat::docker_container_add")
+
+        end
+    end
+
+end
+
 watchdogs.run = function(watchdog, interval)
     awful.widget.watch(watchdogs.scripts[watchdog], interval, watchdogs.callbacks[watchdog])
 end
@@ -213,6 +247,8 @@ watchdogs.init = function()
     watchdogs.run(watchdogs.signals.git_repos, 3600)
     watchdogs.run(watchdogs.signals.weather, 120)
     watchdogs.run(watchdogs.signals.sync_packages, 3600)
+
+    watchdogs.run(watchdogs.signals.docker, 20)
 
     if nd_utils.is_file_exists(cfg.track_packages.cache_file) == false then
         awful.spawn.easy_async_with_shell(

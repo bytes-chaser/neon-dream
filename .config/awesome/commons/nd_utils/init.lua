@@ -21,13 +21,21 @@ nd_utils = {
   end,
 
   split = function(text, delimiter)
-      result = {};
+      local result = {};
 
-      for match in (text .. delimiter):gmatch("(.-)"..delimiter) do
+      for match in text:gmatch("([^"..delimiter.."]+)") do
           table.insert(result, match);
       end
 
       return result;
+  end,
+
+  trim = function(s)
+      return (string.gsub(s, "^%s*(.-)%s*$", "%1"))
+  end,
+
+  clear = function(text, ptrn)
+      return text:gsub(ptrn, '')
   end,
 
   is_file_exists = function(path)
