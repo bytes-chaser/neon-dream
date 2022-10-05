@@ -26,7 +26,7 @@ return {
     local remote_addr = {
       wrap = 'word_char',
       widget = wibox.widget.textbox,
-      markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. url .."</span>",
+      markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. (url == 'undefined' and 'No remotely available public repository' or url)  .."</span>",
       font = beautiful.font_famaly .. '10',
     }
 
