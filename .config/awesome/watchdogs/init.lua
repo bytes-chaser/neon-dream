@@ -168,8 +168,9 @@ local disk_callback = function(sig, widget, stdout)
 
   local used = stdout:match('(.*) ')
   local available  = stdout:match(' (.*)')
-  local val = math.ceil(100 * (tonumber(used) / tonumber(available)))
-  awesome.emit_signal(sig, val, '%', used, available)
+  local total = used + available
+  local val = math.ceil(100 * (tonumber(used) / tonumber(total)))
+  awesome.emit_signal(sig, val, '%', used, total)
 end
 
 
