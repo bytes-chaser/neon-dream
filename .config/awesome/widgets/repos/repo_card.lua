@@ -31,7 +31,7 @@ return {
     }
 
 
-    function horizontal_scroll(w)
+    local function horizontal_scroll(w)
       return wibox.widget {
          layout = wibox.container.scroll.horizontal,
          max_size = 100,
@@ -42,7 +42,7 @@ return {
       }
     end
 
-    function left_margin(w)
+    local function left_margin(w)
       return {
         w,
         widget = wibox.container.margin,
