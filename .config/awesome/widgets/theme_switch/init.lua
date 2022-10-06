@@ -94,7 +94,7 @@ return {
                     })
 
                     theme_name:buttons(gears.table.join(awful.button({ }, 1, function()
-                        theme_util.switch(w)
+                        theme_util.switch(arr[1])
                     end)))
 
                     base:add(theme_name)
