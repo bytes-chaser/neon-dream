@@ -177,7 +177,7 @@ return {
     })
 
 
-    awesome.connect_signal("sysstat::repo_add", function()
+    awesome.connect_signal("update::repos", function()
       page = 1
       update()
     end)
