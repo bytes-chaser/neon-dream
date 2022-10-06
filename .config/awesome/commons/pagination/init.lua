@@ -30,7 +30,6 @@ return {
                 totalPages = totalPages + 1
             end
 
-            local isOddPagesN = totalPages % 2 == 1
 
             if page > totalPages then
                 page = totalPages
@@ -40,13 +39,9 @@ return {
                 page = 1
             end
 
-            local cmd = get_text_cmd
 
-            if (page - 1) < (math.floor(totalPages / 2)) then
-                cmd  = cmd .. ' | head -' .. tostring(page * size) .. ' | tail -' .. tostring(size)
-            else
-                cmd  = cmd .. ' | tail -' .. tostring((size * (totalPages - page + (isOddPagesN and 1 or 0))) + diff) .. ' | head -' .. tostring(size)
-            end
+            local cmd  = get_text_cmd .. ' | head -' .. tostring(page * size) .. ' | tail -'
+                    .. tostring((page == totalPages and diff > 0) and diff or size)
 
             awful.spawn.easy_async_with_shell(cmd, function(text)
                 callback({
