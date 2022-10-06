@@ -1,5 +1,6 @@
 local awful = require("awful")
 local commands = require("commons.commands")
+local utils = require("watchdogs.utils")
 
 local watchdogs = {}
 watchdogs.signals = {}
@@ -63,45 +64,44 @@ end
 
 watchdogs.callbacks[watchdogs.signals.git_repos] = function(widget, stdout)
 
-    awful.spawn.with_shell(commands.create_text_file(cfg.repos_scan.cache_file))
-
+    local lines = {}
     for w in stdout:gmatch("[^\r\n]+") do
-
         local included = check_excluded_repo_path(w)
-
         if included then
-          local path = w:match('(.*)/.git')
-
-            awful.spawn.easy_async_with_shell(commands.git_repo_info(path),
-                function(out)
-
-                    local url = out:match('Fetch URL: (.+)%.git\n%s+Push') or 'undefined'
-
-                    local source_icon = ""
-
-                    if(url == nil) then
-                        source_icon = ""
-                    elseif url:find('github') then
-                        source_icon = ''
-                    elseif url:find('gitlab') then
-                        source_icon = ""
-                    elseif url:find('bitbucket') then
-                        source_icon = ""
-                    end
-
-                    local formatted_path = string.gsub(path, home_folder, "~")
-                    local row =    'git'                    .. ' ' ..
-                                    formatted_path          .. ' ' ..
-                                    path:match('.+/(.+)$')  .. ' ' ..
-                                    url                     .. ' ' ..
-                                    ''                     .. ' ' ..
-                                    source_icon             .. '\n'
-
-                    awful.spawn.with_shell(commands.append_text(cfg.repos_scan.cache_file, row))
-                    awesome.emit_signal("sysstat::repo_add")
-                end)
+            table.insert(lines, w)
         end
-      end
+    end
+
+    utils.procedures.caching(cfg.repos_scan.cache_file, "update::repos", lines, function(item, callback)
+        local path = item:match('(.*)/.git')
+
+        awful.spawn.easy_async_with_shell(commands.git_repo_info(path), function(out)
+            local url = out:match('Fetch URL: (.+)%.git\n%s+Push') or 'undefined'
+
+            local source_icon = ""
+
+            if(url == nil) then
+                source_icon = ""
+            elseif url:find('github') then
+                source_icon = ''
+            elseif url:find('gitlab') then
+                source_icon = ""
+            elseif url:find('bitbucket') then
+                source_icon = ""
+            end
+
+            local formatted_path = string.gsub(path, home_folder, "~")
+            local line_data = {
+                'git',
+                formatted_path,
+                path:match('.+/(.+)$'),
+                url,
+                '',
+                source_icon
+            }
+        callback(line_data)
+        end)
+    end)
 end
 
 watchdogs.callbacks[watchdogs.signals.temp] = function(widget, stdout)
@@ -114,42 +114,39 @@ watchdogs.callbacks[watchdogs.signals.sync_packages] = function()
 
   local year, month, day = date_table.year, date_table.month, date_table.day   -- date_table.wday to date_table.day
   local result = string.format("%d-%d-%d %d:%d:%d", year, month, day, hour, minute, second, ms)
+  awful.spawn.with_shell("echo '" .. result .. "' > " .. home_folder .. '/.cache/awesome/.packages_sync_time')
 
 
-  awful.spawn.with_shell("echo '" .. result .. "' > " .. home_folder .. '/.config/awesome/.packages_sync_time')
+  utils.procedures.caching(cfg.track_packages.cache_file, "sysstat::package_add", cfg.track_packages.names, function(package, callback)
+      local check_updates = "pacman -Qu " .. package .. " | awk '{printf $4}'"
+      local check_current = "pacman -Q "  .. package .. " | awk '{printf $2}'"
 
-    awful.spawn.with_shell(commands.create_text_file(cfg.track_packages.cache_file))
+      awful.spawn.easy_async_with_shell(check_updates, function(out)
+          local is_outdated = (#out == 0)
+          local avail_version = is_outdated and '' or out
+          local avail_col = '#48b892'
+          local avail_font = (is_outdated and '16' or '12')
 
-    for _, package in pairs(cfg.track_packages.names) do
+          awful.spawn.easy_async_with_shell(check_current, function(version)
+              local color = is_outdated and '#48b892' or '#b84860'
+              local line_data = {
+                  package:gsub("[\r\n]", ""),
+                  color,
+                  version:gsub("[\r\n]", ""),
+                  avail_col,
+                  avail_font,
+                  avail_version:gsub("[\r\n]", "")
+              }
+              callback(line_data)
+          end)
+      end)
+  end)
 
-        local check_updates = "pacman -Qu " .. package .." | awk '{printf $4}'"
-        local check_current = "pacman -Q " .. package .. " | awk '{printf $2}'"
-
-        awful.spawn.easy_async_with_shell(check_updates, function(out)
-            local is_outdated = (#out == 0)
-            local avail_version = is_outdated and '' or out
-            local avail_col = '#48b892'
-            local avail_font = (is_outdated and '16' or '12')
-
-            awful.spawn.easy_async_with_shell(check_current, function(version)
-                local color = is_outdated and '#48b892' or '#b84860'
-                local row =     package:gsub("[\r\n]", "")  .. ' ' ..
-                                color                       .. ' ' ..
-                                version:gsub("[\r\n]", "")  .. ' ' ..
-                                avail_col                   .. ' ' ..
-                                avail_font                  .. ' ' ..
-                                avail_version:gsub("[\r\n]", "") .. '\n'
-
-                awful.spawn.with_shell(commands.append_text(cfg.track_packages.cache_file, row))
-                awesome.emit_signal("sysstat::package_add")
-            end)
-        end)
-    end
 end
 
 watchdogs.callbacks[watchdogs.signals.ps] = function(widget, stdout)
 
-  ps_info = {}
+  local ps_info = {}
   local index  = 1
   for w in stdout:gmatch("%S+") do
     local info = {}
@@ -198,32 +195,33 @@ watchdogs.callbacks[watchdogs.signals.docker] = function(widget, stdout)
 
     stdout = stdout:gsub("______", "___Noinfo___")
 
-    local container_table = nd_utils.split(stdout, '\n')
-    for _, value in ipairs(container_table) do
+    local lines = nd_utils.split(stdout, '\n')
+
+    local containers = {}
+    for _, value in ipairs(lines) do
         if #value > 0 then
             value = nd_utils.trim(value)
-
-            local line_data = nd_utils.split(nd_utils.trim(value), "___")
-
-            line_data[5] = line_data[5]:match("^%w+")
-
-            local time = line_data[6]:match("^%d+%s+%w+")
-            if time == nil then
-                line_data[6] = line_data[6]:match("About%s+a%w*%s+(%w+)")
-            else
-                line_data[6] = time
-            end
-
-
-            line_data[6] = line_data[6]:gsub("%s", "___")
-
-            local row = table.concat(line_data, " ")
-            awful.spawn.with_shell(commands.append_text(cfg.docker.cache_file, row .. '\n'))
-            awesome.emit_signal("sysstat::docker_container_add")
-
+            table.insert(containers, value)
         end
     end
 
+    utils.procedures.caching(cfg.docker.cache_file, "sysstat::docker_container_add", containers, function(value, callback)
+        local line_data = nd_utils.split(nd_utils.trim(value), "___")
+
+        line_data[5] = line_data[5]:match("^%w+")
+
+        local time = line_data[6]:match("^%d+%s+%w+")
+
+        if time == nil then
+            line_data[6] = line_data[6]:match("About%s+a%w*%s+(%w+)")
+        else
+            line_data[6] = time
+        end
+
+        line_data[6] = line_data[6]:gsub("%s", "___")
+
+        callback(line_data)
+    end)
 end
 
 watchdogs.run = function(watchdog, interval)
@@ -264,6 +262,7 @@ watchdogs.init = function()
                 watchdogs.callbacks[watchdogs.signals.git_repos]
         )
     end
+    
 end
 
 return watchdogs
