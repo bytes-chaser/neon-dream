@@ -20,6 +20,7 @@ watchdogs.signals.diskroot = watchdogs.signals.prfx .. 'diskroot'
 watchdogs.signals.diskboot = watchdogs.signals.prfx .. 'diskboot'
 watchdogs.signals.diskhome = watchdogs.signals.prfx .. 'diskhome'
 watchdogs.signals.docker = watchdogs.signals.prfx .. 'docker'
+watchdogs.signals.themes = watchdogs.signals.prfx .. 'themes'
 
 watchdogs.scripts[watchdogs.signals.ram] = commands.ram
 watchdogs.scripts[watchdogs.signals.cpu] = commands.cpu
@@ -33,6 +34,7 @@ watchdogs.scripts[watchdogs.signals.diskroot] = commands.get_disk_root_info
 watchdogs.scripts[watchdogs.signals.diskboot] = commands.get_disk_boot_info
 watchdogs.scripts[watchdogs.signals.diskhome] = commands.get_disk_home_info
 watchdogs.scripts[watchdogs.signals.docker] = commands.docker_containers
+watchdogs.scripts[watchdogs.signals.themes] = commands.get_files(theme_folder)
 
 watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')
@@ -224,6 +226,20 @@ watchdogs.callbacks[watchdogs.signals.docker] = function(widget, stdout)
     end)
 end
 
+watchdogs.callbacks[watchdogs.signals.themes] = function(widget, stdout)
+    local themes = {}
+    for w in stdout:gmatch("[^\r\n]+") do
+        table.insert(themes, w)
+    end
+
+    utils.procedures.caching(cfg.theme.cache_file, "update::themes", themes, function(theme_name, callback)
+        callback({
+            theme_name,
+            theme_folder .. theme_name .. '/background.png'
+        })
+    end)
+end
+
 watchdogs.run = function(watchdog, interval)
     awful.widget.watch(watchdogs.scripts[watchdog], interval, watchdogs.callbacks[watchdog])
 end
@@ -247,6 +263,7 @@ watchdogs.init = function()
     watchdogs.run(watchdogs.signals.sync_packages, 3600)
 
     watchdogs.run(watchdogs.signals.docker, 20)
+    watchdogs.run(watchdogs.signals.themes, 60)
 
     if nd_utils.is_file_exists(cfg.track_packages.cache_file) == false then
         awful.spawn.easy_async_with_shell(

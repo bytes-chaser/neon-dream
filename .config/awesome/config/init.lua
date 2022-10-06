@@ -2,7 +2,10 @@ local shape_utils = require("commons.shape")
 local naughty 	  = require("naughty")
 
 cfg = {
-	theme = "neon-dream-v2",
+	theme = {
+		name = "neon-dream-v2",
+		cache_file = home_folder .. '/.cache/awesome/themes',
+	},
 	tags = {
 		names = { "web", "dev", "misc"},
 		shape = shape_utils.default_frr

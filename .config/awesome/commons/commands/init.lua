@@ -72,8 +72,9 @@ commands.git_repo_info = function(path)
 end
 
 commands.get_files = function(path)
-  return "ls -l " .. path .. " | awk '{printf $9 \"\\n\"}'"
+  return 'zsh -c "ls -l ' .. path .. ' | awk \'{printf $9 \\"\\n\\"}\'"'
 end
+
 
 commands.delete_file = function(path)
   return "rm " .. path

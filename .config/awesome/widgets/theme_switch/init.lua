@@ -13,8 +13,6 @@ is_theme_popup_opened = false
 return {
     create = function(parameters)
 
-        local get_list_cmd = commands.get_files(theme_folder)
-
         local icon = wibox.widget{
             text    = "",
             align   = parameters.alignment or beautiful.battery_aligment,
@@ -49,12 +47,14 @@ return {
             bg                  = beautiful.palette_c7
         }
 
-        icon:connect_signal('button::press', function()
-            is_theme_popup_opened = not is_theme_popup_opened
-            pp.visible = is_theme_popup_opened
+        awesome.connect_signal("update::themes", function()
             base:reset()
+            local get_list_cmd = commands.get_text_sorted(cfg.theme.cache_file, 1, 'asc');
+
             awful.spawn.easy_async_with_shell(get_list_cmd, function(stdout)
+
                 for w in stdout:gmatch("[^\r\n]+") do
+                    local arr = nd_utils.split(w, ' ')
 
                     local theme_name = wibox.widget({
                         widget  = wibox.container.margin,
@@ -62,6 +62,7 @@ return {
                             left  = dpi(15),
                             top   = dpi(5),
                             right = dpi(15),
+                            bottom = dpi(5)
                         },
                         {
                             widget = wibox.container.background,
@@ -71,9 +72,22 @@ return {
                                 widget  = wibox.container.margin,
                                 margins = dpi(10),
                                 {
-                                    widget = wibox.widget.textbox,
-                                    text = w,
-                                    align = 'center'
+                                    {
+                                        image  = arr[2],
+                                        forced_height = dpi(170),
+                                        forced_width  = dpi(220),
+                                        resize = true,
+                                        widget = wibox.widget.imagebox
+                                    },
+                                    {
+
+                                        widget = wibox.widget.textbox,
+                                        markup   = "<span foreground='#ffffff'><b>" .. arr[1] .. "</b></span>",
+                                        align = 'center',
+                                        valign = 'bottom',
+                                        font = beautiful.icons_font .. '16',
+                                    },
+                                    layout = wibox.layout.stack
                                 }
                             }
                         }
@@ -86,7 +100,11 @@ return {
                     base:add(theme_name)
                 end
             end)
+        end)
 
+        icon:connect_signal('button::press', function()
+            is_theme_popup_opened = not is_theme_popup_opened
+            pp.visible = is_theme_popup_opened
         end)
 
         return icon

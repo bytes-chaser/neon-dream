@@ -36,7 +36,7 @@ theme_util.init = function()
     if a then
         beautiful.init(theme_active)
     else
-        theme_util.switch(cfg.theme)
+        theme_util.switch(cfg.theme.name)
     end
 end
 
