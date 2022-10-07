@@ -34,7 +34,7 @@ watchdogs.scripts[watchdogs.signals.diskroot] = commands.get_disk_root_info
 watchdogs.scripts[watchdogs.signals.diskboot] = commands.get_disk_boot_info
 watchdogs.scripts[watchdogs.signals.diskhome] = commands.get_disk_home_info
 watchdogs.scripts[watchdogs.signals.docker] = commands.docker_containers
-watchdogs.scripts[watchdogs.signals.themes] = commands.get_files(theme_folder)
+watchdogs.scripts[watchdogs.signals.themes] = commands.get_files_watchdog(theme_folder)
 
 watchdogs.callbacks[watchdogs.signals.ram] = function(widget, stdout)
     local total = stdout:match('#(.*)__')
@@ -196,6 +196,7 @@ watchdogs.callbacks[watchdogs.signals.docker] = function(widget, stdout)
     awful.spawn.with_shell(commands.create_text_file(cfg.docker.cache_file))
 
     stdout = stdout:gsub("______", "___Noinfo___")
+    stdout = stdout:gsub(", ", "@")
 
     local lines = nd_utils.split(stdout, '\n')
 

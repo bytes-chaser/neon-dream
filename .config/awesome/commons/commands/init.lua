@@ -72,6 +72,10 @@ commands.git_repo_info = function(path)
 end
 
 commands.get_files = function(path)
+  return "ls -l " .. path .. " | awk '{print $NF}' | tail -n +2"
+end
+
+commands.get_files_watchdog = function(path)
   return 'zsh -c "ls -l ' .. path .. ' | awk \'{printf $9 \\"\\n\\"}\'"'
 end
 
@@ -118,6 +122,7 @@ commands.temp =
   [[
     zsh -c "sensors | grep Package | awk '{printf \"%d\", $4}'"
   ]]
+
 
 commands.docker_containers =
 [[

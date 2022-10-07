@@ -9,7 +9,6 @@ local commands     = require("commons.commands")
 local task_factory = require("widgets.todo.task_factory")
 local header       = require("widgets.todo.header")
 
-local todo = {}
 local todo_path = cfg.todo.path
 local get_list_cmd = commands.get_files(todo_path)
 
@@ -21,7 +20,7 @@ return {
 
     local list = require('widgets.todo.list')
 
-    update_todo_list = function()
+    local update_todo_list = function()
       list:reset()
       files = {}
       content = {}

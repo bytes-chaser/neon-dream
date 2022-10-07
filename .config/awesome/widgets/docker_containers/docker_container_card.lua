@@ -11,7 +11,7 @@ return {
         local name = {
             widget = wibox.widget.textbox,
             markup   = "<span foreground='" .. beautiful.fg_focus .."'>" .. name_text .."</span>",
-            font = beautiful.font_famaly .. '16',
+            font = beautiful.font_famaly .. '12',
         }
 
         local image = {
@@ -28,7 +28,7 @@ return {
 
         local ports = {
             widget = wibox.widget.textbox,
-            markup   = "<span foreground='" .. beautiful.fg_normal .."'>Ports: " .. (ports_text == 'Noinfo' and "Unexposed" or ports_text) .."</span>",
+            markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. (ports_text == 'Noinfo' and "Unexposed" or ports_text:gsub('@', ' ')) .."</span>",
             font = beautiful.font_famaly .. '10',
         }
 
@@ -58,7 +58,7 @@ return {
                 forced_height = height,
                 step_function = wibox.container.scroll.step_functions
                                      .nonlinear_back_and_forth,
-                speed = 100,
+                speed = 50,
                 w,
             }
         end
@@ -67,30 +67,44 @@ return {
             return {
                 w,
                 widget = wibox.container.margin,
-                left   = dpi(20),
+                left   = dpi(10),
                 top    = dpi(5),
             }
         end
 
 
+        local ratio_box = wibox.widget {
+            status,
+            {
+                margin(horizontal_scroll(name, 45)),
+                margin(horizontal_scroll(image)),
+                layout = wibox.layout.flex.vertical
+            },
+            {
+                margin(horizontal_scroll(id, 10)),
+                margin(horizontal_scroll(time, 10)),
+                margin({
+                    {
+                        widget = wibox.widget.textbox,
+                        markup   = "<span foreground='" .. beautiful.fg_normal .."'>Ports: </span>",
+                        font = beautiful.font_famaly .. '10',
+                    },
+                    horizontal_scroll(ports, 10),
+                    layout = wibox.layout.fixed.horizontal
+
+                }),
+                layout = wibox.layout.flex.vertical
+            },
+            layout  = wibox.layout.ratio.horizontal
+        }
+
+        ratio_box:ajust_ratio(2, 0.1, 0.35, 0.55)
+
+
         return {
             {
                 {
-                    {
-                        status,
-                        {
-                            margin(horizontal_scroll(name, 45)),
-                            margin(horizontal_scroll(image)),
-                            layout = wibox.layout.flex.vertical
-                        },
-                        {
-                            margin(horizontal_scroll(id, 10)),
-                            margin(horizontal_scroll(time, 10)),
-                            margin(horizontal_scroll(ports, 10)),
-                            layout = wibox.layout.flex.vertical
-                        },
-                        layout = wibox.layout.align.horizontal
-                    },
+                    ratio_box,
                     widget = wibox.container.margin,
                     margins = cfg.repos_scan.style.card_margin
                 },
