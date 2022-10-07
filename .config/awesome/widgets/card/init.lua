@@ -15,9 +15,19 @@ end
 return {
   create = function(content, margin)
     return wibox.widget(make_margin({
-      make_margin(content, margin),
-      widget = wibox.container.background,
-      bg = beautiful.palette_c6,
+      {
+        forced_height = 10,
+        shape  = shape_utils.partially_rounded_rect(true, true, false, false),
+        widget = wibox.container.background,
+        bg     = beautiful.palette_c6,
+      },
+      {
+        make_margin(content, margin),
+        shape  = shape_utils.partially_rounded_rect(false, false, true, true),
+        widget = wibox.container.background,
+        bg     = beautiful.palette_c6,
+      },
+      layout = wibox.layout.align.vertical
     }, margin))
   end,
 

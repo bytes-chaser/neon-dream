@@ -129,7 +129,7 @@ return {
 
 
         droplist.create(sort_menu,
-                shape_utils.partially_rounded_rect(false, true, true, false, beautiful.rounded),
+                shape_utils.partially_rounded_rect(true, true, true, false, beautiful.rounded),
                 'right', 'middle',
                 {
                     {
