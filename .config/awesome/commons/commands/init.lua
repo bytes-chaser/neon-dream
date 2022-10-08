@@ -59,6 +59,10 @@ commands.set_svol = function(audio_val)
   return "amixer set Master " .. audio_val .. "%"
 end
 
+commands.mv = function(name1, name2)
+  return "mv " .. name1 .. ' ' .. name2
+end
+
 commands.set_brightness = function(brightness_val)
   return "brightnessctl s " .. brightness_val .. "%"
 end
