@@ -20,7 +20,8 @@ return {
 
     local list = require('widgets.todo.list')
 
-    local update_todo_list = function()
+    update_todo_list = function()
+
       list:reset()
       files = {}
       content = {}
@@ -36,7 +37,7 @@ return {
         for i = 1, #files do
            local file = files[i]
            local read_cmd = commands.get_text(todo_path .. file)
-           awful.spawn.easy_async_with_shell(read_cmd, function(text_out, stderr, reason, exit_code)
+           awful.spawn.easy_async_with_shell(read_cmd, function(text_out)
               content[i] = text_out
               local task = task_factory.create(todo_path, file, text_out, update_todo_list)
               list:add(task)

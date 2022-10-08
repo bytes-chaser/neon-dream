@@ -10,8 +10,9 @@ return {
     local delete_btn = btn.create()
     delete_btn:buttons(gears.table.join(awful.button({ }, 1, function()
       local delete_file_cmd = commands.delete_file(todo_path .. file)
-      awful.spawn(delete_file_cmd)
-      delete_callback()
+      awful.spawn.easy_async_with_shell(delete_file_cmd, function()
+        delete_callback()
+      end)
     end)))
 
     local todo_task = task.create(text, delete_btn)
