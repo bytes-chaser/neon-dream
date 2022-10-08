@@ -42,7 +42,7 @@ font:
     style: Bold Italic
 
 color_schemes:
-  nord_1: &nord_1
+  light-blue_v1: &light-blue_v1
 
     # Default colors
     primary:
@@ -119,4 +119,4 @@ color_schemes:
       cyan:    '#94E2D5' # teal
       white:   '#BAC2DE' # subtext1
 
-colors: *nord_1
+colors: *light-blue_v1

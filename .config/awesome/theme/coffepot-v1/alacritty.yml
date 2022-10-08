@@ -42,7 +42,7 @@ font:
     style: Bold Italic
 
 color_schemes:
-  nord_1: &nord_1
+  coffepot_1: &coffepot_1
 
     # Default colors
     primary:
@@ -119,4 +119,4 @@ color_schemes:
       cyan:    '#94E2D5' # teal
       white:   '#BAC2DE' # subtext1
 
-colors: *nord_1
+colors: *coffepot_1
