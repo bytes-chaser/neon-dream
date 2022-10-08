@@ -266,21 +266,6 @@ watchdogs.init = function()
 
     watchdogs.run(watchdogs.signals.docker, 20)
     watchdogs.run(watchdogs.signals.themes, 60)
-
-    if nd_utils.is_file_exists(cfg.track_packages.cache_file) == false then
-        awful.spawn.easy_async_with_shell(
-                watchdogs.scripts[watchdogs.signals.sync_packages] ,
-                watchdogs.callbacks[watchdogs.signals.sync_packages]
-        )
-    end
-
-    if nd_utils.is_file_exists(cfg.repos_scan.cache_file) == false then
-
-        awful.spawn.easy_async_with_shell(
-                watchdogs.scripts[watchdogs.signals.git_repos],
-                watchdogs.callbacks[watchdogs.signals.git_repos]
-        )
-    end
     
 end
 

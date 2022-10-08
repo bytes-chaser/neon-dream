@@ -11,13 +11,13 @@ return {
         local name = {
             widget = wibox.widget.textbox,
             markup   = "<span foreground='" .. beautiful.fg_focus .."'>" .. name_text .."</span>",
-            font = beautiful.font_famaly .. '12',
+            font = beautiful.font_famaly .. '10',
         }
 
         local image = {
             widget = wibox.widget.textbox,
             markup   = "<span foreground='" .. beautiful.fg_normal .."'>" .. image_text .."</span>",
-            font = beautiful.font_famaly .. '10',
+            font = beautiful.font_famaly .. '8',
         }
 
         local id = {
@@ -49,7 +49,7 @@ return {
             color = beautiful.palette_negative
         end
 
-        local status = icons.wbic(status_icon, 26, color)
+        local status = icons.wbic(status_icon, 20, color)
 
 
         local function horizontal_scroll(w, height)
@@ -98,7 +98,7 @@ return {
             layout  = wibox.layout.ratio.horizontal
         }
 
-        ratio_box:ajust_ratio(2, 0.1, 0.35, 0.55)
+        ratio_box:ajust_ratio(2, 0.1, 0.4, 0.5)
 
 
         return {

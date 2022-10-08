@@ -14,7 +14,7 @@ return {
             screen   = s,
             shape    = shape_utils.default_frr,
             visible  = false,
-            width    = dpi(500),
+            width    = dpi(380),
             height   = dpi(1020),
 
             margins  = {

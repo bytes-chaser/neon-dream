@@ -4,11 +4,11 @@ local dpi         = require("beautiful").xresources.apply_dpi
 local shape_utils = require("commons.shape")
 
 local card  = require("widgets.card")
-local packs = card.create(require("widgets.packages_list").create())
+local repos = card.create(require("widgets.repos").create())
 
 return {
   create = function(s)
-    local dev  = awful.wibar({
+    local repo_bar  = awful.wibar({
 
       position = "left",
       screen   = s,
@@ -23,12 +23,12 @@ return {
 
     })
 
-    dev:setup{
-      packs,
+    repo_bar:setup{
+      repos,
       layout = wibox.layout.flex.vertical
     }
 
-    return dev
+    return repo_bar
 
 
   end

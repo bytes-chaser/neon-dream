@@ -7,13 +7,13 @@ require("screen.rclick_menu")
 local tags    = require("screen.tags")
 local tasks   = require("screen.tasks")
 local notif   = require("screen.notifications")
-local notifi  = require("screen.notif_icon")
 local wibar   = require("screen.wibar")
 
-local stat_bar = require("widgets.stat_bar")
-local dev_bar  = require("widgets.dev_bar")
+local stat_bar    = require("widgets.stat_bar")
+local dev_bar     = require("widgets.dev_bar")
+local repos_bar   = require("widgets.git_bar")
 local docker_bar  = require("widgets.docker_bar")
-local user_bar = require("widgets.user_bar")
+local user_bar    = require("widgets.user_bar")
 
 
 local function set_wallpaper(s)
@@ -41,10 +41,11 @@ awful.screen.connect_for_each_screen(function(s)
     s.focused_task = tasks.create(s)
 
     show_sub_panel = false
-    sub_panel_mode = 'dev'
+    sub_panel_mode = 'user'
 
     s.stats  = stat_bar.create(s)
-    s.dev    = dev_bar.create(s)
+    s.pacs    = dev_bar.create(s)
+    s.repos  = repos_bar.create(s)
     s.docker = docker_bar.create(s)
     s.user   = user_bar.create(s)
     s.notif  = notif.create(s)
