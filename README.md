@@ -4,7 +4,7 @@
 </p>
 <br>
 
-<img width="60%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
+<img width="55%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
 
 ## Dependencies Information
 <table>
