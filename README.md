@@ -104,7 +104,7 @@ nvim configuration icnludes plugins configuration using:
 ### Firefox
 * Has [custom color theme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/firefox/themes). 
 * Website pages styled with firefox [stylish](https://addons.mozilla.org/en-US/firefox/addon/stylish/) plugin
-* [Windowed](https://addons.mozilla.org/en-US/firefox/addon/windowed/Youtobe) plugin used to for in-window fullscreen mode 
+* [Windowed](https://addons.mozilla.org/en-US/firefox/addon/windowed/) plugin used to for in-window fullscreen mode 
 
 ## Awesome
 Awesome configuration based on default awesome config. All lua widgets are custom-made.
