@@ -174,10 +174,18 @@ List of packages, pagination etc. can be configured in **cfg/init.lua  track_pac
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/pacs.png)
 
-### Repos bar
+### Docker bar
 Repos bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + g**
 It shows Git repositories on your system.
 Information splited on pages and can be sorted in by Name, Path, Remote URL in any direction
+Pagination can be configured in **cfg/init.lua  docker** 
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/repos.png)
+
+### Docker bar
+Docker bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + d**
+It shows docker containers status.
+Information splited on pages and can be sorted in by Name, ID, Image, Ports, Status in any direction
 Scan path, pagination etc. can be configured in **cfg/init.lua  repos_scan** 
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/repos.png)
@@ -212,3 +220,13 @@ Includes:
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/stats-v2.png)
 
+
+### Theme Switch
+Scrollable list of available themes.
+Each theme option changing style of:
+* AwesomeWM itself
+* Spotify (spicetify)
+* Alacritty
+* Cava
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/theme_switch.png)
