@@ -141,13 +141,13 @@ configuration {
 }
 
 * {
-    palette-c1: #88c0d0;
-    palette-c2: #e5e9f0;
-    palette-c3: #2e3440;
-    palette-c4: #88c0d0;
+    palette-c1: #5097FF;
+    palette-c2: #656565;
+    palette-c3: #F7F8FA;
+    palette-c4: #5097FF;
     palette-c5: #d8dee9;
-    palette-c6: #3b4252;
-    palette-c7: #4c566a;
+    palette-c6: #FFFFFF;
+    palette-c7: #e1e7f0;
     background-color: @palette-c3;
     text-color: @palette-c4;
     border-color: @palette-c2;
