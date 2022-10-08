@@ -6,7 +6,7 @@
 
 <img width="50%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
 
-## General Information
+## Dependencies Information
 <table>
   <tr>
     <td><b>Latest Release</b></td>
@@ -230,3 +230,19 @@ Each theme option changing style of:
 * Cava
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/theme_switch.png)
+
+### Available themes
+#### Coffepot-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/coffepot-1/showcase.png" />
+
+#### Light-Blue-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/light-blue-1/showcase.png" />
+
+#### Neon-Dream-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/neon-1/showcase.png" />
+
+#### Neon-Dream-v2
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/neon-2/showcase.png" />
+
+#### Nord-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/nord-1/showcase.png" />
