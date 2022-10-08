@@ -6,7 +6,7 @@
 
 <img width="50%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
 
-## General Information
+## Dependencies Information
 <table>
   <tr>
     <td><b>Latest Release</b></td>
@@ -104,7 +104,7 @@ nvim configuration icnludes plugins configuration using:
 ### Firefox
 * Has [custom color theme](https://github.com/bytes-chaser/dotfiles/tree/main/.config/firefox/themes). 
 * Website pages styled with firefox [stylish](https://addons.mozilla.org/en-US/firefox/addon/stylish/) plugin
-* [Windowed](https://addons.mozilla.org/en-US/firefox/addon/windowed/Youtobe) plugin used to for in-window fullscreen mode 
+* [Windowed](https://addons.mozilla.org/en-US/firefox/addon/windowed/) plugin used to for in-window fullscreen mode 
 
 ## Awesome
 Awesome configuration based on default awesome config. All lua widgets are custom-made.
@@ -174,10 +174,18 @@ List of packages, pagination etc. can be configured in **cfg/init.lua  track_pac
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/pacs.png)
 
-### Repos bar
+### Docker bar
 Repos bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + g**
 It shows Git repositories on your system.
 Information splited on pages and can be sorted in by Name, Path, Remote URL in any direction
+Pagination can be configured in **cfg/init.lua  docker** 
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/repos.png)
+
+### Docker bar
+Docker bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + d**
+It shows docker containers status.
+Information splited on pages and can be sorted in by Name, ID, Image, Ports, Status in any direction
 Scan path, pagination etc. can be configured in **cfg/init.lua  repos_scan** 
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/repos.png)
@@ -212,3 +220,29 @@ Includes:
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/stats-v2.png)
 
+
+### Theme Switch
+Scrollable list of available themes.
+Each theme option changing style of:
+* AwesomeWM itself
+* Spotify (spicetify)
+* Alacritty
+* Cava
+
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/theme_switch.png)
+
+### Available themes
+#### Coffepot-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/coffepot-1/showcase.png" />
+
+#### Light-Blue-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/light-blue-1/showcase.png" />
+
+#### Neon-Dream-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/neon-1/showcase.png" />
+
+#### Neon-Dream-v2
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/neon-2/showcase.png" />
+
+#### Nord-v1
+<img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/nord-1/showcase.png" />
