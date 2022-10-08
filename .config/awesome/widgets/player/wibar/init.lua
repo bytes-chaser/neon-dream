@@ -41,17 +41,15 @@ local nxt_btn = controls.create("", 10, commands.player_next)
     {
       layout = wibox.layout.fixed.vertical,
       {
-        layout        = wibox.container.scroll.horizontal,
-        max_size      = 100,
-        speed         = 100,
-        step_function = wibox.container.scroll.step_functions.nonlinear_back_and_forth,
         {
+          layout        = wibox.container.scroll.horizontal,
+          max_size      = 200,
+          speed         = 100,
+          step_function = wibox.container.scroll.step_functions.nonlinear_back_and_forth,
           text_player,
-          widget = wibox.container.margin,
-          left   = dpi(5),
-          right  = dpi(5),
-          bottom = dpi(2)
-        }
+        },
+        layout        = wibox.container.place,
+        halign = 'center',
       },
       {
         make_ctr_margin(prv_btn),
