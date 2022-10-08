@@ -29,17 +29,17 @@ return {
             {
               id = "name",
               widget = wibox.widget.textbox,
-              markup = "<span foreground='" .. beautiful.pallete_c1 .."'>" .. name  .."</span>"
+              markup = "<span foreground='" .. beautiful.palette_c1 .."'>" .. name  .."</span>"
             },
             {
               id = "cpu",
               widget = wibox.widget.textbox,
-              markup = "<span foreground='" .. beautiful.pallete_c1 .."'>" .. cpu  .."</span>"
+              markup = "<span foreground='" .. beautiful.palette_c1 .."'>" .. cpu  .."</span>"
             },
             {
               widget = wibox.widget.textbox,
               id = "mem",
-              markup = "<span foreground='" .. beautiful.pallete_c1 .."'>" .. mem  .."</span>"
+              markup = "<span foreground='" .. beautiful.palette_c1 .."'>" .. mem  .."</span>"
             },
             layout = wibox.layout.flex.horizontal,
           }

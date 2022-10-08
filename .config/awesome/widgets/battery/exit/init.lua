@@ -8,7 +8,7 @@ local shape             = require("commons.shape")
 local create_btn_container = function(glyph, tooltip, cmd)
 
   local icon = {
-    icons.wbic(glyph, 150, beautiful.pallete_c1),
+    icons.wbic(glyph, 150, beautiful.palette_c1),
     margins = 10,
     widget  = wibox.container.margin
   }
@@ -18,7 +18,7 @@ local create_btn_container = function(glyph, tooltip, cmd)
     widget             = wibox.container.background,
     shape              = shape.default_frr,
     bg                 = beautiful.col_transparent,
-    shape_border_color = beautiful.pallete_c1,
+    shape_border_color = beautiful.palette_c1,
     shape_border_width = 10,
   }
 

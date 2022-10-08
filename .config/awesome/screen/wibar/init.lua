@@ -25,7 +25,7 @@ return {
 
     local cpu_section = {
       widget = wibox.container.background,
-      bg = beautiful.pallete_c3,
+      bg = beautiful.palette_c3,
       shape = shape_utils.default_frr,
       wbm_cpu
     }
@@ -33,12 +33,13 @@ return {
     local wbm_ram = wbm.create("RAM: ")
     awesome.connect_signal("sysstat::ram", function(val, postfix)
         wbm_ram.wbm_body.wbm_labels.wbm_valtext.text = val .. postfix
+        wbm_ram.wbm_body.wbm_labels.wbm_valtext.text = val .. postfix
         wbm_ram.wbm_body.wbm_graphs_margin.wbm_graphs.wbm_graph:add_value(val, 1)
     end)
 
     local ram_section = {
       widget = wibox.container.background,
-      bg = beautiful.pallete_c3,
+      bg = beautiful.palette_c3,
       shape = shape_utils.default_frr,
       wbm_ram
     }
@@ -62,7 +63,7 @@ return {
               layout = wibox.layout.fixed.horizontal,
               {
                 widget = wibox.container.background,
-                bg     = beautiful.pallete_c3,
+                bg     = beautiful.palette_c3,
                 shape  = shape_utils.default_frr,
                 {
                   layout = wibox.layout.fixed.horizontal,
@@ -74,7 +75,7 @@ return {
                 left   = dpi(10),
                 {
                   widget = wibox.container.background,
-                  bg     = beautiful.pallete_c3,
+                  bg     = beautiful.palette_c3,
                   shape  = shape_utils.default_frr,
                   {
                     widget = wibox.container.margin,
@@ -93,7 +94,7 @@ return {
                     s.focused_task,
                   },
                   widget  = wibox.container.background,
-                  bg      = beautiful.pallete_c3,
+                  bg      = beautiful.palette_c3,
                   shape   = shape_utils.default_frr,
                 }
               }
@@ -106,7 +107,7 @@ return {
                 right = dpi(10),
                 {
                   widget = wibox.container.background,
-                  bg = beautiful.pallete_c3,
+                  bg = beautiful.palette_c3,
                   shape = shape_utils.default_frr,
                   wb_player
                 }
@@ -123,7 +124,7 @@ return {
               },
               {
                 widget = wibox.container.background,
-                bg     = beautiful.pallete_c3,
+                bg     = beautiful.palette_c3,
                 shape  = shape_utils.default_frr,
                 {
                   layout = wibox.layout.fixed.horizontal,

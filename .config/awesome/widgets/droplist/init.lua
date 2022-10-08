@@ -13,7 +13,7 @@ return {
 
         for key, value in pairs(options) do
 
-            local color = value.default and beautiful.pallete_c4 or beautiful.pallete_c2
+            local color = value.default and beautiful.palette_c4 or beautiful.palette_c2
             local opt = wibox.widget({
                 widget = wibox.container.margin,
                 margins = {
@@ -45,7 +45,7 @@ return {
                 for ok, ov in pairs(options_map) do
                     local child = ov:get_children_by_id(ok)[1]
                     child.markup = "<span foreground='" ..
-                            (ok == value.name and beautiful.pallete_c4 or beautiful.pallete_c2)
+                            (ok == value.name and beautiful.palette_c4 or beautiful.palette_c2)
                             .."'>" .. ok .. "</span>"
                 end
 

@@ -23,7 +23,7 @@ client.connect_signal("request::titlebars", function(c)
     )
 
 
-    awful.titlebar(c, { position = "top", size = dpi(36), bg_normal = beautiful.pallete_c3}) : setup {
+    awful.titlebar(c, { position = "top", size = dpi(36), bg_normal = beautiful.palette_c3}) : setup {
         layout = wibox.layout.align.horizontal,
         { -- Left
             {

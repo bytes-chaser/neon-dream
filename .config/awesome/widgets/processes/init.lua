@@ -11,9 +11,9 @@ process.add_record = function(base, ps_table, index, records_num)
     local line  = children[index + 1]
     local data = ps_table[index]
 
-    line.marg.i_marg.box.name.markup = "<span foreground='" .. beautiful.pallete_c2 .."'>" .. data.name  .."</span>"
-    line.marg.i_marg.box.cpu.markup  = "<span foreground='" .. beautiful.pallete_c2 .."'>" .. data.cpu  .."</span>"
-    line.marg.i_marg.box.mem.markup  = "<span foreground='" .. beautiful.pallete_c2 .."'>" .. data.mem  .."</span>"
+    line.marg.i_marg.box.name.markup = "<span foreground='" .. beautiful.palette_c2 .."'>" .. data.name  .."</span>"
+    line.marg.i_marg.box.cpu.markup  = "<span foreground='" .. beautiful.palette_c2 .."'>" .. data.cpu  .."</span>"
+    line.marg.i_marg.box.mem.markup  = "<span foreground='" .. beautiful.palette_c2 .."'>" .. data.mem  .."</span>"
     process.add_record(base, ps_table, index + 1, records_num)
   end
 end

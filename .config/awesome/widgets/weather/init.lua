@@ -11,7 +11,7 @@ require("config.weather")
 return {
   create = function()
 
-    local icon = icons.wbic('', '30', beautiful.pallete_c1)
+    local icon = icons.wbic('', '30', beautiful.palette_c1)
     local temp_txt = wibox.widget({
         widget = wibox.widget.textbox,
         text = '0',
@@ -39,7 +39,7 @@ return {
           weather_icon = weather_icons_map[tonumber(status)]
         end
 
-        icon.markup =  "<span foreground='" .. beautiful.pallete_c1 .."'>" .. weather_icon .. "</span>"
+        icon.markup =  "<span foreground='" .. beautiful.palette_c1 .."'>" .. weather_icon .. "</span>"
         temp_txt.text = weather_text
     end)
 

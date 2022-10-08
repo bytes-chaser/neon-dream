@@ -23,8 +23,8 @@ return {
                     max_value    = 100,
                     thickness    = dpi(10),
                     paddings     = dpi(5),
-                    bg           = beautiful.pallete_c2,
-                    colors       = {beautiful.pallete_c1},
+                    bg           = beautiful.palette_c2,
+                    colors       = {beautiful.palette_c1},
                     start_angle  = 4.71239,
                     {
                         widget = wibox.container.mirror,

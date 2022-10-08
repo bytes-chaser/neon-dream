@@ -29,7 +29,7 @@ return {
         }
       },
       widget = wibox.container.background,
-      bg = beautiful.pallete_c3 .. '77'
+      bg = beautiful.palette_c3 .. '77'
     })
   end
 }

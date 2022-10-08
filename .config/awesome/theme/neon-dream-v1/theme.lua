@@ -13,29 +13,29 @@ theme.font_famaly = "JetBrains Mono "
 theme.font_size = 12
 theme.font        = theme.font_famaly..tostring(theme.font_size)
 
-theme.pallete_c1 = "#d17bed"
-theme.pallete_c2 = "#96eef2"
-theme.pallete_c3 = "#2f2b3a"
-theme.pallete_c4 = "#CCB8F0"
-theme.pallete_c5 = "#333170"
+theme.palette_c1 = "#d17bed"
+theme.palette_c2 = "#96eef2"
+theme.palette_c3 = "#2f2b3a"
+theme.palette_c4 = "#CCB8F0"
+theme.palette_c5 = "#333170"
 theme.palette_c6 = "#4b455c"
 theme.palette_c7 = "#564d70"
 theme.col_transparent = "#00000000"
 
-theme.bg_normal     = theme.pallete_c3
-theme.bg_focus      = theme.pallete_c3
-theme.bg_urgent     = theme.pallete_c1
+theme.bg_normal     = theme.palette_c3
+theme.bg_focus      = theme.palette_c3
+theme.bg_urgent     = theme.palette_c1
 theme.bg_minimize   = "#444444"
 theme.bg_systray    = theme.bg_normal
-theme.fg_normal     = theme.pallete_c2
-theme.fg_focus      = theme.pallete_c4
+theme.fg_normal     = theme.palette_c2
+theme.fg_focus      = theme.palette_c4
 theme.fg_urgent     = "d61ff0"
 theme.fg_minimize   = "#ffffff"
 
 theme.useless_gap   = dpi(5)
 theme.border_width  = dpi(2)
-theme.border_normal = theme.pallete_c2
-theme.border_focus  = theme.pallete_c1
+theme.border_normal = theme.palette_c2
+theme.border_focus  = theme.palette_c1
 theme.border_marked = "#91231c"
 
 
@@ -45,8 +45,8 @@ theme.profile_pic = home_folder .. "/profile.png"
 theme.pbar_heigth       = 30
 theme.pbar_width        = 30
 theme.pbar_margin       = 5
-theme.pbar_active_color = theme.pallete_c1
-theme.pbar_bg_color     = theme.pallete_c5
+theme.pbar_active_color = theme.palette_c1
+theme.pbar_bg_color     = theme.palette_c5
 theme.pbar_icon_size    = 16
 
 

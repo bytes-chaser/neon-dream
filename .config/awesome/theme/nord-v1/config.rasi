@@ -141,16 +141,16 @@ configuration {
 }
 
 * {
-    pallete-c1: #88c0d0;
-    pallete-c2: #e5e9f0;
-    pallete-c3: #2e3440;
-    pallete-c4: #88c0d0;
-    pallete-c5: #d8dee9;
+    palette-c1: #88c0d0;
+    palette-c2: #e5e9f0;
+    palette-c3: #2e3440;
+    palette-c4: #88c0d0;
+    palette-c5: #d8dee9;
     palette-c6: #3b4252;
     palette-c7: #4c566a;
-    background-color: @pallete-c3;
-    text-color: @pallete-c4;
-    border-color: @pallete-c2;
+    background-color: @palette-c3;
+    text-color: @palette-c4;
+    border-color: @palette-c2;
 }
 
 
@@ -165,7 +165,7 @@ window {
   width: 45%;
   border-radius: 15px;
   background-color: #00000000;
-  border-color: @pallete-c3;
+  border-color: @palette-c3;
   height: 70%;
 }
 
@@ -197,7 +197,7 @@ listview {
   dynamic: true;
   layout: vertical;
   scrollbar: true;
-  border-color: @pallete-c2;
+  border-color: @palette-c2;
 }
 
 mainbox {
@@ -209,7 +209,7 @@ element {
   padding: 2% 2% 2% 0;
   margin: 5px 5px 5px 5px;
   border-radius: 10px;
-  background-color: @pallete-c7;
+  background-color: @palette-c7;
 }
 
 element-text {
@@ -227,27 +227,27 @@ element-icon {
 
 
 #element.selected.normal {
-    background-color: @pallete-c4;
-    text-color:       @pallete-c3;
+    background-color: @palette-c4;
+    text-color:       @palette-c3;
 }
 
 #element.selected.active {
-    background-color: @pallete-c1;
-    text-color:       @pallete-c3;
+    background-color: @palette-c1;
+    text-color:       @palette-c3;
 }
 
 #element.normal.normal {
     background-color: @palette-c6;
-    text-color: @pallete-c2;
+    text-color: @palette-c2;
 }
 
 #element.normal.active {
-    background-color: @pallete-c5;
-    text-color: @pallete-c1;
+    background-color: @palette-c5;
+    text-color: @palette-c1;
 }
 
 
 #element.alternate.normal {
     background-color: @palette-c6;
-    text-color: @pallete-c2;
+    text-color: @palette-c2;
 }

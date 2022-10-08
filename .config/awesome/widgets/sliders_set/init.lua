@@ -8,7 +8,7 @@ local beautiful       = require("beautiful")
 local dpi             = beautiful.xresources.apply_dpi
 
 
-local sun_icon = icons.wbic("", 20, beautiful.pallete_c1)
+local sun_icon = icons.wbic("", 20, beautiful.palette_c1)
 
 local vol_sl = slider_factory.create_with_events(0, 100, commands.svol,
 function(stdout)
@@ -19,7 +19,7 @@ function(val)
 end
 )
 
-local music_icon = icons.wbic("", 20, beautiful.pallete_c1)
+local music_icon = icons.wbic("", 20, beautiful.palette_c1)
 
 local brightness_sl = slider_factory.create_with_events(10, 100, commands.brightness,
 function(stdout)
