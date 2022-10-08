@@ -6,7 +6,9 @@ local naughty       = require("naughty")
 
 local close_all_sub_panels = function(s)
   s.stats.visible    = false
-  s.dev.visible = false
+  s.pacs.visible = false
+  s.repos.visible = false
+  s.docker.visible = false
   s.user.visible     = false
 end
 -- {{{ Key bindings
@@ -129,8 +131,20 @@ globalkeys = gears.table.join(
     awful.key({ modkey, "Shift" },  "d",     function ()
       local screen = awful.screen.focused()
       close_all_sub_panels(screen)
-      screen.dev.visible = not screen.dev.visible
-    end, {description = "open development wibar", group = "wibars"}),
+      screen.docker.visible = not screen.docker.visible
+    end, {description = "open docker wibar", group = "wibars"}),
+
+    awful.key({ modkey, "Shift" },  "g",     function ()
+        local screen = awful.screen.focused()
+        close_all_sub_panels(screen)
+        screen.repos.visible = not screen.repos.visible
+    end, {description = "open repos wibar", group = "wibars"}),
+
+    awful.key({ modkey, "Shift" },  "z",     function ()
+        local screen = awful.screen.focused()
+        close_all_sub_panels(screen)
+        screen.pacs.visible = not screen.pacs.visible
+    end, {description = "open packages wibar", group = "wibars"}),
 
     awful.key({ modkey, "Shift" },  "s",     function ()
       local screen = awful.screen.focused()
