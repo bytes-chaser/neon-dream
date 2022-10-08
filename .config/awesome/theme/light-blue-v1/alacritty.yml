@@ -83,7 +83,7 @@ color_schemes:
 
     # Selection colors
     selection:
-      text: '#d17bed' # base
+      text: '#5097FF' # base
       background: '#656565' # rosewater
 
     # Normal colors
