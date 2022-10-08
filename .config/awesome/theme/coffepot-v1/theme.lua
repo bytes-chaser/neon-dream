@@ -93,7 +93,7 @@ theme.menu_width  = dpi(100)
 
 theme.icons_font = "Font Awesome 6 Free "
 
-theme.wallpaper = theme_folder.."gruvbox-v1/background.png"
+theme.wallpaper = theme_folder.."coffepot-v1/background.png"
 
 
 theme.rounded = dpi(20)
