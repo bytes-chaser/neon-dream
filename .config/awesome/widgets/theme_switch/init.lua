@@ -38,10 +38,11 @@ return {
             widget              = base,
             type                = "dropdown_menu",
             minimum_height      = dpi(300),
+            maximum_height      = dpi(800),
             minimum_width       = dpi(150),
             visible             = false,
             ontop               = true,
-            hide_on_right_click = true,
+            hide_on_right_click = false,
             shape               = shape.default_frr,
             placement           = awful.placement.centered,
             bg                  = beautiful.palette_c7
