@@ -82,7 +82,7 @@ return {
                                     {
 
                                         widget = wibox.widget.textbox,
-                                        markup   = "<span foreground='#ffffff'><b>" .. arr[1] .. "</b></span>",
+                                        markup   = "<span foreground='" .. beautiful.palette_c2 .. "'><b>" .. arr[1] .. "</b></span>",
                                         align = 'center',
                                         valign = 'bottom',
                                         font = beautiful.icons_font .. '16',

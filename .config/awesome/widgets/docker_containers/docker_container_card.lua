@@ -43,10 +43,10 @@ return {
 
         if 'Up' == status_text then
             status_icon = ''
-            color = '#48b892'
+            color = beautiful.palette_positive
         else
             status_icon = ''
-            color = '#b84860'
+            color = beautiful.palette_negative
         end
 
         local status = icons.wbic(status_icon, 26, color)

@@ -1,4 +1,5 @@
 local awful = require("awful")
+local beautiful = require("beautiful")
 local commands = require("commons.commands")
 local utils = require("watchdogs.utils")
 
@@ -126,11 +127,11 @@ watchdogs.callbacks[watchdogs.signals.sync_packages] = function()
       awful.spawn.easy_async_with_shell(check_updates, function(out)
           local is_outdated = (#out == 0)
           local avail_version = is_outdated and '' or out
-          local avail_col = '#48b892'
+          local avail_col = beautiful.palette_positive
           local avail_font = (is_outdated and '16' or '12')
 
           awful.spawn.easy_async_with_shell(check_current, function(version)
-              local color = is_outdated and '#48b892' or '#b84860'
+              local color = is_outdated and beautiful.palette_negative or beautiful.palette_positive
               local line_data = {
                   package:gsub("[\r\n]", ""),
                   color,

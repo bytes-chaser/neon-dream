@@ -21,6 +21,8 @@ theme.palette_c5 = "#333170"
 theme.palette_c6 = "#2a2939"
 theme.palette_c7 = "#33334a"
 theme.col_transparent = "#00000000"
+theme.palette_positive = "#88ffbb"
+theme.palette_negative = "#b84f48"
 
 theme.bg_normal     = theme.palette_c3
 theme.bg_focus      = theme.palette_c3
