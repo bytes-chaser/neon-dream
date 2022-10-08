@@ -21,6 +21,7 @@ local theme_util = {}
 theme_util.switch = function(name)
     copy_file_cnt(theme_folder .. name .. '/theme.lua'          , theme_active)
     copy_file_cnt(theme_folder .. name .. '/alacritty.yml'      , alacritty_folder .. 'alacritty.yml')
+    copy_file_cnt(theme_folder .. name .. '/cava/config'        , cava_folder .. 'config')
     copy_file_cnt(theme_folder .. name .. '/config.rasi'        ,rofi_folder .. 'config.rasi')
     copy_file_cnt(theme_folder .. name .. '/background.png'     ,rofi_folder .. 'background.png')
 

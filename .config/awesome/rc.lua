@@ -16,6 +16,7 @@ home_folder         = os.getenv("HOME")
 cache_folder        = os.getenv("HOME") .. "/.cache/awesome/"
 theme_folder        = home_folder .. "/.config/awesome/theme/"
 alacritty_folder    = home_folder .. "/.config/alacritty/"
+cava_folder         = home_folder .. "/.config/cava/"
 rofi_folder         = home_folder .. "/.config/rofi/"
 theme_active        = cache_folder .. "theme.lua"
 user                = os.getenv("USER")
