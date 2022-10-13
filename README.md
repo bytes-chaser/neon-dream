@@ -188,7 +188,7 @@ It shows docker containers status.
 Information splited on pages and can be sorted in by Name, ID, Image, Ports, Status in any direction
 Scan path, pagination etc. can be configured in **cfg/init.lua  repos_scan** 
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/docker.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/docker_showcase.png)
 
 ### User bar
 User bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + U**
