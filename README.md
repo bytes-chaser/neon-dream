@@ -4,7 +4,7 @@
 </p>
 <br>
 
-<img width="55%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
+<img width="50%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
 
 ## Dependencies Information
 <table>
@@ -174,7 +174,7 @@ List of packages, pagination etc. can be configured in **cfg/init.lua  track_pac
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/pacs.png)
 
-### Docker bar
+### Repos bar
 Repos bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + g**
 It shows Git repositories on your system.
 Information splited on pages and can be sorted in by Name, Path, Remote URL in any direction
@@ -188,7 +188,7 @@ It shows docker containers status.
 Information splited on pages and can be sorted in by Name, ID, Image, Ports, Status in any direction
 Scan path, pagination etc. can be configured in **cfg/init.lua  repos_scan** 
 
-![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/repos.png)
+![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/docker.png)
 
 ### User bar
 User bar can be opened on left screen side by selecting it on Left Bar Switch or with keybinding  **Mod + Shift + U**
