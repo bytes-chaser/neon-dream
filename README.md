@@ -153,7 +153,7 @@ Includes:
 * Bar player  (Becomes visible on playing music/video only)
 * CPU usage history graph
 * RAM usage history graph
-* Systray (includes battery widget and notifications widget)
+* Systray (includes battery, theme switcher and notifications widgets)
 
 ### Battery
 Battery icon on systray shows battery charge level on hover event. Icon is changing depends on battery charge level.
