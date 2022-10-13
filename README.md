@@ -6,7 +6,7 @@
 
 <img width="50%" align="right" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/collage.png" />
 
-## Dependencies Information
+## :flashlight: Dependencies Information
 <table>
   <tr>
     <td><b>Latest Release</b></td>
@@ -80,7 +80,7 @@
 </table>
 
 
-## Additional Information
+## :wrench: Additional Information
 
 ### zsh
 Confugured with [oh-my-zsh](https://ohmyz.sh/) framework and using [Starship Prompt](https://spaceship-prompt.sh/)
@@ -106,7 +106,7 @@ nvim configuration icnludes plugins configuration using:
 * Website pages styled with firefox [stylish](https://addons.mozilla.org/en-US/firefox/addon/stylish/) plugin
 * [Windowed](https://addons.mozilla.org/en-US/firefox/addon/windowed/) plugin used to for in-window fullscreen mode 
 
-## Awesome
+## :mag_right: Awesome
 Awesome configuration based on default awesome config. All lua widgets are custom-made.
 
 ### Dependencies
@@ -247,7 +247,7 @@ Each theme option changing style of:
 ### Nord-v1
 <img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/nord-1/showcase.png" />
 
-## Tkanks for your attention
+## :sparkling_heart: Tkanks for your attention
 
 You can leave any ideas, notes on the "issues" tab and support me by dropping some coins.
 
