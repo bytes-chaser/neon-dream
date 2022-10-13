@@ -231,18 +231,24 @@ Each theme option changing style of:
 
 ![](https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/theme_switch.png)
 
-### Available themes
-#### Coffepot-v1
+## Available themes
+### Coffepot-v1
 <img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/coffepot-1/showcase.png" />
 
-#### Light-Blue-v1
+### Light-Blue-v1
 <img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/light-blue-1/showcase.png" />
 
-#### Neon-Dream-v1
+### Neon-Dream-v1
 <img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/neon-1/showcase.png" />
 
-#### Neon-Dream-v2
+### Neon-Dream-v2
 <img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/neon-2/showcase.png" />
 
-#### Nord-v1
+### Nord-v1
 <img width="100%" align="center" src="https://github.com/bytes-chaser/dotfiles/blob/main/assets/neon-2.0/themes/nord-1/showcase.png" />
+
+## Tkanks for your attention
+
+You can leave any ideas, notes on the "issues" tab and support me by dropping some coins.
+
+[![](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/bytes-chaser)
