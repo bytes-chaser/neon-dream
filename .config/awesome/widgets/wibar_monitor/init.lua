@@ -27,7 +27,7 @@ return {
       step_width       = 10,
       scale            = true,
       border_color     = beautiful.palette_c1,
-      color            = beautiful.fg_normal,
+      color            = beautiful.palette_c1,
       background_color = beautiful.palette_c6,
       id               = "wbm_graph"
     }
