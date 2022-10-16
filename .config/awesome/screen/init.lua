@@ -9,11 +9,11 @@ local tasks   = require("screen.tasks")
 local notif   = require("screen.notifications")
 local wibar   = require("screen.wibar")
 
-local stat_bar    = require("widgets.stat_bar")
-local dev_bar     = require("widgets.dev_bar")
-local repos_bar   = require("widgets.git_bar")
-local docker_bar  = require("widgets.docker_bar")
-local user_bar    = require("widgets.user_bar")
+local stat_bar    = require("panels.stat_bar")
+local dev_bar     = require("panels.dev_bar")
+local repos_bar   = require("panels.git_bar")
+local docker_bar  = require("panels.docker_bar")
+local user_bar    = require("panels.user_bar")
 
 
 local function set_wallpaper(s)

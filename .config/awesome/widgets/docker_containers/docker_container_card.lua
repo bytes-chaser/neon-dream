@@ -106,7 +106,7 @@ return {
                 {
                     ratio_box,
                     widget = wibox.container.margin,
-                    margins = cfg.repos_scan.style.card_margin
+                    margins = cfg.panels.docker.style.card_margin
                 },
                 layout = require("dependencies.overflow").vertical,
                 spacing = dpi(5),

@@ -3,16 +3,79 @@ local wibox       = require("wibox")
 local beautiful   = require("beautiful")
 local dpi         = beautiful.xresources.apply_dpi
 local gears       = require("gears")
+local utils       = require("watchdogs.utils")
 local commands    = require("commons.commands")
 local icons       = require("commons.icons")
 local shape_utils = require("commons.shape")
 local droplist    = require("widgets.droplist")
-local pagination   = require("commons.pagination")
+local pagination  = require("commons.pagination")
 local paginator   = require("widgets.paginator")
 
 local repo_card   = require("widgets.repos.repo_card")
 
+local check_excluded_repo_path = function(w)
+
+  for _, path in pairs(cfg.panels.git.exclude_paths) do
+    if w:find(path) then
+      return false
+    end
+  end
+
+  return true
+end
+
 return {
+  name = 'repos',
+  watchdogs = {
+    {
+      command = commands.git_repos(cfg.panels.git.scan_root_path),
+      interval = 3600,
+      callback = function(widget, stdout)
+
+        local lines = {}
+        for w in stdout:gmatch("[^\r\n]+") do
+          local included = check_excluded_repo_path(w)
+          if included then
+            table.insert(lines, w)
+          end
+        end
+
+        utils.procedures.caching(cfg.panels.git.cache_file, "update::repos", lines, function(item, callback)
+          local path = item:match('(.*)/.git')
+
+          awful.spawn.easy_async_with_shell(commands.git_repo_info(path), function(out)
+            local url = out:match('Fetch URL: (.+)%.git\n%s+Push') or 'undefined'
+
+            local source_icon = ""
+
+            if(url == nil) then
+              source_icon = ""
+            elseif url:find('github') then
+              source_icon = ''
+            elseif url:find('gitlab') then
+              source_icon = ""
+            elseif url:find('bitbucket') then
+              source_icon = ""
+            end
+
+            local formatted_path = string.gsub(path, home_folder, "~")
+            local line_data = {
+              'git',
+              formatted_path,
+              path:match('.+/(.+)$'),
+              url,
+              '',
+              source_icon
+            }
+            callback(line_data)
+          end)
+        end)
+      end,
+    }
+  },
+
+
+
 
   create = function()
 
@@ -32,9 +95,9 @@ return {
 
     local page       = 1
     local totalPages = 1
-    local size       = cfg.repos_scan.pagination_defaults.size
-    local col        = cfg.repos_scan.pagination_defaults.sort_property
-    local direction  = cfg.repos_scan.pagination_defaults.order
+    local size       = cfg.panels.git.pagination_defaults.size
+    local col        = cfg.panels.git.pagination_defaults.sort_property
+    local direction  = cfg.panels.git.pagination_defaults.order
 
 
     local sort_menu = wibox.widget({
@@ -92,7 +155,7 @@ return {
 
 
     local update = function()
-      pagination.getPage(cfg.repos_scan.cache_file, update_callback, page, size, col, direction)
+      pagination.getPage(cfg.panels.git.cache_file, update_callback, page, size, col, direction)
     end
 
 

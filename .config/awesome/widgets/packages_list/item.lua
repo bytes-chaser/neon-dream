@@ -53,7 +53,7 @@ return {
           layout = wibox.layout.flex.vertical,
         },
         widget  = wibox.container.margin,
-        margins = dpi(cfg.track_packages.style.card_margin)
+        margins = dpi(cfg.panels.packages.style.card_margin)
       }
 
     }

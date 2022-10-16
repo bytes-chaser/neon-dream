@@ -7,10 +7,32 @@ local theme_util  = require("commons.theme")
 local shape_utils = require("commons.shape")
 local wibox       = require("wibox")
 local shape       = require("commons.shape")
+local utils       = require("watchdogs.utils")
 
 is_theme_popup_opened = false
 
 return {
+    name = 'theme_switcher',
+    watchdogs = {
+        {
+            command = commands.get_files_watchdog(theme_folder),
+            interval = 60,
+            callback = function(widget, stdout)
+                local themes = {}
+
+                for w in stdout:gmatch("[^\r\n]+") do
+                    table.insert(themes, w)
+                end
+
+                utils.procedures.caching(cfg.theme.cache_file, "update::themes", themes, function(theme_name, callback)
+                    callback({
+                        theme_name,
+                        theme_folder .. theme_name .. '/background.png'
+                    })
+                end)
+            end
+        }
+    },
     create = function(parameters)
 
         local icon = wibox.widget{
@@ -49,6 +71,7 @@ return {
         }
 
         awesome.connect_signal("update::themes", function()
+
             base:reset()
             local get_list_cmd = commands.get_text_sorted(cfg.theme.cache_file, 1, 'asc');
 

@@ -7,12 +7,54 @@ local commands    = require("commons.commands")
 local icons       = require("commons.icons")
 local shape_utils = require("commons.shape")
 local droplist    = require("widgets.droplist")
-local pagination   = require("commons.pagination")
+local pagination  = require("commons.pagination")
 local paginator   = require("widgets.paginator")
+local utils       = require("watchdogs.utils")
 
 local container_card   = require("widgets.docker_containers.docker_container_card")
 
 return {
+    name = "docker",
+    watchdogs = {
+        command = [[
+          zsh -c "docker ps -a --format '{{.ID}}___{{.Image}}___{{.Names}}___{{.Ports}}___{{.Status}}___{{.RunningFor}}'"
+        ]],
+        interval = 20,
+        callback = function(widget, stdout)
+            awful.spawn.with_shell(commands.create_text_file(cfg.panels.docker.cache_file))
+
+            stdout = stdout:gsub("______", "___Noinfo___")
+            stdout = stdout:gsub(", ", "@")
+
+            local lines = nd_utils.split(stdout, '\n')
+
+            local containers = {}
+            for _, value in ipairs(lines) do
+                if #value > 0 then
+                    value = nd_utils.trim(value)
+                    table.insert(containers, value)
+                end
+            end
+
+            utils.procedures.caching(cfg.panels.docker.cache_file, "sysstat::docker_container_add", containers, function(value, callback)
+                local line_data = nd_utils.split(nd_utils.trim(value), "___")
+
+                line_data[5] = line_data[5]:match("^%w+")
+
+                local time = line_data[6]:match("^%d+%s+%w+")
+
+                if time == nil then
+                    line_data[6] = line_data[6]:match("About%s+a%w*%s+(%w+)")
+                else
+                    line_data[6] = time
+                end
+
+                line_data[6] = line_data[6]:gsub("%s", "___")
+
+                callback(line_data)
+            end)
+        end
+    },
 
     create = function()
 
@@ -32,9 +74,9 @@ return {
 
         local page       = 1
         local totalPages = 1
-        local size       = cfg.docker.pagination_defaults.size
-        local col        = cfg.docker.pagination_defaults.sort_property
-        local direction  = cfg.docker.pagination_defaults.order
+        local size       = cfg.panels.docker.pagination_defaults.size
+        local col        = cfg.panels.docker.pagination_defaults.sort_property
+        local direction  = cfg.panels.docker.pagination_defaults.order
 
 
         local sort_menu = wibox.widget({
@@ -97,7 +139,7 @@ return {
 
 
         local update = function()
-            pagination.getPage(cfg.docker.cache_file, update_callback, page, size, col, direction)
+            pagination.getPage(cfg.panels.docker.cache_file, update_callback, page, size, col, direction)
         end
 
 

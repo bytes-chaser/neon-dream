@@ -2,8 +2,33 @@ local beautiful    = require("beautiful")
 local wibox        = require("wibox")
 local process_info = require("widgets.processes.process_info")
 
+local process = {
+  name = "process",
+  watchdogs = {
+    {
+      command = [[
+        zsh -c "top -b | head -14 | tail -7 | awk '{printf \"#\" $12 \"-\" $9 \"__\" $10 \" \"}'"
+      ]],
+      interval = 5,
+      callback = function(widget, stdout)
 
-local process = {}
+        local ps_info = {}
+        local index  = 1
+        for w in stdout:gmatch("%S+") do
+          local info = {}
+          info.name = w:match("#(.+)-")
+          info.cpu = w:match("-(.+)__")
+          info.mem = w:match("__(.+)")
+          ps_info[index] = info
+          index = index + 1
+
+        end
+        awesome.emit_signal("sysstat::ps", ps_info)
+
+      end
+    }
+  }
+}
 
 process.add_record = function(base, ps_table, index, records_num)
   local children = base.children
@@ -20,7 +45,6 @@ end
 
 
 process.create = function()
-
   local record = {}
   record.name  = "Name"
   record.cpu   = "CPU %"

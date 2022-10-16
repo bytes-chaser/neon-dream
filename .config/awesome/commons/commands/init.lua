@@ -1,19 +1,5 @@
 
 local commands = {}
-commands.ram =
-[[
-    zsh -c "free -m | grep Mem: | awk '{printf \"#%d__%d#\", $2, $3}'"
-]]
-
-commands.cpu =
-[[
-    zsh -c "top -bn2 | grep '%Cpu' | tail -1 | grep -P '(....|...) id,'|awk '{print 100-$8}'"
-]]
-
-commands.pow =
-[[
-  zsh -c "{cat /sys/class/power_supply/BAT0/status | sed 's/ //g';cat /sys/class/power_supply/BAT0/capacity} | paste -d ' ' -s" | awk '{printf "#" $1 "__" $2 "#"}'
-]]
 
 commands.svol =
 [[
@@ -25,10 +11,6 @@ commands.brightness =
   zsh -c "brightnessctl i | head -2 | tail -1 | awk '{printf $4}' | grep -o '[0-9]\+'"
 ]]
 
-commands.top_ps =
-[[
-  zsh -c "top -b|head -14 | tail -7 | awk '{printf \"#\" $12 \"-\" $9 \"__\" $10 \" \"}'"
-]]
 
 commands.player_toggle =
 [[
@@ -44,12 +26,6 @@ commands.player_prev =
 [[
   zsh -c "playerctl previous"
 ]]
-
-commands.sync_packages =
-[[
-  zsh -c "sudo pacman -Sy ; yay -Sy"
-]]
-
 
 commands.shutdown = 'sudo shutdown now'
 
@@ -105,32 +81,5 @@ commands.get_text_sorted = function(path, col, direction)
   return cmd .. tostring(col) .. ' ' .. path
 end
 
-commands.weather_info = 'curl https://api.weatherapi.com/v1/current.json?key=' .. os.getenv("WEATHER_API_COM_API_KEY") .. '&q='.. os.getenv("WEATHER_API_COM_CITY") ..'&aqi=no'
-
-commands.get_disk_root_info =
-  [[
-    zsh -c "df -B 1MB / | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
-  ]]
-
-commands.get_disk_boot_info =
-  [[
-    zsh -c "df -B 1MB /efi | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
-  ]]
-
-commands.get_disk_home_info =
-  [[
-    zsh -c "df -B 1MB /home | tail -1 | awk '{printf \"%d %d\", $3, $4}'"
-  ]]
-
-commands.temp =
-  [[
-    zsh -c "sensors | grep Package | awk '{printf \"%d\", $4}'"
-  ]]
-
-
-commands.docker_containers =
-[[
-  zsh -c "docker ps -a --format '{{.ID}}___{{.Image}}___{{.Names}}___{{.Ports}}___{{.Status}}___{{.RunningFor}}'"
-]]
 
 return commands

@@ -10,59 +10,70 @@ cfg = {
 		names = { "web", "dev", "misc"},
 		shape = shape_utils.default_frr
 	},
-	track_packages = {
-		names = {
-			'git', 'lua', 'awesome-git',
-			'alacritty', 'zsh', 'neovim',
-			'rofi', 'yay', 'pacman', 'alsa-lib',
-			'spotify', 'spicetify-cli', 'systemd',
-			'sudo', 'ttf-jetbrains-mono', 'ttf-font-awesome',
-			'ranger', 'python', 'pulseaudio', 'playerctl', 'picom'
-		},
-		cache_file = home_folder .. '/.cache/awesome/packages',
-		pagination_defaults = {
-			size          = 12,     -- items per page,
-			order         = 'asc', -- asc or desc
-			sort_property = 1,     -- 1-Name, 3-Current Version, 6-Available version
+	panels = {
+		packages = {
+			names = {
+				'git', 'lua', 'awesome-git',
+				'alacritty', 'zsh', 'neovim',
+				'rofi', 'yay', 'pacman', 'alsa-lib',
+				'spotify', 'spicetify-cli', 'systemd',
+				'sudo', 'ttf-jetbrains-mono', 'ttf-font-awesome',
+				'ranger', 'python', 'pulseaudio', 'playerctl', 'picom'
+			},
+			cache_file = home_folder .. '/.cache/awesome/packages',
+			pagination_defaults = {
+				size          = 12,     -- items per page,
+				order         = 'asc', -- asc or desc
+				sort_property = 1,     -- 1-Name, 3-Current Version, 6-Available version
 
+			},
+			style = {
+				card_margin   = 7,
+			}
 		},
-		style = {
-			card_margin   = 7,
+		git = {
+			scan_root_path = home_folder,
+			cache_file = home_folder .. '/.cache/awesome/repos',
+			pagination_defaults = {
+				size          = 12,     -- items per page,
+				order         = 'asc', -- asc or desc
+				sort_property = 3,     -- 2-Path, 3-Name, 4-Remote URL
+			},
+			style = {
+				card_margin   = 5,
+			},
+			exclude_paths  = {
+				home_folder .. '/.cache/yay/',
+				home_folder .. '/.local/share/nvim/'
+			}
+		},
+		docker = {
+			cache_file = home_folder .. '/.cache/awesome/docker_containers',
+			pagination_defaults = {
+				size          = 10,     -- items per page,
+				order         = 'asc', -- asc or desc
+				sort_property = 3,     -- 1-ID, 2-Image, 3-Name, 4-Ports, 5-Status
+			},
+			style = {
+				card_margin   = 5,
+			}
+		},
+		stats = {
+			version = 'v2' -- v1, v2
 		}
 	},
-	repos_scan = {
-		scan_root_path = home_folder,
-		cache_file = home_folder .. '/.cache/awesome/repos',
-		pagination_defaults = {
-			size          = 12,     -- items per page,
-			order         = 'asc', -- asc or desc
-			sort_property = 3,     -- 2-Path, 3-Name, 4-Remote URL
+
+
+	widgets = {
+
+		todo = {
+			path = home_folder .. '/.cache/awesome/todo/'
 		},
-		style = {
-			card_margin   = 5,
-		},
-		exclude_paths  = {
-			home_folder .. '/.cache/yay/',
-			home_folder .. '/.local/share/nvim/'
+
+		calendar = {
+			week_started_on_sunday = true,
+			weekend_days_indexes   = {5, 6},
 		}
-	},
-	docker = {
-		cache_file = home_folder .. '/.cache/awesome/docker_containers',
-		pagination_defaults = {
-			size          = 10,     -- items per page,
-			order         = 'asc', -- asc or desc
-			sort_property = 3,     -- 1-ID, 2-Image, 3-Name, 4-Ports, 5-Status
-		}
-	},
-	calendar = {
-		week_started_on_sunday = true,
-		weekend_days_indexes   = {5, 6},
-	},
-	todo = {
-		path = home_folder .. '/.cache/awesome/todo/'
-	},
-	widgets_versions = {
-		stat_bar = 'v2' -- v1, v2
 	}
 }
 

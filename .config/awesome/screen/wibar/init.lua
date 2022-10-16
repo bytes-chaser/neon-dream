@@ -1,14 +1,13 @@
-local awful         = require("awful")
-local beautiful     = require("beautiful")
-local wibox         = require("wibox")
-local bwf           = require("widgets.battery")
-local ts            = require("widgets.theme_switch")
-local dpi           = beautiful.xresources.apply_dpi
-local shape_utils   = require("commons.shape")
-local wbm           = require("widgets.wibar_monitor")
-local wb_player     = require("widgets.player.wibar")
-
-local notifi  = require("screen.notif_icon")
+local awful          = require("awful")
+local beautiful      = require("beautiful")
+local wibox          = require("wibox")
+local bwf            = require("widgets.battery")
+local dpi            = beautiful.xresources.apply_dpi
+local shape_utils    = require("commons.shape")
+local wbm            = require("widgets.wibar_monitor")
+local wb_player      = require("widgets.player.wibar")
+local ts             = require("widgets.theme_switch")
+local notifi         = require("screen.notif_icon")
 local panels_switch  = require("screen.panels_switch")
 
 
@@ -131,7 +130,7 @@ return {
                   wibox.widget.textclock(),
                   bwf.create({size = 20}),
                   {
-                      ts.create({size = 12}),
+                      createWidget(ts, {size = 12}),
                       margins = 10,
                       widget  = wibox.container.margin
                   },

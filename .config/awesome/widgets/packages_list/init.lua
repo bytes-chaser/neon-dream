@@ -6,11 +6,56 @@ local gears        = require("gears")
 local droplist     = require("widgets.droplist")
 local shape_utils  = require("commons.shape")
 local icons        = require("commons.icons")
+local utils        = require("watchdogs.utils")
 local pagination   = require("commons.pagination")
 local package_item = require("widgets.packages_list.item")
 local paginator    = require("widgets.paginator")
 
 return {
+  name = 'packages_list',
+  watchdogs = {
+      {
+          command = [[
+              zsh -c "sudo pacman -Sy ; yay -Sy"
+            ]],
+          interval = 3600,
+          callback = function()
+              local date_table = os.date("*t")
+              local hour, minute, second = date_table.hour, date_table.min, date_table.sec
+
+              local year, month, day = date_table.year, date_table.month, date_table.day   -- date_table.wday to date_table.day
+              local result = string.format("%d-%d-%d %d:%d:%d", year, month, day, hour, minute, second, ms)
+              awful.spawn.with_shell("echo '" .. result .. "' > " .. home_folder .. '/.cache/awesome/.packages_sync_time')
+
+
+              utils.procedures.caching(cfg.panels.packages.cache_file, "sysstat::package_add", cfg.panels.packages.names, function(package, callback)
+                  local check_updates = "pacman -Qu " .. package .. " | awk '{printf $4}'"
+                  local check_current = "pacman -Q "  .. package .. " | awk '{printf $2}'"
+
+                  awful.spawn.easy_async_with_shell(check_updates, function(out)
+                      local is_outdated = (#out == 0)
+                      local avail_version = is_outdated and '' or out
+                      local avail_col = beautiful.palette_positive
+                      local avail_font = (is_outdated and '16' or '12')
+
+                      awful.spawn.easy_async_with_shell(check_current, function(version)
+                          local color = is_outdated and beautiful.palette_negative or beautiful.palette_positive
+                          local line_data = {
+                              package:gsub("[\r\n]", ""),
+                              color,
+                              version:gsub("[\r\n]", ""),
+                              avail_col,
+                              avail_font,
+                              avail_version:gsub("[\r\n]", "")
+                          }
+                          callback(line_data)
+                      end)
+                  end)
+              end)
+          end,
+      }
+  },
+
   create = function()
 
       local scroll = {
@@ -30,9 +75,9 @@ return {
 
       local page       = 1
       local totalPages = 1
-      local size       = cfg.track_packages.pagination_defaults.size
-      local col        = cfg.track_packages.pagination_defaults.sort_property
-      local direction  = cfg.track_packages.pagination_defaults.order
+      local size       = cfg.panels.packages.pagination_defaults.size
+      local col        = cfg.panels.packages.pagination_defaults.sort_property
+      local direction  = cfg.panels.packages.pagination_defaults.order
 
 
       local sort_menu = wibox.widget({
@@ -94,7 +139,7 @@ return {
 
 
       local update = function()
-          pagination.getPage(cfg.track_packages.cache_file, update_callback, page, size, col, direction)
+          pagination.getPage(cfg.panels.packages.cache_file, update_callback, page, size, col, direction)
       end
 
 

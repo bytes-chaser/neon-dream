@@ -74,7 +74,7 @@ return {
             layout = wibox.layout.flex.vertical
           },
           widget = wibox.container.margin,
-          margins = cfg.repos_scan.style.card_margin
+          margins = cfg.panels.git.style.card_margin
         },
         layout = require("dependencies.overflow").vertical,
         spacing = dpi(5),

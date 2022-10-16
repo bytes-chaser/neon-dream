@@ -9,7 +9,7 @@ local commands     = require("commons.commands")
 local task_factory = require("widgets.todo.task_factory")
 local header       = require("widgets.todo.header")
 
-local todo_path = cfg.todo.path
+local todo_path = cfg.widgets.todo.path
 local get_list_cmd = commands.get_files(todo_path)
 
 return {

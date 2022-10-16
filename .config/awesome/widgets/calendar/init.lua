@@ -38,7 +38,7 @@ calendar.decorate_cell = function(widget, flag, date)
 
 
     local weekday = tonumber(os.date("%w", os.time(d)))
-    local default_fg = nd_utils.arr_contains(cfg.calendar.weekend_days_indexes, weekday)
+    local default_fg = nd_utils.arr_contains(cfg.widgets.calendar.weekend_days_indexes, weekday)
                         and beautiful.palette_positive
                         or (props.fg_color or beautiful.palette_c2)
 
@@ -59,7 +59,7 @@ calendar.create = function()
   return wibox.widget {
       date          = os.date("*t"),
       long_weekdays = true,
-      start_sunday  = cfg.calendar.week_started_on_sunday,
+      start_sunday  = cfg.widgets.calendar.week_started_on_sunday,
       fn_embed      = calendar.decorate_cell,
       widget        = wibox.widget.calendar.month
   }

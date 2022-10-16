@@ -11,6 +11,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 require("awful.hotkeys_popup.keys")
+require("commons.widget_factory")
 require("commons.nd_utils")
 home_folder         = os.getenv("HOME")
 cache_folder        = os.getenv("HOME") .. "/.cache/awesome/"
@@ -154,9 +155,6 @@ client.connect_signal("manage", function (c)
 end)
 
 require("decorations")
-
-watchdogs = require("watchdogs")
-watchdogs.init()
 require("commons.playerctl")
 
 -- Autostart
