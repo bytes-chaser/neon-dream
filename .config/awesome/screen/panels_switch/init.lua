@@ -9,12 +9,15 @@ local shapes         = require("commons.shape")
 local active_panel_switch_icon
 local active_panel_switch_icon_section
 
+local panels = {}
+
 local close_all_sub_panels = function(s)
-  s.stats.visible    = false
-  s.pacs.visible     = false
-  s.docker.visible   = false
-  s.repos.visible    = false
-  s.user.visible     = false
+  local screen_panels = panels[s.index]
+
+  for _, panel in ipairs(screen_panels) do
+    panel.visible = false
+  end
+
   if active_panel_switch_icon and active_panel_switch_icon_section then
 	active_panel_switch_icon_section.markup = "<span foreground='" .. beautiful.fg_normal .. "'>" .. active_panel_switch_icon .. "</span>"
   end
@@ -90,15 +93,38 @@ end
 
 
 return {
-  create = function(s)
-    return {
-      layout = wibox.layout.fixed.horizontal,
+  add_panel = function(s, panel)
+    if panels[s.index] == nil then
+      panels[s.index] = {}
+    end
 
-      create_munu_panel_button("",  "User",     btn_setup(s, s.user)),
-      create_munu_panel_button("", "Packages", btn_setup(s, s.pacs)),
-      create_munu_panel_button("",  "Repos",   btn_setup(s, s.repos)),
-      create_munu_panel_button("", "Docker",  btn_setup(s, s.docker)),
-      create_munu_panel_button("", "Stats",   btn_setup(s, s.stats)),
-    }
+    table.insert(panels[s.index], panel)
+  end,
+
+
+  create = function(s)
+    local body = wibox.layout.fixed.horizontal()
+
+    if cfg.panels.user.enabled then
+      body:add(create_munu_panel_button("",  "User",    btn_setup(s, s.user)))
+    end
+
+    if cfg.panels.packages.enabled then
+      body:add(create_munu_panel_button("", "Packages", btn_setup(s, s.pacs)))
+    end
+
+    if cfg.panels.git.enabled then
+      body:add(create_munu_panel_button("",  "Repos",   btn_setup(s, s.repos)))
+    end
+
+    if cfg.panels.docker.enabled then
+      body:add(create_munu_panel_button("", "Docker",  btn_setup(s, s.docker)))
+    end
+
+    if cfg.panels.stats.enabled then
+      body:add(create_munu_panel_button("", "Stats",    btn_setup(s, s.stats)))
+    end
+
+    return body
   end
 }

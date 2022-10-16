@@ -9,11 +9,12 @@ local tasks   = require("screen.tasks")
 local notif   = require("screen.notifications")
 local wibar   = require("screen.wibar")
 
-local stat_bar    = require("panels.stat_bar")
-local dev_bar     = require("panels.dev_bar")
-local repos_bar   = require("panels.git_bar")
-local docker_bar  = require("panels.docker_bar")
-local user_bar    = require("panels.user_bar")
+local panels_switch  = require("screen.panels_switch")
+local stat_bar       = require("panels.stat_bar")
+local dev_bar        = require("panels.dev_bar")
+local repos_bar      = require("panels.git_bar")
+local docker_bar     = require("panels.docker_bar")
+local user_bar       = require("panels.user_bar")
 
 
 local function set_wallpaper(s)
@@ -43,11 +44,31 @@ awful.screen.connect_for_each_screen(function(s)
     show_sub_panel = false
     sub_panel_mode = 'user'
 
-    s.stats  = stat_bar.create(s)
-    s.pacs   = dev_bar.create(s)
-    s.repos  = repos_bar.create(s)
-    s.docker = docker_bar.create(s)
-    s.user   = user_bar.create(s)
+    if cfg.panels.stats.enabled then
+        s.stats  = stat_bar.create(s)
+        panels_switch.add_panel(s, s.stats)
+    end
+
+    if cfg.panels.packages.enabled then
+        s.pacs  = dev_bar.create(s)
+        panels_switch.add_panel(s, s.pacs)
+    end
+
+    if cfg.panels.git.enabled then
+        s.repos  = repos_bar.create(s)
+        panels_switch.add_panel(s, s.repos)
+    end
+
+    if cfg.panels.docker.enabled then
+        s.docker = docker_bar.create(s)
+        panels_switch.add_panel(s, s.docker)
+    end
+
+    if cfg.panels.user.enabled then
+        s.user   = user_bar.create(s)
+        panels_switch.add_panel(s, s.user)
+    end
+
     s.notif  = notif.create(s)
     
     wibar.create(s)

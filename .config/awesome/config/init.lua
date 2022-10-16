@@ -12,6 +12,7 @@ cfg = {
 	},
 	panels = {
 		packages = {
+			enabled = true,
 			names = {
 				'git', 'lua', 'awesome-git',
 				'alacritty', 'zsh', 'neovim',
@@ -32,6 +33,7 @@ cfg = {
 			}
 		},
 		git = {
+			enabled = true,
 			scan_root_path = home_folder,
 			cache_file = home_folder .. '/.cache/awesome/repos',
 			pagination_defaults = {
@@ -48,6 +50,7 @@ cfg = {
 			}
 		},
 		docker = {
+			enabled = false,
 			cache_file = home_folder .. '/.cache/awesome/docker_containers',
 			pagination_defaults = {
 				size          = 10,     -- items per page,
@@ -59,7 +62,11 @@ cfg = {
 			}
 		},
 		stats = {
+			enabled = true,
 			version = 'v2' -- v1, v2
+		},
+		user = {
+			enabled = true,
 		}
 	},
 
