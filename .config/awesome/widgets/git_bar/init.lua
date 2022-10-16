@@ -4,7 +4,7 @@ local dpi         = require("beautiful").xresources.apply_dpi
 local shape_utils = require("commons.shape")
 
 local card  = require("widgets.card")
-local repos = card.create(require("widgets.repos").create())
+local repos = card.create_with_header_placeholder(require("widgets.repos").create())
 
 return {
   create = function(s)

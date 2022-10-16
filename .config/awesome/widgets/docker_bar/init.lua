@@ -4,7 +4,7 @@ local dpi         = require("beautiful").xresources.apply_dpi
 local shape_utils = require("commons.shape")
 
 local card  = require("widgets.card")
-local containers = card.create(require("widgets.docker_containers").create())
+local containers = card.create_with_header_placeholder(require("widgets.docker_containers").create())
 
 return {
     create = function(s)

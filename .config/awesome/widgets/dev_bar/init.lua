@@ -4,7 +4,7 @@ local dpi         = require("beautiful").xresources.apply_dpi
 local shape_utils = require("commons.shape")
 
 local card  = require("widgets.card")
-local packs = card.create(require("widgets.packages_list").create())
+local packs = card.create_with_header_placeholder(require("widgets.packages_list").create())
 
 return {
   create = function(s)

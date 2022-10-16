@@ -15,6 +15,15 @@ end
 return {
   create = function(content, margin)
     return wibox.widget(make_margin({
+      make_margin(content, margin),
+      shape  = shape_utils.default_frr,
+      widget = wibox.container.background,
+      bg     = beautiful.palette_c6,
+    }, margin))
+  end,
+
+  create_with_header_placeholder = function(content, margin)
+    return wibox.widget(make_margin({
       {
         forced_height = 10,
         shape  = shape_utils.partially_rounded_rect(true, true, false, false),
