@@ -11,7 +11,7 @@ local active_panel_switch_icon_section
 
 local close_all_sub_panels = function(s)
   s.stats.visible    = false
-  s.pacs.visible      = false
+  s.pacs.visible     = false
   s.docker.visible   = false
   s.repos.visible    = false
   s.user.visible     = false
@@ -46,8 +46,46 @@ local create_munu_panel_button = function(glyph, text, btn_fn)
       end,
   }
 
-  btn_fn(btn, icon)
+  btn_fn(btn, icon, glyph, text)
   return btn
+end
+
+local btn_setup = function(screen, panel)
+
+  local close = function(icon, glyph)
+    panel.visible  = false
+    show_sub_panel = false
+    icon.markup    = "<span foreground='" .. beautiful.fg_normal .. "'>" .. glyph .. "</span>"
+  end
+
+
+  local close_active = function(icon, glyph)
+    show_sub_panel = false
+    icon.markup  = "<span foreground='" .. beautiful.fg_normal .. "'>" .. glyph .. "</span>"
+    close_all_sub_panels(screen)
+  end
+  
+
+  return function(btn, icon, glyph, mode)
+    btn:buttons(gears.table.join(awful.button({ }, 1, function()
+      if sub_panel_mode == mode and show_sub_panel then
+        close(icon, glyph)
+      else
+        if not sub_panel_mode ~= mode then
+          close_active(icon, glyph)
+        end
+
+        sub_panel_mode = mode
+        show_sub_panel = true
+        panel.visible  = true
+        icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. glyph .. "</span>"
+
+        active_panel_switch_icon = glyph
+        active_panel_switch_icon_section = icon
+
+      end
+    end)))
+  end
 end
 
 
@@ -56,120 +94,11 @@ return {
     return {
       layout = wibox.layout.fixed.horizontal,
 
-
-      create_munu_panel_button("", "User", function(btn, icon)
-        btn:buttons(gears.table.join(awful.button({ }, 1, function()
-          if sub_panel_mode == 'user' and show_sub_panel then
-            s.user.visible = false
-            show_sub_panel = false
-            icon.markup    = "<span foreground='" .. beautiful.fg_normal .. "'>" .. "" .. "</span>"
-          else
-            if not sub_panel_mode ~= 'user' then
-              icon.markup  = "<span foreground='" .. beautiful.fg_normal .. "'>" .. "" .. "</span>"
-              close_all_sub_panels(s)
-            end
-            show_sub_panel = true
-            sub_panel_mode = 'user'
-            s.user.visible = true
-            icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. "" .. "</span>"
-
-            active_panel_switch_icon = ""
-            active_panel_switch_icon_section = icon
-
-          end
-        end)))
-      end),
-
-      create_munu_panel_button("", "Packages", function(btn, icon)
-        btn:buttons(gears.table.join(awful.button({ }, 1, function()
-          if sub_panel_mode == 'pacs' and show_sub_panel then
-            s.pacs.visible  = false
-            show_sub_panel = false
-            icon.markup    = "<span foreground='" .. beautiful.fg_normal .. "'>" .. "" .. "</span>"
-          else
-            if not sub_panel_mode ~= 'pacs' then
-              icon.markup  = "<span foreground='" .. beautiful.fg_normal .. "'>" .. "" .. "</span>"
-              close_all_sub_panels(s)
-            end
-            show_sub_panel = true
-            sub_panel_mode = 'pacs'
-            s.pacs.visible  = true
-            icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. "" .. "</span>"
-	    
-            active_panel_switch_icon = ""
-            active_panel_switch_icon_section = icon
-            
-          end
-        end)))
-      end),
-
-      create_munu_panel_button('', "Repos", function(btn, icon)
-        btn:buttons(gears.table.join(awful.button({ }, 1, function()
-          if sub_panel_mode == 'repos' and show_sub_panel then
-            s.repos.visible  = false
-            show_sub_panel = false
-            icon.markup    = "<span foreground='" .. beautiful.fg_normal .. "'>" .. '' .. "</span>"
-          else
-            if not sub_panel_mode ~= 'repos' then
-              icon.markup  = "<span foreground='" .. beautiful.fg_normal .. "'>" .. '' .. "</span>"
-              close_all_sub_panels(s)
-            end
-            show_sub_panel = true
-            sub_panel_mode = 'repos'
-            s.repos.visible  = true
-            icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. '' .. "</span>"
-
-            active_panel_switch_icon = ''
-            active_panel_switch_icon_section = icon
-
-          end
-        end)))
-      end),
-
-      create_munu_panel_button('', "Docker", function(btn, icon)
-        btn:buttons(gears.table.join(awful.button({ }, 1, function()
-          if sub_panel_mode == 'docker' and show_sub_panel then
-            s.docker.visible  = false
-            show_sub_panel = false
-            icon.markup    = "<span foreground='" .. beautiful.fg_normal .. "'>" .. '' .. "</span>"
-          else
-            if not sub_panel_mode ~= 'docker' then
-              icon.markup  = "<span foreground='" .. beautiful.fg_normal .. "'>" .. '' .. "</span>"
-              close_all_sub_panels(s)
-            end
-            show_sub_panel = true
-            sub_panel_mode = 'docker'
-            s.docker.visible  = true
-            icon.markup    = "<span foreground='" .. beautiful.fg_focus .. "'>" .. '' .. "</span>"
-
-            active_panel_switch_icon = ''
-            active_panel_switch_icon_section = icon
-
-          end
-        end)))
-      end),
-
-      create_munu_panel_button("", "Stats", function(btn, icon)
-        btn:buttons(gears.table.join(awful.button({ }, 1, function()
-          if sub_panel_mode == 'stat' and show_sub_panel then
-            s.stats.visible = false
-            show_sub_panel  = false
-            icon.markup     = "<span foreground='" .. beautiful.fg_normal .. "'>" .. "" .. "</span>"
-          else
-            if not sub_panel_mode ~= 'stat' then
-              icon.markup   = "<span foreground='" .. beautiful.fg_normal .. "'>" .. "" .. "</span>"
-              close_all_sub_panels(s)
-            end
-            show_sub_panel  = true
-            sub_panel_mode  = 'stat'
-            s.stats.visible = true
-            icon.markup     = "<span foreground='" .. beautiful.fg_focus .. "'>" .. "" .. "</span>"
-
-            active_panel_switch_icon = ""
-            active_panel_switch_icon_section = icon
-          end
-        end)))
-      end),
+      create_munu_panel_button("",  "User",     btn_setup(s, s.user)),
+      create_munu_panel_button("", "Packages", btn_setup(s, s.pacs)),
+      create_munu_panel_button("",  "Repos",   btn_setup(s, s.repos)),
+      create_munu_panel_button("", "Docker",  btn_setup(s, s.docker)),
+      create_munu_panel_button("", "Stats",   btn_setup(s, s.stats)),
     }
   end
 }

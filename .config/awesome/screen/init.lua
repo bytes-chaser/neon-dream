@@ -44,7 +44,7 @@ awful.screen.connect_for_each_screen(function(s)
     sub_panel_mode = 'user'
 
     s.stats  = stat_bar.create(s)
-    s.pacs    = dev_bar.create(s)
+    s.pacs   = dev_bar.create(s)
     s.repos  = repos_bar.create(s)
     s.docker = docker_bar.create(s)
     s.user   = user_bar.create(s)
