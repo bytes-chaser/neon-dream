@@ -1,3 +1,4 @@
+
 local awful       = require("awful")
 local wibox       = require("wibox")
 local beautiful   = require("beautiful")
@@ -6,7 +7,6 @@ local gears       = require("gears")
 local naughty     = require('naughty')
 local shape_utils = require("commons.shape")
 local icons       = require("commons.icons")
-
 
 local notifications = wibox.widget({
   layout  = require("dependencies.overflow").vertical,
@@ -136,13 +136,25 @@ local add_notif = function(title, text, notif_icon)
   return notification
 end
 
+local is_relevant_to_add = function (n)
+
+  if n.app_name == "Player" then
+    return false
+  else
+    return true
+  end
+end
+
 
 local add = function(n, notif_icon)
 	n:connect_signal(
 		'destroyed',
 		function(self, reason, keep_visble)
-      local notif = add_notif(n.title, n.message, notif_icon)
-      notifications:insert(1, notif)
+          if is_relevant_to_add(n) then
+            local notif = add_notif(n.app_name, n.message, notif_icon)
+            notifications:insert(1, notif)
+          end
+
 		end
 	)
 end

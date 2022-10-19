@@ -57,10 +57,8 @@ modkey = "Mod4"
 
 require("bindings")
 require("layout")
-
-
-
 require("screen")
+require("notifications")
 
 
 clientbuttons = gears.table.join(
