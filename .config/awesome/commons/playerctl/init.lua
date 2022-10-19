@@ -20,7 +20,14 @@ awful.spawn.easy_async_with_shell(playerctl.command.kill_metadata_check, functio
             local album = line:match('@album(.*)album@')
             local art_link = line:match('@alink(.*)alink@')
 
+            awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
+                    function()
+                        awesome.emit_signal("player::icon_update", status, title, album, artist, art_link)
+                    end)
+
             awesome.emit_signal("player::metadata", status, title, album, artist, art_link)
+
+
         end
     })
 end)

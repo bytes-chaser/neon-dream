@@ -152,15 +152,15 @@ awesome.connect_signal("player::metadata",
       album_val.text  = album
       artist_val.text = artist
 
-      awful.spawn.easy_async_with_shell("curl -o " .. home_folder .. "/.cache/spotify/current_image " .. art_link,
-        function()
-          imagebox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
-        end)
       else
 	title_val.text  = "Click"
         album_val.text  = "To start"
         artist_val.text = on_player_pause_cmd
     end
+end)
+
+awesome.connect_signal("player::icon_update", function()
+    imagebox.image = gears.surface.load_uncached_silently(home_folder .. "/.cache/spotify/current_image")
 end)
 
 return player
