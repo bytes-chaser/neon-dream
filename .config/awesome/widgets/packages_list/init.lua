@@ -39,7 +39,7 @@ return {
                       local avail_font = (is_outdated and '16' or '12')
 
                       awful.spawn.easy_async_with_shell(check_current, function(version)
-                          local color = is_outdated and beautiful.palette_negative or beautiful.palette_positive
+                          local color = is_outdated and beautiful.palette_positive or beautiful.palette_negative
                           local line_data = {
                               package:gsub("[\r\n]", ""),
                               color,
